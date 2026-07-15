@@ -14,7 +14,7 @@ const translations = {
         },
         about: {
             kicker: "About", title: "Engineering with clarity and care.",
-            paragraph1: "I’m a software engineer at AWS Kiro, where I work on agentic AI developer experiences and the context systems behind them. I earned my master’s degree in computer science from Brown University.",
+            paragraph1: "I’m a software engineer at AWS Kiro, where I work on agentic AI developer experiences and the context systems behind them.",
             paragraph2: "My work spans LLM systems, software engineering, and computer vision for healthcare. I enjoy turning ambiguous research problems into dependable products—balancing technical depth with usability, performance, and clean execution.",
             principle1Title: "Systems thinking", principle1Text: "Designing for the whole workflow, not a single feature.",
             principle2Title: "Practical research", principle2Text: "Turning experiments into reliable, measurable product improvements.",
@@ -53,7 +53,7 @@ const translations = {
         },
         about: {
             kicker: "关于", title: "用清晰与用心做好工程。",
-            paragraph1: "我目前是 AWS Kiro 的软件工程师，负责智能代理 AI 开发者体验及其背后的上下文系统。我已获得布朗大学计算机科学硕士学位。",
+            paragraph1: "我目前是 AWS Kiro 的软件工程师，负责智能代理 AI 开发者体验及其背后的上下文系统。",
             paragraph2: "我的工作横跨 LLM 系统、软件工程和医疗计算机视觉。我喜欢把开放性的研究问题转化为可靠的产品，在技术深度、易用性、性能与工程质量之间找到平衡。",
             principle1Title: "系统思维", principle1Text: "围绕完整工作流设计，而不只关注单一功能。",
             principle2Title: "实践型研究", principle2Text: "把实验转化为可靠、可衡量的产品改进。",
