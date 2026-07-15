@@ -1,13 +1,13 @@
 const translations = {
     en: {
         meta: {
-            title: "Charlie Yang | Software Engineer at AWS",
-            description: "Charlie Yang is a Software Engineer at AWS building agentic AI developer experiences and researching medical imaging AI agents."
+            title: "Charlie Yang | Software Development Engineer at AWS",
+            description: "Charlie Yang is a Software Development Engineer at AWS building agentic AI developer experiences and researching medical imaging AI agents."
         },
         nav: { home: "Home", about: "About", experience: "Experience", academic: "Academic", education: "Education", skills: "Skills", contact: "Contact" },
         common: { skip: "Skip to content", details: "View details" },
         hero: {
-            eyebrow: "Software Engineer at AWS",
+            eyebrow: "Software Development Engineer at AWS",
             title: "I build thoughtful AI products for developers.",
             description: "I'm Charlie, a software engineer focused on agentic AI, context systems, and reliable developer experiences. I recently completed my MSCS at Brown University and joined AWS Kiro full-time.",
             viewWork: "View my experience", contact: "Get in touch", focusLabel: "Focus", focus: "Agentic AI & developer tools", locationLabel: "Based in", location: "Seattle, Washington", currentRole: "Currently building Kiro", fullTime: "Full-time"
@@ -22,7 +22,7 @@ const translations = {
         },
         experience: {
             kicker: "Experience", title: "Where I’ve built and learned.", intro: "From production AI developer tools to medical imaging systems.", current: "Current", research: "Research", earlier: "Earlier experience",
-            "aws-kiro": { title: "Software Engineer", company: "Amazon Web Services · Kiro", date: "Jul 2026 – Present", location: "Seattle, WA", summary: "Building agentic AI developer experiences and evolving the context systems that make long-running workflows more capable, reliable, and intuitive." },
+            "aws-kiro": { title: "Software Development Engineer", company: "Amazon Web Services · Kiro", date: "Jul 2026 – Present", location: "Seattle, WA", summary: "Building agentic AI developer experiences and evolving the context systems that make long-running workflows more capable, reliable, and intuitive." },
             "cu-anschutz": { title: "Research Assistant", company: "University of Colorado Anschutz School of Medicine", date: "Jul 2026 – Present", location: "Remote", summary: "Researching medical imaging and AI agents in a remote, part-time role." },
             "aws-kiro-intern": { title: "Software Engineer Intern", company: "Amazon Web Services · Kiro", date: "Jun 2025 – Aug 2025", location: "Seattle, WA", summary: "Led the design and productization of a modular context management system combining hierarchical compaction, memory, and retrieval." },
             "brown-health": { title: "Research Intern", company: "Brown University Health", date: "Mar 2025 – Aug 2025", location: "Providence, RI", summary: "Developed an AI-powered medical imaging platform for report generation, image analysis, and clinical comparison workflows." },
@@ -49,13 +49,13 @@ const translations = {
     },
     zh: {
         meta: {
-            title: "杨新烨 | AWS 软件工程师",
-            description: "杨新烨是 AWS 软件工程师，专注于智能代理 AI、开发者工具与医疗影像 AI 智能体研究。"
+            title: "杨新烨 | AWS 软件开发工程师",
+            description: "杨新烨是 AWS 软件开发工程师，专注于智能代理 AI、开发者工具与医疗影像 AI 智能体研究。"
         },
         nav: { home: "首页", about: "关于", experience: "经历", academic: "学术", education: "教育", skills: "技能", contact: "联系" },
         common: { skip: "跳转到正文", details: "查看详情" },
         hero: {
-            eyebrow: "AWS 软件工程师",
+            eyebrow: "AWS 软件开发工程师",
             title: "为开发者打造可靠、好用的 AI 产品。",
             description: "你好，我是杨新烨，一名专注于智能代理 AI、上下文系统与开发者体验的软件工程师。我刚刚完成布朗大学计算机科学硕士学业，并全职加入 AWS Kiro。",
             viewWork: "查看我的经历", contact: "联系我", focusLabel: "专注方向", focus: "智能代理 AI 与开发者工具", locationLabel: "所在地", location: "华盛顿州西雅图", currentRole: "正在参与 Kiro 产品开发", fullTime: "全职"
@@ -70,7 +70,7 @@ const translations = {
         },
         experience: {
             kicker: "工作经历", title: "我构建产品与积累经验的地方。", intro: "从生产级 AI 开发者工具到医疗影像系统。", current: "目前", research: "研究", earlier: "更早经历",
-            "aws-kiro": { title: "软件工程师", company: "亚马逊云服务 · Kiro", date: "2026年7月 – 至今", location: "华盛顿州西雅图", summary: "构建智能代理 AI 开发者体验，并持续演进上下文系统，让长周期任务更强大、更可靠、更易用。" },
+            "aws-kiro": { title: "软件开发工程师", company: "亚马逊云服务 · Kiro", date: "2026年7月 – 至今", location: "华盛顿州西雅图", summary: "构建智能代理 AI 开发者体验，并持续演进上下文系统，让长周期任务更强大、更可靠、更易用。" },
             "cu-anschutz": { title: "研究助理", company: "科罗拉多大学安舒茨医学院", date: "2026年7月 – 至今", location: "远程", summary: "以远程兼职形式开展医疗影像与 AI 智能体研究。" },
             "aws-kiro-intern": { title: "软件开发工程师实习生", company: "亚马逊云服务 · Kiro", date: "2025年6月 – 2025年8月", location: "华盛顿州西雅图", summary: "主导模块化上下文管理系统的设计与产品化，结合层次化压缩、记忆与检索能力。" },
             "brown-health": { title: "研究实习生", company: "布朗大学健康中心", date: "2025年3月 – 2025年8月", location: "罗德岛州普罗维登斯", summary: "开发面向医疗报告生成、影像分析与临床对比工作流的 AI 医学影像平台。" },

@@ -24,7 +24,7 @@ const detailTranslations = {
         // Experience detail translations
         experience: {
             "aws-kiro": {
-                title: "Software Engineer",
+                title: "Software Development Engineer",
                 company: "Amazon Web Services · Kiro",
                 date: "Jul 2026 - Present",
                 location: "Seattle, Washington, United States",
@@ -257,7 +257,7 @@ const detailTranslations = {
         // Experience detail translations
         experience: {
             "aws-kiro": {
-                title: "软件工程师",
+                title: "软件开发工程师",
                 company: "亚马逊云服务 · Kiro",
                 date: "2026年7月 - 至今",
                 location: "西雅图，华盛顿州，美国",
