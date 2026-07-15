@@ -4,7 +4,7 @@ const translations = {
             title: "Charlie Yang | Software Engineer at AWS",
             description: "Charlie Yang is a Software Engineer at AWS building agentic AI developer experiences and researching medical imaging AI agents."
         },
-        nav: { home: "Home", about: "About", experience: "Experience", education: "Education", skills: "Skills", contact: "Contact" },
+        nav: { home: "Home", about: "About", experience: "Experience", academic: "Academic", education: "Education", skills: "Skills", contact: "Contact" },
         common: { skip: "Skip to content", details: "View details" },
         hero: {
             eyebrow: "Software Engineer at AWS",
@@ -47,7 +47,7 @@ const translations = {
             title: "杨新烨 | AWS 软件工程师",
             description: "杨新烨是 AWS 软件工程师，专注于智能代理 AI、开发者工具与医疗影像 AI 智能体研究。"
         },
-        nav: { home: "首页", about: "关于", experience: "经历", education: "教育", skills: "技能", contact: "联系" },
+        nav: { home: "首页", about: "关于", experience: "经历", academic: "学术", education: "教育", skills: "技能", contact: "联系" },
         common: { skip: "跳转到正文", details: "查看详情" },
         hero: {
             eyebrow: "AWS 软件工程师",
