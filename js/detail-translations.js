@@ -7,6 +7,7 @@ const detailTranslations = {
             educationNotFound: "Education not found",
             internship: "Internship",
             fullTime: "Full-time",
+            partTime: "Part-time",
             graduateProgram: "Graduate Program",
             undergraduateProgram: "Undergraduate Program",
             keyResponsibilities: "Key Responsibilities",
@@ -23,9 +24,9 @@ const detailTranslations = {
         // Experience detail translations
         experience: {
             "aws-kiro": {
-                title: "Software Development Engineer",
+                title: "Software Engineer",
                 company: "Amazon Web Services · Kiro",
-                date: "Jun 2026 - Present",
+                date: "Jul 2026 - Present",
                 location: "Seattle, Washington, United States",
                 description: "Building agentic AI developer experiences at Kiro, with a focus on context systems, product reliability, and intuitive workflows.",
                 responsibility1: "Build and ship agentic AI developer experiences for Kiro across the product stack",
@@ -36,41 +37,58 @@ const detailTranslations = {
                 achievement2: "Continuing to advance context engineering and agentic developer workflows",
                 achievement3: "Shipping production improvements across AI systems and user experience"
             },
+            "cu-anschutz": {
+                title: "Research Assistant",
+                company: "University of Colorado Anschutz School of Medicine",
+                date: "Jul 2026 - Present",
+                location: "Remote",
+                description: "Researching medical imaging and AI agents in a remote, part-time role.",
+                responsibility1: "Explore applications of AI agents in medical imaging research and workflows",
+                responsibility2: "Contribute to interdisciplinary research connecting medical imaging with agentic AI systems",
+                achievement1: "Current research focus: Medical Imaging and AI Agents"
+            },
             "aws-kiro-intern": {
-                title: "Software Development Engineer Intern",
+                title: "Software Engineer Intern",
                 company: "Amazon Web Services · Kiro",
                 date: "Jun 2025 - Aug 2025",
                 location: "Seattle, Washington, United States",
-                description: "Led the design and productization of context management capabilities for Kiro's agentic AI developer experience.",
-                responsibility1: "Independently led the design and productization of a context management system, enabling efficient multi-turn memory handling and scalable LLM interaction",
-                responsibility2: "Developed a modular framework combining hierarchical context compaction, importance-based tagging, memory, and RAG",
-                responsibility3: "Designed and ran internal experiments to evaluate context strategies under token and latency constraints with senior applied scientists",
-                responsibility4: "Integrated the context system into production pipelines with dynamic retrieval and compact history injection",
-                responsibility5: "Improved key chat and IDE interactions to strengthen usability and interface consistency",
-                achievement1: "Led independent design and productization of the context system",
-                achievement2: "Built a modular framework for flexible deployment and evaluation",
-                achievement3: "Integrated the system into production workflows",
-                achievement4: "Transitioned from the internship into a full-time role at Kiro"
+                description: "Led the design and productization of a context compaction system for Kiro IDE, enabling scalable multi-turn memory and LLM integration.",
+                responsibility1: "Led the design and productization of a context compaction system for Kiro IDE, enabling scalable multi-turn memory and LLM integration",
+                responsibility2: "Built a modular architecture combining hierarchical compaction, supporting flexible deployment and ablation testing",
+                responsibility3: "Ran benchmarks and context strategy evaluations in collaboration with senior applied scientists",
+                responsibility4: "Fixed major UI/UX bugs in chat and IDE layout, improving usability and developer experience",
+                responsibility5: "Shipped to production serving 100K+ users, with high system reliability, maintainability, and measurable improvements in context relevance",
+                achievement1: "Shipped the context system to production serving 100K+ users",
+                achievement2: "Improved context relevance while maintaining high reliability",
+                achievement3: "Built a modular architecture for deployment and ablation testing",
+                achievement4: "Transitioned from the internship into a full-time role at AWS"
             },
             "brown-health": {
                 title: "Research Intern",
                 company: "Brown University Health",
-                date: "Mar 2025 - Present",
+                date: "Mar 2025 - Aug 2025",
                 location: "Providence, Rhode Island, United States",
-                description: "Developing AI-powered medical imaging platform for healthcare applications.",
-                responsibility1: "Developing a web-based platform that enables doctors to interactively view AI-generated medical reports alongside ground-truth clinical reports for various medical images",
-                responsibility2: "The system supports multi-modal inputs (DICOM, PNG, NIfTI) and integrates an interactive frontend image viewer",
-                responsibility3: "On the backend, deployed the state-of-the-art vision-language model VILA-M3 for automatic medical report generation across multiple imaging modalities",
-                responsibility4: "Processed 10,000+ brain MRI images and developed an automated preprocessing pipeline for DICOM to NIfTI conversion, registration, skull stripping, and file organization",
-                responsibility5: "Deployed nnU-Net v2 for automated brain stroke lesion segmentation, achieving high accuracy in medical image analysis",
-                responsibility6: "The platform is built with Python (Flask) for the backend, JavaScript for the interactive frontend, and supports efficient LLM inference deployment for real-time medical reasoning",
-                responsibility7: "Submitting the software to RSNA Abstracts",
-                achievement1: "Developing comprehensive medical imaging platform",
-                achievement2: "Deployed state-of-the-art VILA-M3 model",
-                achievement3: "Processed 10,000+ brain MRI images with automated pipeline",
-                achievement4: "Implemented nnU-Net v2 for stroke lesion segmentation",
-                achievement5: "Supporting multi-modal medical inputs",
-                achievement6: "Submitting to RSNA Abstracts"
+                description: "Led full-stack development of a medical AI platform for clinicians to compare, edit, and evaluate AI-generated reports in real time.",
+                responsibility1: "Built an interactive JavaScript DICOM/NIfTI viewer with cornerstone.js and a Flask backend deploying the VILA-M3 model",
+                responsibility2: "Engineered scalable APIs and optimized the LLM inference workflow for low-latency, interactive medical reasoning",
+                responsibility3: "Implemented a UNet-V2 brain tumor segmentation model with cross-dataset generalization, automated visualization, preprocessing pipelines, and statistical analysis tools",
+                responsibility4: "Built a multi-modal classification system using medical imaging foundation models to predict radiological report complexity with variable-length sequence aggregation",
+                achievement1: "Led full-stack development of a real-time medical AI platform",
+                achievement2: "Optimized LLM inference for low-latency medical reasoning",
+                achievement3: "Implemented cross-dataset UNet-V2 brain tumor segmentation",
+                achievement4: "Built a multi-modal report-complexity classification system"
+            },
+            "personal-trainer": {
+                title: "Personal Trainer",
+                company: "Brown University Athletics",
+                date: "Sep 2024 - Aug 2025",
+                location: "Providence, Rhode Island, United States",
+                description: "Coached clients at Brown University Athletics through personalized training, technique guidance, and progress tracking.",
+                responsibility1: "Designed personalized workout plans for clients to achieve specific health and fitness goals",
+                responsibility2: "Provided guidance on proper exercise techniques and motivation to support clients",
+                responsibility3: "Tracked progress, adjusted routines, and offered nutrition advice for optimal results",
+                achievement1: "Delivered individualized training plans and ongoing progress support",
+                achievement2: "Applied exercise instruction, sports nutrition, and client coaching"
             },
             "rici": {
                 title: "Lead Web Developer & Designer",
@@ -121,6 +139,26 @@ const detailTranslations = {
                 achievement4: "Created React-based visualization app",
                 achievement5: "Built multi-modal HCI system for medical service robot",
                 achievement6: "Implemented crowd-aware robot navigation with 4-star GitHub project"
+            },
+            "ustb-research": {
+                title: "Research Intern",
+                company: "University of Science and Technology Beijing",
+                date: "May 2023 - Aug 2023",
+                location: "Beijing, China",
+                description: "Conducted research on transformer architectures in brain science and contributed to a published survey.",
+                responsibility1: "Co-authored a survey of transformer methods and applications across brain science research",
+                achievement1: "Published: Understanding the brain with attention: a survey of transformers in brain sciences",
+                achievement2: "Brain-X, 2023, 1(3): e29"
+            },
+            "ntu-research": {
+                title: "Research Intern",
+                company: "Nanyang Technological University",
+                date: "Jul 2022 - Sep 2022",
+                location: "Singapore",
+                description: "Researched CNN optimization for lung disease diagnosis using lung segmentation and rib suppression.",
+                responsibility1: "Developed and evaluated CNN-based methods for lung disease diagnosis with lung segmentation and rib suppression",
+                achievement1: "Published at the 2022 15th International Symposium on Computational Intelligence and Design (ISCID)",
+                achievement2: "IEEE, 2022: 254-259"
             }
         },
         
@@ -202,6 +240,7 @@ const detailTranslations = {
             educationNotFound: "未找到教育背景",
             internship: "实习",
             fullTime: "全职",
+            partTime: "兼职",
             graduateProgram: "研究生项目",
             undergraduateProgram: "本科生项目",
             keyResponsibilities: "主要职责",
@@ -218,9 +257,9 @@ const detailTranslations = {
         // Experience detail translations
         experience: {
             "aws-kiro": {
-                title: "软件开发工程师",
+                title: "软件工程师",
                 company: "亚马逊云服务 · Kiro",
-                date: "2026年6月 - 至今",
+                date: "2026年7月 - 至今",
                 location: "西雅图，华盛顿州，美国",
                 description: "在 Kiro 构建智能代理 AI 开发者体验，专注上下文系统、产品可靠性与直观的工作流。",
                 responsibility1: "跨产品技术栈构建并交付 Kiro 智能代理 AI 开发者体验",
@@ -231,41 +270,58 @@ const detailTranslations = {
                 achievement2: "持续推进上下文工程与智能代理开发者工作流",
                 achievement3: "在 AI 系统和用户体验层面交付生产级改进"
             },
+            "cu-anschutz": {
+                title: "研究助理",
+                company: "科罗拉多大学安舒茨医学院",
+                date: "2026年7月 - 至今",
+                location: "远程",
+                description: "以远程兼职形式开展医疗影像与 AI 智能体研究。",
+                responsibility1: "探索 AI 智能体在医疗影像研究与工作流中的应用",
+                responsibility2: "参与连接医疗影像与智能代理 AI 系统的跨学科研究",
+                achievement1: "当前研究方向：医疗影像与 AI 智能体"
+            },
             "aws-kiro-intern": {
                 title: "软件开发工程师实习生",
                 company: "亚马逊云服务 · Kiro",
                 date: "2025年6月 - 2025年8月",
                 location: "西雅图，华盛顿州，美国",
-                description: "主导 Kiro 智能代理 AI 开发者体验中上下文管理能力的设计与产品化。",
-                responsibility1: "独立主导上下文管理系统的设计与产品化，实现高效的多轮记忆处理和可扩展的 LLM 交互",
-                responsibility2: "开发结合层次化上下文压缩、重要性标记、记忆与 RAG 的模块化框架",
-                responsibility3: "与高级应用科学家合作设计内部实验，在 token 与延迟约束下评估上下文策略",
-                responsibility4: "将上下文系统集成到生产流水线，支持动态检索和紧凑历史注入",
-                responsibility5: "改进关键聊天与 IDE 交互，提升易用性与界面一致性",
-                achievement1: "独立主导上下文系统的设计与产品化",
-                achievement2: "构建支持灵活部署和评估的模块化框架",
-                achievement3: "将系统集成到生产工作流",
-                achievement4: "从实习顺利转为 Kiro 全职岗位"
+                description: "主导 Kiro IDE 上下文压缩系统的设计与产品化，实现可扩展的多轮记忆与 LLM 集成。",
+                responsibility1: "主导 Kiro IDE 上下文压缩系统的设计与产品化，实现可扩展的多轮记忆与 LLM 集成",
+                responsibility2: "构建结合层次化压缩的模块化架构，支持灵活部署与消融测试",
+                responsibility3: "与高级应用科学家合作开展基准测试和上下文策略评估",
+                responsibility4: "修复聊天与 IDE 布局中的重要 UI/UX 问题，改善易用性和开发者体验",
+                responsibility5: "将系统交付生产环境并服务 10 万以上用户，在可靠性、可维护性与上下文相关性方面取得可衡量改进",
+                achievement1: "将上下文系统交付生产并服务 10 万以上用户",
+                achievement2: "在保持高可靠性的同时改善上下文相关性",
+                achievement3: "构建支持部署与消融测试的模块化架构",
+                achievement4: "从实习顺利转为 AWS 全职岗位"
             },
             "brown-health": {
                 title: "研究实习生",
                 company: "布朗大学健康中心",
-                date: "2025年3月 - 至今",
+                date: "2025年3月 - 2025年8月",
                 location: "普罗维登斯，罗德岛州，美国",
-                description: "开发AI驱动的医疗影像平台，用于医疗保健应用。",
-                responsibility1: "开发基于Web的平台，使医生能够交互式查看AI生成的医疗报告与真实临床报告的对比",
-                responsibility2: "系统支持多模态输入（DICOM、PNG、NIfTI）并集成交互式前端图像查看器",
-                responsibility3: "在后端部署最先进的视觉语言模型VILA-M3，用于多种成像模态的自动医疗报告生成",
-                responsibility4: "处理10,000+脑部MRI图像并开发自动化预处理流水线，用于DICOM到NIfTI转换、配准、去颅骨和文件组织",
-                responsibility5: "部署nnU-Net v2用于自动化脑卒中病变分割，在医学图像分析中实现高精度",
-                responsibility6: "平台使用Python (Flask)构建后端，JavaScript构建交互式前端，支持高效的LLM推理部署用于实时医疗推理",
-                responsibility7: "向RSNA摘要提交软件",
-                achievement1: "开发综合医疗影像平台",
-                achievement2: "部署最先进的VILA-M3模型",
-                achievement3: "使用自动化流水线处理10,000+脑部MRI图像",
-                achievement4: "实现nnU-Net v2用于卒中病变分割",
-                achievement5: "支持多模态医疗输入",
-                achievement6: "向RSNA摘要提交软件"
+                description: "主导医疗 AI 平台的全栈开发，帮助临床医生实时比较、编辑和评估 AI 生成报告。",
+                responsibility1: "使用 cornerstone.js 构建交互式 JavaScript DICOM/NIfTI 查看器，并以 Flask 后端部署 VILA-M3 模型",
+                responsibility2: "设计可扩展 API 并优化 LLM 推理工作流，实现低延迟交互式医疗推理",
+                responsibility3: "实现具有跨数据集泛化能力的 UNet-V2 脑肿瘤分割模型，并开发自动可视化、预处理流水线与统计分析工具",
+                responsibility4: "使用医疗影像基础模型构建多模态分类系统，通过可变长度序列聚合预测放射学报告复杂度",
+                achievement1: "主导实时医疗 AI 平台的全栈开发",
+                achievement2: "优化 LLM 推理以支持低延迟医疗推理",
+                achievement3: "实现跨数据集 UNet-V2 脑肿瘤分割",
+                achievement4: "构建多模态报告复杂度分类系统"
+            },
+            "personal-trainer": {
+                title: "私人教练",
+                company: "布朗大学体育部",
+                date: "2024年9月 - 2025年8月",
+                location: "普罗维登斯，罗德岛州，美国",
+                description: "在布朗大学体育部通过个性化训练、动作指导与进度跟踪帮助客户实现健康目标。",
+                responsibility1: "为客户设计个性化训练计划，帮助实现具体健康与健身目标",
+                responsibility2: "提供正确动作技术指导与持续激励",
+                responsibility3: "跟踪训练进展、调整计划并提供营养建议",
+                achievement1: "提供个性化训练计划与持续进度支持",
+                achievement2: "实践运动指导、运动营养与客户教练能力"
             },
             "rici": {
                 title: "首席Web开发工程师兼设计师",
@@ -316,6 +372,26 @@ const detailTranslations = {
                 achievement4: "创建基于React的可视化应用程序",
                 achievement5: "构建医疗机器人多模态人机交互系统",
                 achievement6: "实现群体感知机器人导航，获得4星GitHub项目"
+            },
+            "ustb-research": {
+                title: "研究实习生",
+                company: "北京科技大学",
+                date: "2023年5月 - 2023年8月",
+                location: "北京，中国",
+                description: "研究脑科学中的 Transformer 架构并参与发表综述论文。",
+                responsibility1: "共同撰写 Transformer 方法及其在脑科学研究中应用的综述",
+                achievement1: "发表论文：Understanding the brain with attention: a survey of transformers in brain sciences",
+                achievement2: "Brain-X, 2023, 1(3): e29"
+            },
+            "ntu-research": {
+                title: "研究实习生",
+                company: "南洋理工大学",
+                date: "2022年7月 - 2022年9月",
+                location: "新加坡",
+                description: "研究结合肺部分割与肋骨抑制的 CNN 肺部疾病诊断优化。",
+                responsibility1: "开发并评估结合肺部分割与肋骨抑制的 CNN 肺部疾病诊断方法",
+                achievement1: "论文发表于 2022 年第十五届计算智能与设计国际研讨会（ISCID）",
+                achievement2: "IEEE, 2022: 254-259"
             }
         },
         

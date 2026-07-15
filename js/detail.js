@@ -23,10 +23,14 @@ const detailConfig = {
 const experienceMeta = {
     'aws-kiro': { type: 'fullTime', technologies: ['TypeScript', 'JavaScript', 'Agentic AI', 'LLM Systems', 'Context Engineering', 'MCP', 'AWS'], image: '../assets/kiro.jpeg' },
     'aws-kiro-intern': { type: 'internship', technologies: ['TypeScript', 'JavaScript', 'Context Management', 'RAG', 'MCP', 'LLM'], image: '../assets/kiro.jpeg' },
-    'brown-health': { type: 'internship', technologies: ['Python', 'Flask', 'JavaScript', 'VILA-M3', 'nnU-Net v2', 'PyTorch', 'DICOM', 'NIfTI'] },
-    'rici': { type: 'internship', technologies: ['HTML', 'CSS', 'JavaScript', 'Wix', 'MailChimp', 'Google Analytics'] },
+    'cu-anschutz': { type: 'partTime', technologies: ['Medical Imaging', 'AI Agents', 'Research'] },
+    'brown-health': { type: 'partTime', technologies: ['Python', 'Flask', 'JavaScript', 'cornerstone.js', 'VILA-M3', 'UNet-V2', 'Medical Imaging', 'DICOM', 'NIfTI'] },
+    'personal-trainer': { type: 'partTime', technologies: ['Exercise Instruction', 'Sports Nutrition', 'Client Coaching'] },
+    'rici': { type: 'partTime', technologies: ['HTML', 'CSS', 'JavaScript', 'Wix', 'MailChimp', 'Google Analytics'] },
     'shukun-tech': { type: 'internship', technologies: ['Python', 'PyTorch', 'Computer Vision', 'Medical Imaging', '3D Processing'] },
-    'casia': { type: 'internship', technologies: ['Python', 'React', 'MySQL', 'MQTT', 'PyTorch', 'OpenCV', 'Deep Reinforcement Learning'] }
+    'casia': { type: 'internship', technologies: ['Python', 'React', 'MySQL', 'MQTT', 'PyTorch', 'OpenCV', 'Deep Reinforcement Learning'] },
+    'ustb-research': { type: 'internship', technologies: ['Transformers', 'Brain Science', 'Research', 'Scientific Writing'] },
+    'ntu-research': { type: 'internship', technologies: ['TensorFlow', 'Java', 'CNN', 'Medical Imaging', 'Lung Segmentation'] }
 };
 
 const educationMeta = {
