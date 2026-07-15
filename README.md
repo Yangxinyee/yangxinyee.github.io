@@ -23,4 +23,4 @@ This website now supports **Chinese and English** language switching!
 
 ---
 
-**Charlie Yang** - Software Engineer & AI Researcher 
+**Charlie Yang** - Software Development Engineer at AWS Kiro

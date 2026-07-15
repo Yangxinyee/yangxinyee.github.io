@@ -6,6 +6,7 @@ const detailTranslations = {
             experienceNotFound: "Experience not found",
             educationNotFound: "Education not found",
             internship: "Internship",
+            fullTime: "Full-time",
             graduateProgram: "Graduate Program",
             undergraduateProgram: "Undergraduate Program",
             keyResponsibilities: "Key Responsibilities",
@@ -22,20 +23,34 @@ const detailTranslations = {
         // Experience detail translations
         experience: {
             "aws-kiro": {
-                title: "Software Engineer Intern",
-                company: "Amazon Web Services (AWS) - Kiro",
-                date: "Jun 2025 - Present",
+                title: "Software Development Engineer",
+                company: "Amazon Web Services · Kiro",
+                date: "Jun 2026 - Present",
                 location: "Seattle, Washington, United States",
-                description: "Working on the development of Agentic AI IDE, focusing on context management and LLM integration.",
-                responsibility1: "Independently led the design and productization of the context management system for Agentic AI IDE, enabling efficient multi-turn memory handling and scalable LLM interaction",
-                responsibility2: "Developed a modular, switchable framework combining hierarchical context compaction, importance-based tagging, memory bank, and RAG, supporting flexible deployment and ablation testing",
-                responsibility3: "Designed and ran internal experiments and benchmarks to evaluate context strategies under token and latency constraints, in collaboration with senior applied scientists from the SCI team",
-                responsibility4: "Integrated the context system into production pipelines, supporting dynamic retrieval, compact history injection, and future extensions toward agentic reasoning",
-                responsibility5: "Fixed key UI issues in the chat interface and IDE layout, improving usability and interface consistency",
-                achievement1: "Led independent design and productization of context management system",
-                achievement2: "Developed modular framework for flexible deployment",
-                achievement3: "Collaborated with senior applied scientists on experiments",
-                achievement4: "Integrated system into production pipelines"
+                description: "Building agentic AI developer experiences at Kiro, with a focus on context systems, product reliability, and intuitive workflows.",
+                responsibility1: "Build and ship agentic AI developer experiences for Kiro across the product stack",
+                responsibility2: "Evolve context and memory systems that support reliable, long-running development workflows",
+                responsibility3: "Partner with engineering, product, and applied science teams to improve quality, latency, and usability",
+                responsibility4: "Turn emerging LLM capabilities into dependable product experiences for developers",
+                achievement1: "Joined AWS Kiro full-time after completing the 2025 internship",
+                achievement2: "Continuing to advance context engineering and agentic developer workflows",
+                achievement3: "Shipping production improvements across AI systems and user experience"
+            },
+            "aws-kiro-intern": {
+                title: "Software Development Engineer Intern",
+                company: "Amazon Web Services · Kiro",
+                date: "Jun 2025 - Aug 2025",
+                location: "Seattle, Washington, United States",
+                description: "Led the design and productization of context management capabilities for Kiro's agentic AI developer experience.",
+                responsibility1: "Independently led the design and productization of a context management system, enabling efficient multi-turn memory handling and scalable LLM interaction",
+                responsibility2: "Developed a modular framework combining hierarchical context compaction, importance-based tagging, memory, and RAG",
+                responsibility3: "Designed and ran internal experiments to evaluate context strategies under token and latency constraints with senior applied scientists",
+                responsibility4: "Integrated the context system into production pipelines with dynamic retrieval and compact history injection",
+                responsibility5: "Improved key chat and IDE interactions to strengthen usability and interface consistency",
+                achievement1: "Led independent design and productization of the context system",
+                achievement2: "Built a modular framework for flexible deployment and evaluation",
+                achievement3: "Integrated the system into production workflows",
+                achievement4: "Transitioned from the internship into a full-time role at Kiro"
             },
             "brown-health": {
                 title: "Research Intern",
@@ -116,7 +131,7 @@ const detailTranslations = {
                 school: "Brown University",
                 date: "Sep 2024 - May 2026",
                 location: "Providence, Rhode Island, United States",
-                summary: "Currently pursuing advanced studies in computer science with focus on AI, machine learning, and software engineering.",
+                summary: "Completed advanced study in computer science with a focus on AI, machine learning, and software engineering.",
                 activity1: {
                     title: "Research Assistant",
                     description: "Working on AI-powered medical imaging research"
@@ -133,9 +148,9 @@ const detailTranslations = {
                 focus2: "Computer Vision and Deep Learning",
                 focus3: "Software Engineering and Systems",
                 focus4: "Data Science and Analytics",
-                achievement1: "Currently enrolled in advanced CS program",
-                achievement2: "Focusing on AI and machine learning research",
-                achievement3: "Active in research and teaching activities"
+                achievement1: "Earned a Master of Science in Computer Science",
+                achievement2: "Focused on AI, machine learning, and software systems",
+                achievement3: "Contributed to research, teaching, and campus activities"
             },
             "ustb": {
                 degree: "Bachelor of Engineering in Artificial Intelligence",
@@ -185,7 +200,8 @@ const detailTranslations = {
         common: {
             experienceNotFound: "未找到工作经历",
             educationNotFound: "未找到教育背景",
-            internship: "实习生",
+            internship: "实习",
+            fullTime: "全职",
             graduateProgram: "研究生项目",
             undergraduateProgram: "本科生项目",
             keyResponsibilities: "主要职责",
@@ -202,20 +218,34 @@ const detailTranslations = {
         // Experience detail translations
         experience: {
             "aws-kiro": {
-                title: "软件工程师实习生",
-                company: "亚马逊云服务 (AWS) - Kiro",
-                date: "2025年6月 - 至今",
+                title: "软件开发工程师",
+                company: "亚马逊云服务 · Kiro",
+                date: "2026年6月 - 至今",
                 location: "西雅图，华盛顿州，美国",
-                description: "从事智能代理AI IDE的开发工作，专注于上下文管理和LLM集成。",
-                responsibility1: "独立主导智能代理AI IDE上下文管理系统的设计和产品化，实现高效的多轮记忆处理和可扩展的LLM交互",
-                responsibility2: "开发结合层次化上下文压缩、重要性标记、记忆库和RAG的模块化可切换框架，支持灵活部署和消融测试",
-                responsibility3: "设计并运行内部实验和基准测试，在token和延迟约束下评估上下文策略，与SCI团队的高级应用科学家合作",
-                responsibility4: "将上下文系统集成到生产流水线中，支持动态检索、紧凑历史注入和面向智能代理推理的未来扩展",
-                responsibility5: "修复聊天界面和IDE布局中的关键UI问题，提高可用性和界面一致性",
-                achievement1: "主导上下文管理系统的独立设计和产品化",
-                achievement2: "开发用于灵活部署的模块化框架",
-                achievement3: "与高级应用科学家合作进行实验",
-                achievement4: "将系统集成到生产流水线中"
+                description: "在 Kiro 构建智能代理 AI 开发者体验，专注上下文系统、产品可靠性与直观的工作流。",
+                responsibility1: "跨产品技术栈构建并交付 Kiro 智能代理 AI 开发者体验",
+                responsibility2: "持续演进上下文与记忆系统，支持可靠的长周期开发工作流",
+                responsibility3: "与工程、产品和应用科学团队合作，改善质量、延迟与易用性",
+                responsibility4: "将新兴 LLM 能力转化为可靠的开发者产品体验",
+                achievement1: "完成 2025 年实习后全职加入 AWS Kiro",
+                achievement2: "持续推进上下文工程与智能代理开发者工作流",
+                achievement3: "在 AI 系统和用户体验层面交付生产级改进"
+            },
+            "aws-kiro-intern": {
+                title: "软件开发工程师实习生",
+                company: "亚马逊云服务 · Kiro",
+                date: "2025年6月 - 2025年8月",
+                location: "西雅图，华盛顿州，美国",
+                description: "主导 Kiro 智能代理 AI 开发者体验中上下文管理能力的设计与产品化。",
+                responsibility1: "独立主导上下文管理系统的设计与产品化，实现高效的多轮记忆处理和可扩展的 LLM 交互",
+                responsibility2: "开发结合层次化上下文压缩、重要性标记、记忆与 RAG 的模块化框架",
+                responsibility3: "与高级应用科学家合作设计内部实验，在 token 与延迟约束下评估上下文策略",
+                responsibility4: "将上下文系统集成到生产流水线，支持动态检索和紧凑历史注入",
+                responsibility5: "改进关键聊天与 IDE 交互，提升易用性与界面一致性",
+                achievement1: "独立主导上下文系统的设计与产品化",
+                achievement2: "构建支持灵活部署和评估的模块化框架",
+                achievement3: "将系统集成到生产工作流",
+                achievement4: "从实习顺利转为 Kiro 全职岗位"
             },
             "brown-health": {
                 title: "研究实习生",
@@ -296,7 +326,7 @@ const detailTranslations = {
                 school: "布朗大学",
                 date: "2024年9月 - 2026年5月",
                 location: "普罗维登斯，罗德岛州，美国",
-                summary: "目前正在攻读计算机科学高级学位，专注于人工智能、机器学习和软件工程。",
+                summary: "完成计算机科学高级学习，专注于人工智能、机器学习和软件工程。",
                 activity1: {
                     title: "研究助理",
                     description: "从事AI驱动的医疗影像研究"
@@ -313,9 +343,9 @@ const detailTranslations = {
                 focus2: "计算机视觉与深度学习",
                 focus3: "软件工程与系统",
                 focus4: "数据科学与分析",
-                achievement1: "目前就读高级CS项目",
-                achievement2: "专注于AI和机器学习研究",
-                achievement3: "积极参与研究和教学活动"
+                achievement1: "获得计算机科学理学硕士学位",
+                achievement2: "专注于 AI、机器学习与软件系统",
+                achievement3: "参与科研、教学与校园活动"
             },
             "ustb": {
                 degree: "人工智能工程学士",
@@ -379,4 +409,4 @@ function getDetailTranslation(key, lang = 'zh') {
 
 // Export for use in other scripts
 window.detailTranslations = detailTranslations;
-window.getDetailTranslation = getDetailTranslation; 
+window.getDetailTranslation = getDetailTranslation;
