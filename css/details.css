@@ -7,6 +7,8 @@
 .detail-error h1 { color: var(--ink); }
 .detail-hero { padding: 92px 0 72px; border-bottom: 1px solid var(--line); background: radial-gradient(circle at 86% 10%, rgba(49,95,199,.12), transparent 32%); }
 .detail-hero-grid { display: grid; grid-template-columns: 1fr 330px; gap: 80px; align-items: end; }
+.detail-organization-logo { display: grid; place-items: center; width: 112px; height: 72px; margin-bottom: 24px; padding: 10px; overflow: hidden; border: 1px solid var(--line); border-radius: 15px; background: var(--surface); box-shadow: var(--shadow-sm); }
+.detail-organization-logo img { width: 100%; height: 100%; object-fit: contain; }
 .detail-eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--accent); font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .detail-hero h1 { max-width: 850px; margin: 20px 0 14px; font-size: clamp(2.8rem, 6vw, 5.9rem); line-height: 1; letter-spacing: -.06em; }
 .detail-company { margin: 0; color: var(--accent); font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 600; }
