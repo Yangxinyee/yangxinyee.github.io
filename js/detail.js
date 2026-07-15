@@ -23,7 +23,7 @@ const detailConfig = {
 const experienceMeta = {
     'aws-kiro': { type: 'fullTime', technologies: ['TypeScript', 'JavaScript', 'Agentic AI', 'LLM Systems', 'Context Engineering', 'MCP', 'AWS'], image: '../assets/kiro.jpeg', logo: '../assets/logos/aws.svg' },
     'aws-kiro-intern': { type: 'internship', technologies: ['TypeScript', 'JavaScript', 'Context Management', 'RAG', 'MCP', 'LLM'], image: '../assets/kiro.jpeg', logo: '../assets/logos/aws.svg' },
-    'cu-anschutz': { type: 'partTime', technologies: ['Medical Imaging', 'AI Agents', 'Research'], logo: '../assets/logos/cu-anschutz.svg' },
+    'cu-anschutz': { type: 'partTime', technologies: ['Medical Imaging', 'AI Agents', 'Research'], logo: '../assets/logos/cu-anschutz-mark.png' },
     'brown-health': { type: 'partTime', technologies: ['Python', 'Flask', 'JavaScript', 'cornerstone.js', 'VILA-M3', 'UNet-V2', 'Medical Imaging', 'DICOM', 'NIfTI'], logo: '../assets/logos/brown-health.svg' },
     'personal-trainer': { type: 'partTime', technologies: ['Exercise Instruction', 'Sports Nutrition', 'Client Coaching'], logo: '../assets/logos/brown-athletics.svg' },
     'rici': { type: 'partTime', technologies: ['HTML', 'CSS', 'JavaScript', 'Wix', 'MailChimp', 'Google Analytics'], logo: '../assets/logos/rici.jpg' },
