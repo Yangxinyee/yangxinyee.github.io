@@ -33,6 +33,11 @@ const translations = {
             "ustb-research": { title: "Research Intern", company: "University of Science and Technology Beijing" },
             "ntu-research": { title: "Research Intern", company: "Nanyang Technological University" }
         },
+        academic: {
+            kicker: "Academic", title: "Research at the intersection of AI and healthcare.", intro: "My work spans multimodal language models, medical image analysis, clinical AI evaluation, and agentic systems.",
+            researchTitle: "Research interests", metricsTitle: "Google Scholar", updated: "Updated July 2026", citations: "Citations", publications: "Publications", scholar: "View Google Scholar",
+            publicationsTitle: "Publications", note: "Citation counts reflect Google Scholar in July 2026.", citedBy: "cited by"
+        },
         education: {
             kicker: "Education", title: "A foundation in AI and systems.",
             brown: { date: "2024 – 2026", degree: "Master of Science in Computer Science", school: "Brown University", summary: "Focus on AI, machine learning, and software systems." },
@@ -75,6 +80,11 @@ const translations = {
             casia: { title: "软件与机器学习工程实习生", company: "中国科学院自动化研究所" },
             "ustb-research": { title: "研究实习生", company: "北京科技大学" },
             "ntu-research": { title: "研究实习生", company: "南洋理工大学" }
+        },
+        academic: {
+            kicker: "学术研究", title: "探索人工智能与医疗健康的交叉领域。", intro: "我的研究涵盖多模态大语言模型、医学影像分析、临床 AI 评估与智能代理系统。",
+            researchTitle: "研究方向", metricsTitle: "Google Scholar", updated: "更新于 2026 年 7 月", citations: "引用", publications: "论文", scholar: "查看 Google Scholar",
+            publicationsTitle: "学术论文", note: "引用数据来自 2026 年 7 月的 Google Scholar 主页。", citedBy: "引用"
         },
         education: {
             kicker: "教育背景", title: "以 AI 与计算机系统为基础。",
