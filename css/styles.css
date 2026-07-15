@@ -129,8 +129,6 @@ button { color: inherit; }
 .earlier-grid .institution-logo-small.institution-logo-emblem { place-items: center; width: 54px; height: 54px; padding: 3px; }
 .earlier-grid .institution-logo-small.institution-logo-emblem img { object-position: center; }
 .earlier-grid .institution-logo-brown-athletics img { width: auto; height: 44px; max-width: 100%; }
-.earlier-grid .institution-logo-casia { width: 62px; overflow: hidden; }
-.earlier-grid .institution-logo-casia img { object-fit: cover; object-position: center top; transform: scale(1.6); transform-origin: center top; }
 .earlier-grid span { color: var(--subtle); font-size: .7rem; }
 .earlier-grid strong { line-height: 1.35; font-size: .92rem; }
 .earlier-grid small { color: var(--muted); font-size: .76rem; }

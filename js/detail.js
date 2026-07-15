@@ -28,7 +28,7 @@ const experienceMeta = {
     'personal-trainer': { type: 'partTime', technologies: ['Exercise Instruction', 'Sports Nutrition', 'Client Coaching'], logo: '../assets/logos/brown-athletics.svg' },
     'rici': { type: 'partTime', technologies: ['HTML', 'CSS', 'JavaScript', 'Wix', 'MailChimp', 'Google Analytics'], logo: '../assets/logos/rici.jpg' },
     'shukun-tech': { type: 'internship', technologies: ['Python', 'PyTorch', 'Computer Vision', 'Medical Imaging', '3D Processing'], logo: '../assets/logos/shukun.png' },
-    'casia': { type: 'internship', technologies: ['Python', 'React', 'MySQL', 'MQTT', 'PyTorch', 'OpenCV', 'Deep Reinforcement Learning'], logo: '../assets/logos/casia.png' },
+    'casia': { type: 'internship', technologies: ['Python', 'React', 'MySQL', 'MQTT', 'PyTorch', 'OpenCV', 'Deep Reinforcement Learning'], logo: '../assets/logos/casia-official.jpg' },
     'ustb-research': { type: 'internship', technologies: ['Transformers', 'Brain Science', 'Research', 'Scientific Writing'], logo: '../assets/logos/ustb.png' },
     'ntu-research': { type: 'internship', technologies: ['TensorFlow', 'Java', 'CNN', 'Medical Imaging', 'Lung Segmentation'], logo: '../assets/logos/ntu.png' }
 };
