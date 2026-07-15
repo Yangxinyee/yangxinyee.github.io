@@ -70,7 +70,7 @@ button { color: inherit; }
 .hero-meta div { display: grid; gap: 3px; }
 .hero-meta strong { color: var(--subtle); font-size: .68rem; letter-spacing: .09em; text-transform: uppercase; }
 .hero-meta span { color: var(--ink); font-size: .86rem; font-weight: 600; }
-.portrait-wrap { position: relative; justify-self: end; width: min(100%, 430px); }
+.portrait-wrap { position: relative; justify-self: end; width: min(100%, 365px); }
 .portrait-card { position: relative; overflow: hidden; padding: 12px; border: 1px solid rgba(221,226,234,.9); border-radius: var(--radius-lg); background: rgba(255,255,255,.78); box-shadow: var(--shadow-lg); backdrop-filter: blur(14px); transform: rotate(1.5deg); transition: transform .35s ease; }
 .portrait-card:hover { transform: rotate(0); }
 .portrait-card img { width: 100%; aspect-ratio: 1 / 1.06; object-fit: cover; border-radius: 22px; }
@@ -207,7 +207,7 @@ button { color: inherit; }
     .hero { min-height: auto; padding-top: calc(var(--header-height) + 72px); }
     .hero-grid { grid-template-columns: 1fr; gap: 64px; }
     .hero h1 { max-width: 760px; }
-    .portrait-wrap { justify-self: start; width: min(100%, 520px); }
+    .portrait-wrap { justify-self: start; width: min(100%, 380px); }
     .portrait-note { right: -20px; }
     .about-grid, .skills-layout { grid-template-columns: 1fr; gap: 50px; }
     .academic-overview { grid-template-columns: 1fr; }
@@ -231,7 +231,7 @@ button { color: inherit; }
     .hero-meta div { max-width: 46%; }
     .hero-actions { display: grid; }
     .button { width: 100%; }
-    .portrait-wrap { width: 100%; }
+    .portrait-wrap { width: min(100%, 330px); }
     .portrait-note { display: none; }
     .section-heading-row { display: grid; gap: 20px; margin-bottom: 36px; }
     .role-card { grid-template-columns: 1fr; gap: 16px; padding: 24px; }
