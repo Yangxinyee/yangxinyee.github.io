@@ -7,10 +7,11 @@ const translations = {
         nav: { home: "Home", about: "About", experience: "Experience", academic: "Academic", education: "Education", skills: "Skills", contact: "Contact" },
         common: { skip: "Skip to content", details: "View details" },
         hero: {
-            eyebrow: "Software Development Engineer at AWS",
-            title: "I build thoughtful AI products for developers.",
-            description: "I'm Charlie, a software engineer focused on agentic AI, context systems, and reliable developer experiences. I recently completed my MSCS at Brown University and joined AWS Kiro full-time.",
-            viewWork: "View my experience", contact: "Get in touch", focusLabel: "Focus", focus: "Agentic AI & developer tools", locationLabel: "Based in", location: "Seattle, Washington", currentRole: "Currently building Kiro", fullTime: "Full-time"
+            eyebrow: "Software Development Engineer · AI Researcher",
+            title: "Charlie Yang",
+            role: "Software Development Engineer at AWS Kiro",
+            description: "I work on agentic AI developer experiences and context systems, with an additional research focus on medical imaging and clinical AI.",
+            viewWork: "Professional experience", scholar: "Google Scholar", focusLabel: "Focus", focus: "Agentic AI & developer tools", locationLabel: "Based in", location: "Seattle, Washington", educationLabel: "Education", education: "Brown University · MSCS"
         },
         about: {
             kicker: "About", title: "Engineering with clarity and care.",
@@ -35,8 +36,8 @@ const translations = {
         },
         academic: {
             kicker: "Academic", title: "Research at the intersection of AI and healthcare.", intro: "My work spans multimodal language models, medical image analysis, clinical AI evaluation, and agentic systems.",
-            researchTitle: "Research interests", metricsTitle: "Google Scholar", updated: "Updated July 2026", citations: "Citations", publications: "Publications", scholar: "View Google Scholar",
-            publicationsTitle: "Publications", note: "Citation counts reflect Google Scholar in July 2026.", citedBy: "cited by"
+            researchTitle: "Research interests", metricsTitle: "Google Scholar", updated: "Updated September 2026", citations: "Citations", publications: "Publications", scholar: "View Google Scholar",
+            publicationsTitle: "Publications", note: "Metrics and publication citations are synchronized from Google Scholar.", citedBy: "cited by"
         },
         education: {
             kicker: "Education", title: "A foundation in AI and systems.",
@@ -55,10 +56,11 @@ const translations = {
         nav: { home: "首页", about: "关于", experience: "经历", academic: "学术", education: "教育", skills: "技能", contact: "联系" },
         common: { skip: "跳转到正文", details: "查看详情" },
         hero: {
-            eyebrow: "AWS 软件开发工程师",
-            title: "为开发者打造可靠、好用的 AI 产品。",
-            description: "你好，我是杨新烨，一名专注于智能代理 AI、上下文系统与开发者体验的软件工程师。我刚刚完成布朗大学计算机科学硕士学业，并全职加入 AWS Kiro。",
-            viewWork: "查看我的经历", contact: "联系我", focusLabel: "专注方向", focus: "智能代理 AI 与开发者工具", locationLabel: "所在地", location: "华盛顿州西雅图", currentRole: "正在参与 Kiro 产品开发", fullTime: "全职"
+            eyebrow: "软件开发工程师 · 人工智能研究者",
+            title: "杨新烨",
+            role: "AWS Kiro 软件开发工程师",
+            description: "专注于智能代理 AI 开发者体验与上下文系统，同时从事医学影像和临床人工智能研究。",
+            viewWork: "职业经历", scholar: "Google Scholar", focusLabel: "专注方向", focus: "智能代理 AI 与开发者工具", locationLabel: "所在地", location: "华盛顿州西雅图", educationLabel: "教育背景", education: "布朗大学 · 计算机科学硕士"
         },
         about: {
             kicker: "关于", title: "用清晰与用心做好工程。",
@@ -83,8 +85,8 @@ const translations = {
         },
         academic: {
             kicker: "学术研究", title: "探索人工智能与医疗健康的交叉领域。", intro: "我的研究涵盖多模态大语言模型、医学影像分析、临床 AI 评估与智能代理系统。",
-            researchTitle: "研究方向", metricsTitle: "Google Scholar", updated: "更新于 2026 年 7 月", citations: "引用", publications: "论文", scholar: "查看 Google Scholar",
-            publicationsTitle: "学术论文", note: "引用数据来自 2026 年 7 月的 Google Scholar 主页。", citedBy: "引用"
+            researchTitle: "研究方向", metricsTitle: "Google Scholar", updated: "更新于 2026 年 9 月", citations: "引用", publications: "论文", scholar: "查看 Google Scholar",
+            publicationsTitle: "学术论文", note: "指标与论文引用数据会从 Google Scholar 定期同步。", citedBy: "引用"
         },
         education: {
             kicker: "教育背景", title: "以 AI 与计算机系统为基础。",

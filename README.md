@@ -17,9 +17,13 @@ This website now supports **Chinese and English** language switching!
 
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
 - **Bilingual Support**: Full Chinese and English language switching
-- **Modern UI**: Clean, professional design with smooth animations
-- **Interactive Elements**: Hover effects, smooth scrolling, and dynamic content
+- **Professional UI**: A restrained engineering and research portfolio design
+- **Scholar Snapshot**: Publication and citation data loaded from `data/scholar.json`
 - **Performance Optimized**: Fast loading and smooth user experience
+
+## Google Scholar synchronization
+
+The `Update Google Scholar data` GitHub Actions workflow checks the Scholar author profile every Monday through the SerpAPI Google Scholar Author API. To enable it, create a SerpAPI key and add it to this repository as an Actions secret named `SERPAPI_KEY` under **Settings → Secrets and variables → Actions**. The workflow only commits when Scholar data changes.
 
 ---
 

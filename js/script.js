@@ -68,5 +68,88 @@ document.addEventListener('DOMContentLoaded', () => {
         try { sessionStorage.removeItem('pageScrollPosition'); } catch (_) { /* optional */ }
     }
 
+    let scholarData = null;
+
+    const currentLanguage = () => document.documentElement.lang.startsWith('zh') ? 'zh' : 'en';
+
+    const formatScholarDate = (value, language) => {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '';
+        const formatted = new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-US', {
+            month: 'long',
+            year: 'numeric'
+        }).format(date);
+        return language === 'zh' ? `更新于 ${formatted}` : `Updated ${formatted}`;
+    };
+
+    const appendTextElement = (parent, tagName, className, value) => {
+        const element = document.createElement(tagName);
+        if (className) element.className = className;
+        element.textContent = value;
+        parent.append(element);
+        return element;
+    };
+
+    const renderScholarData = () => {
+        if (!scholarData) return;
+        const language = currentLanguage();
+
+        Object.entries(scholarData.metrics || {}).forEach(([key, value]) => {
+            const element = document.querySelector(`[data-scholar-metric="${key}"]`);
+            if (element && Number.isFinite(Number(value))) element.textContent = Number(value).toLocaleString(language === 'zh' ? 'zh-CN' : 'en-US');
+        });
+
+        const updated = document.querySelector('[data-scholar-updated]');
+        if (updated) updated.textContent = formatScholarDate(scholarData.updatedAt, language);
+
+        const list = document.querySelector('[data-scholar-publications]');
+        if (!list || !Array.isArray(scholarData.publications) || scholarData.publications.length === 0) return;
+        const fragment = document.createDocumentFragment();
+
+        scholarData.publications.forEach((publication) => {
+            const card = document.createElement('a');
+            card.className = 'publication-card reveal is-visible';
+            card.href = publication.link || scholarData.profile;
+            card.target = '_blank';
+            card.rel = 'noreferrer';
+
+            appendTextElement(card, 'span', 'publication-year', publication.year || '—');
+            const body = document.createElement('div');
+            appendTextElement(body, 'h3', '', publication.title || 'Untitled publication');
+            appendTextElement(body, 'p', 'publication-authors', publication.authors || '');
+            appendTextElement(body, 'p', 'publication-venue', publication.venue || '');
+            card.append(body);
+
+            const side = document.createElement('div');
+            side.className = 'publication-side';
+            const citations = document.createElement('span');
+            citations.className = 'publication-citations';
+            appendTextElement(citations, 'strong', '', String(publication.citations || 0));
+            appendTextElement(citations, 'small', '', language === 'zh' ? '引用' : 'cited by');
+            side.append(citations);
+            const icon = document.createElement('i');
+            icon.className = 'fa-solid fa-arrow-up-right-from-square';
+            icon.setAttribute('aria-hidden', 'true');
+            side.append(icon);
+            card.append(side);
+            fragment.append(card);
+        });
+
+        list.replaceChildren(fragment);
+    };
+
+    fetch('data/scholar.json', { cache: 'no-cache' })
+        .then((response) => {
+            if (!response.ok) throw new Error(`Scholar data request failed: ${response.status}`);
+            return response.json();
+        })
+        .then((data) => {
+            scholarData = data;
+            renderScholarData();
+        })
+        .catch(() => { /* Accurate static content remains available as a fallback. */ });
+
+    document.addEventListener('languagechange', renderScholarData);
+
     document.querySelectorAll('[data-current-year]').forEach((element) => { element.textContent = String(new Date().getFullYear()); });
 });
