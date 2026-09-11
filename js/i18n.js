@@ -15,7 +15,7 @@ const translations = {
         },
         about: {
             kicker: "About", title: "About",
-            paragraph1: "I’m a software engineer at AWS Kiro, where I work on agentic AI developer experiences and the context systems behind them.",
+            paragraph1: "I’m a software engineer at AWS Kiro, where I work on agentic AI developer experiences.",
             paragraph2: "Alongside product engineering, I contribute to medical imaging and AI agent research at the University of Colorado Anschutz School of Medicine. I enjoy turning ambiguous research problems into dependable products—balancing technical depth with usability, performance, and clean execution.",
             highlightsTitle: "Highlights",
             highlight1: "At AWS Kiro, designing an AI automation framework for agent-driven workflows—standardizing multi-step tool calling and orchestration (MCP), execution state management, and failure recovery for reliable long-running agent sessions.",
@@ -71,7 +71,7 @@ const translations = {
         },
         about: {
             kicker: "关于", title: "关于",
-            paragraph1: "我目前是 AWS Kiro 的软件工程师，负责智能代理 AI 开发者体验及其背后的上下文系统。",
+            paragraph1: "我目前是 AWS Kiro 的软件工程师，负责智能代理 AI 开发者体验。",
             paragraph2: "在产品工程之外，我也在科罗拉多大学安舒茨医学院参与医疗影像与 AI 智能体研究。我喜欢把开放性的研究问题转化为可靠的产品，在技术深度、易用性、性能与工程质量之间找到平衡。",
             highlightsTitle: "经历亮点",
             highlight1: "在 AWS Kiro 设计面向智能体工作流的 AI 自动化框架：标准化多步工具调用与编排（MCP）、执行状态管理与失败恢复，让长时运行的智能体会话可靠、可观测。",
