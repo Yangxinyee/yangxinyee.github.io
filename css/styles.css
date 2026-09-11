@@ -104,6 +104,10 @@ h3 { margin: 1.75rem 0 .75rem; font-size: 1.05rem; font-weight: 700; }
 .section { margin-bottom: 3rem; }
 .section p { margin: 0 0 .9rem; }
 
+/* About highlights */
+.about-list { margin: 0 0 .9rem; padding-left: 1.3rem; }
+.about-list > li { margin-bottom: .55rem; }
+
 /* CV-style lists */
 .cv-list { margin: 0; padding: 0; list-style: none; }
 .cv-list > li { margin-bottom: 1.5rem; }
