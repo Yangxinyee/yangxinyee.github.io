@@ -7,263 +7,183 @@
     <meta name="theme-color" content="#ffffff">
     <title>Charlie Yang | Software Development Engineer at AWS</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css?v=20260909-sections">
+    <link rel="stylesheet" href="css/styles.css?v=20260911-minimal">
 </head>
 <body>
     <a class="skip-link" href="#main-content" data-i18n="common.skip">Skip to content</a>
 
-    <header class="site-header" data-header>
-        <nav class="nav-shell" aria-label="Primary navigation">
-            <a class="brand" href="#home" aria-label="Charlie Yang home">
-                <span class="brand-mark" aria-hidden="true">CY</span>
-                <span>Charlie Yang</span>
-            </a>
-
-            <div class="nav-panel" data-nav-panel>
-                <a class="nav-link active" href="#home" data-i18n="nav.home">Home</a>
-                <a class="nav-link" href="#about" data-i18n="nav.about">About</a>
-                <a class="nav-link" href="#experience" data-i18n="nav.experience">Experience</a>
-                <a class="nav-link" href="#academic" data-i18n="nav.academic">Academic</a>
-                <a class="nav-link" href="#education" data-i18n="nav.education">Education</a>
-                <a class="nav-link" href="#skills" data-i18n="nav.skills">Skills</a>
-                <a class="nav-link" href="#contact" data-i18n="nav.contact">Contact</a>
-            </div>
-
-            <div class="nav-actions">
-                <div class="language-switcher" aria-label="Language">
-                    <button class="lang-btn active" type="button" data-lang="en" aria-pressed="true">EN</button>
-                    <button class="lang-btn" type="button" data-lang="zh" aria-pressed="false">中文</button>
-                </div>
-                <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>
-                    <span></span><span></span>
-                </button>
-            </div>
+    <header class="page-header">
+        <nav class="page-nav" aria-label="Primary navigation">
+            <a href="#about" data-i18n="nav.about">About</a>
+            <a href="#experience" data-i18n="nav.experience">Experience</a>
+            <a href="#academic" data-i18n="nav.academic">Academic</a>
+            <a href="#education" data-i18n="nav.education">Education</a>
+            <a href="#skills" data-i18n="nav.skills">Skills</a>
+            <a href="#contact" data-i18n="nav.contact">Contact</a>
         </nav>
+        <span class="language-switcher" aria-label="Language">
+            <button class="lang-btn active" type="button" data-lang="en" aria-pressed="true">EN</button><span class="lang-sep" aria-hidden="true">/</span><button class="lang-btn" type="button" data-lang="zh" aria-pressed="false">中文</button>
+        </span>
     </header>
 
     <main id="main-content">
-        <section id="home" class="hero section-anchor">
-            <div class="container hero-grid">
-                <div class="hero-copy reveal">
-                    <div class="eyebrow"><span data-i18n="hero.eyebrow">Software Development Engineer · AI Researcher</span></div>
-                    <h1 data-i18n="hero.title">Charlie Yang</h1>
-                    <p class="hero-role" data-i18n="hero.role">Software Development Engineer at AWS Kiro</p>
-                    <p class="hero-lead" data-i18n="hero.description">I work on agentic AI developer experiences and context systems, with an additional research focus on medical imaging and clinical AI.</p>
-                    <div class="hero-actions">
-                        <a class="button button-primary" href="#experience"><span data-i18n="hero.viewWork">Professional experience</span><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
-                        <a class="button button-secondary" href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ&amp;hl=en" target="_blank" rel="noreferrer"><span data-i18n="hero.scholar">Google Scholar</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="hero-meta" aria-label="Profile highlights">
-                        <div><strong data-i18n="hero.focusLabel">Focus</strong><span data-i18n="hero.focus">Agentic AI &amp; developer tools</span></div>
-                        <div><strong data-i18n="hero.locationLabel">Based in</strong><span data-i18n="hero.location">Seattle, Washington</span></div>
-                        <div><strong data-i18n="hero.educationLabel">Education</strong><span data-i18n="hero.education">Brown University · MSCS</span></div>
-                    </div>
-                </div>
-
-                <div class="portrait-wrap reveal" aria-label="Portrait of Charlie Yang">
-                    <div class="portrait-card">
-                        <img src="assets/profile-avatar.jpeg" alt="Charlie Yang" width="800" height="800">
-                    </div>
-                </div>
+        <section id="home" class="intro">
+            <div class="intro-text">
+                <h1 data-i18n="hero.title">Charlie Yang</h1>
+                <p class="intro-role" data-i18n="hero.role">Software Development Engineer at AWS Kiro</p>
+                <p class="intro-lead" data-i18n="hero.description">I work on agentic AI developer experiences and context systems, with an additional research focus on medical imaging and clinical AI.</p>
+                <p class="intro-links">
+                    <a href="mailto:charlieyangxinye@gmail.com">Email</a> ·
+                    <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Google Scholar</a> ·
+                    <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a> ·
+                    <a href="https://www.linkedin.com/in/xinye-charlie-yang-939674286/" target="_blank" rel="noreferrer">LinkedIn</a>
+                </p>
             </div>
+            <img class="portrait" src="assets/profile-avatar.jpeg" alt="Charlie Yang" width="150" height="150">
         </section>
 
-        <section id="about" class="section section-anchor">
-            <div class="container about-grid">
-                <div class="section-heading reveal">
-                    <h2 data-i18n="about.title">About</h2>
-                </div>
-                <div class="about-copy reveal">
-                    <p class="about-lead" data-i18n="about.paragraph1">I’m a software engineer at AWS Kiro, where I work on agentic AI developer experiences and the context systems behind them.</p>
-                    <p data-i18n="about.paragraph2">Alongside product engineering, I contribute to medical imaging and AI agent research at the University of Colorado Anschutz School of Medicine. I enjoy turning ambiguous research problems into dependable products—balancing technical depth with usability, performance, and clean execution.</p>
-                    <div class="principles">
-                        <div class="principle"><span>01</span><div><strong data-i18n="about.principle1Title">Systems thinking</strong><p data-i18n="about.principle1Text">Designing for the whole workflow, not a single feature.</p></div></div>
-                        <div class="principle"><span>02</span><div><strong data-i18n="about.principle2Title">Practical research</strong><p data-i18n="about.principle2Text">Turning experiments into reliable, measurable product improvements.</p></div></div>
-                        <div class="principle"><span>03</span><div><strong data-i18n="about.principle3Title">Human-centered craft</strong><p data-i18n="about.principle3Text">Keeping complex technology calm and intuitive for people.</p></div></div>
-                    </div>
-                </div>
-            </div>
+        <section id="about" class="section">
+            <h2 data-i18n="about.title">About</h2>
+            <p data-i18n="about.paragraph1">I’m a software engineer at AWS Kiro, where I work on agentic AI developer experiences and the context systems behind them.</p>
+            <p data-i18n="about.paragraph2">Alongside product engineering, I contribute to medical imaging and AI agent research at the University of Colorado Anschutz School of Medicine. I enjoy turning ambiguous research problems into dependable products—balancing technical depth with usability, performance, and clean execution.</p>
         </section>
 
-        <section id="experience" class="section section-tinted section-anchor">
-            <div class="container">
-                <div class="section-heading section-heading-row reveal">
-                    <div><h2 data-i18n="experience.title">Experience</h2></div>
-                    <p data-i18n="experience.intro">From production AI developer tools to medical imaging systems.</p>
-                </div>
+        <section id="experience" class="section">
+            <h2 data-i18n="experience.title">Experience</h2>
+            <ul class="cv-list">
+                <li>
+                    <p class="cv-head"><strong data-i18n="experience.aws-kiro.title">Software Development Engineer</strong>, <span data-i18n="experience.aws-kiro.company">Amazon Web Services · Kiro</span></p>
+                    <p class="cv-meta"><span data-i18n="experience.aws-kiro.date">Jul 2026 – Present</span> · <span data-i18n="experience.aws-kiro.location">Seattle, WA</span></p>
+                    <p class="cv-note" data-i18n="experience.aws-kiro.summary">Building agentic AI developer experiences and evolving the context systems that make long-running workflows more capable, reliable, and intuitive.</p>
+                    <p class="cv-more"><a href="pages/experience-details.html?id=aws-kiro" data-i18n="common.details">View details</a></p>
+                </li>
+                <li>
+                    <p class="cv-head"><strong data-i18n="experience.cu-anschutz.title">Research Assistant</strong>, <span data-i18n="experience.cu-anschutz.company">University of Colorado Anschutz School of Medicine</span></p>
+                    <p class="cv-meta"><span data-i18n="experience.cu-anschutz.date">Jul 2026 – Present</span> · <span data-i18n="experience.cu-anschutz.location">Remote</span></p>
+                    <p class="cv-note" data-i18n="experience.cu-anschutz.summary">Researching medical imaging and AI agents in a remote, part-time role.</p>
+                    <p class="cv-more"><a href="pages/experience-details.html?id=cu-anschutz" data-i18n="common.details">View details</a></p>
+                </li>
+                <li>
+                    <p class="cv-head"><strong data-i18n="experience.aws-kiro-intern.title">Software Engineer Intern</strong>, <span data-i18n="experience.aws-kiro-intern.company">Amazon Web Services · Kiro</span></p>
+                    <p class="cv-meta"><span data-i18n="experience.aws-kiro-intern.date">Jun 2025 – Aug 2025</span> · <span data-i18n="experience.aws-kiro-intern.location">Seattle, WA</span></p>
+                    <p class="cv-note" data-i18n="experience.aws-kiro-intern.summary">Led the design and productization of a modular context management system combining hierarchical compaction, memory, and retrieval.</p>
+                    <p class="cv-more"><a href="pages/experience-details.html?id=aws-kiro-intern" data-i18n="common.details">View details</a></p>
+                </li>
+                <li>
+                    <p class="cv-head"><strong data-i18n="experience.brown-health.title">Research Intern</strong>, <span data-i18n="experience.brown-health.company">Brown University Health</span></p>
+                    <p class="cv-meta"><span data-i18n="experience.brown-health.date">Mar 2025 – Aug 2025</span> · <span data-i18n="experience.brown-health.location">Providence, RI</span></p>
+                    <p class="cv-note" data-i18n="experience.brown-health.summary">Developed an AI-powered medical imaging platform for report generation, image analysis, and clinical comparison workflows.</p>
+                    <p class="cv-more"><a href="pages/experience-details.html?id=brown-health" data-i18n="common.details">View details</a></p>
+                </li>
+            </ul>
 
-                <div class="experience-list">
-                    <article class="role-card role-card-featured reveal">
-                        <div class="role-marker"><span class="institution-logo"><img src="assets/logos/aws.svg" alt=""></span><span class="role-status"><span class="status-dot"></span><span data-i18n="experience.current">Current</span></span></div>
-                        <div class="role-main">
-                            <div class="role-heading"><div><h3 data-i18n="experience.aws-kiro.title">Software Development Engineer</h3><p data-i18n="experience.aws-kiro.company">Amazon Web Services · Kiro</p></div><div class="role-meta"><span data-i18n="experience.aws-kiro.date">Jul 2026 – Present</span><span data-i18n="experience.aws-kiro.location">Seattle, WA</span></div></div>
-                            <p class="role-summary" data-i18n="experience.aws-kiro.summary">Building agentic AI developer experiences and evolving the context systems that make long-running workflows more capable, reliable, and intuitive.</p>
-                            <div class="role-tags"><span>Agentic AI</span><span>TypeScript</span><span>LLM Systems</span><span>MCP</span></div>
-                            <a class="text-link" href="pages/experience-details.html?id=aws-kiro"><span data-i18n="common.details">View details</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-                        </div>
-                    </article>
-
-                    <article class="role-card reveal">
-                        <div class="role-marker"><span class="institution-logo institution-logo-emblem"><img src="assets/logos/cu-anschutz-mark.png" alt=""></span><span class="role-status"><span class="status-dot"></span><span data-i18n="experience.research">Research</span></span></div>
-                        <div class="role-main">
-                            <div class="role-heading"><div><h3 data-i18n="experience.cu-anschutz.title">Research Assistant</h3><p data-i18n="experience.cu-anschutz.company">University of Colorado Anschutz School of Medicine</p></div><div class="role-meta"><span data-i18n="experience.cu-anschutz.date">Jul 2026 – Present</span><span data-i18n="experience.cu-anschutz.location">Remote</span></div></div>
-                            <p class="role-summary" data-i18n="experience.cu-anschutz.summary">Researching medical imaging and AI agents in a remote, part-time role.</p>
-                            <div class="role-tags"><span>Medical Imaging</span><span>AI Agents</span><span>Research</span></div>
-                            <a class="text-link" href="pages/experience-details.html?id=cu-anschutz"><span data-i18n="common.details">View details</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-                        </div>
-                    </article>
-
-                    <article class="role-card reveal">
-                        <div class="role-marker"><span class="institution-logo"><img src="assets/logos/aws.svg" alt=""></span><span>2025</span></div>
-                        <div class="role-main">
-                            <div class="role-heading"><div><h3 data-i18n="experience.aws-kiro-intern.title">Software Engineer Intern</h3><p data-i18n="experience.aws-kiro-intern.company">Amazon Web Services · Kiro</p></div><div class="role-meta"><span data-i18n="experience.aws-kiro-intern.date">Jun 2025 – Aug 2025</span><span data-i18n="experience.aws-kiro-intern.location">Seattle, WA</span></div></div>
-                            <p class="role-summary" data-i18n="experience.aws-kiro-intern.summary">Led the design and productization of a modular context management system combining hierarchical compaction, memory, and retrieval.</p>
-                            <div class="role-tags"><span>Context Engineering</span><span>RAG</span><span>JavaScript</span></div>
-                            <a class="text-link" href="pages/experience-details.html?id=aws-kiro-intern"><span data-i18n="common.details">View details</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-                        </div>
-                    </article>
-
-                    <article class="role-card reveal">
-                        <div class="role-marker"><span class="institution-logo institution-logo-wide"><img src="assets/logos/brown-health.svg" alt=""></span><span>2025</span></div>
-                        <div class="role-main">
-                            <div class="role-heading"><div><h3 data-i18n="experience.brown-health.title">Research Intern</h3><p data-i18n="experience.brown-health.company">Brown University Health</p></div><div class="role-meta"><span data-i18n="experience.brown-health.date">Mar 2025 – Aug 2025</span><span data-i18n="experience.brown-health.location">Providence, RI</span></div></div>
-                            <p class="role-summary" data-i18n="experience.brown-health.summary">Developed an AI-powered medical imaging platform for report generation, image analysis, and clinical comparison workflows.</p>
-                            <div class="role-tags"><span>VILA-M3</span><span>Flask</span><span>Medical AI</span></div>
-                            <a class="text-link" href="pages/experience-details.html?id=brown-health"><span data-i18n="common.details">View details</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-                        </div>
-                    </article>
-
-                    <details class="earlier-work reveal">
-                        <summary><span data-i18n="experience.earlier">Earlier experience</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></summary>
-                        <div class="earlier-grid">
-                            <a href="pages/experience-details.html?id=personal-trainer"><span class="institution-logo institution-logo-small institution-logo-emblem institution-logo-brown-athletics"><img src="assets/logos/brown-athletics.svg" alt=""></span><span>2024–2025</span><strong data-i18n="experience.personal-trainer.title">Personal Trainer</strong><small data-i18n="experience.personal-trainer.company">Brown University Athletics</small></a>
-                            <a href="pages/experience-details.html?id=rici"><span class="institution-logo institution-logo-small institution-logo-wide"><img src="assets/logos/rici.jpg" alt=""></span><span>2024–2025</span><strong data-i18n="experience.rici.title">Lead Web Developer &amp; Designer</strong><small data-i18n="experience.rici.company">Rhode Island Coalition for Israel</small></a>
-                            <a href="pages/experience-details.html?id=shukun-tech"><span class="institution-logo institution-logo-small institution-logo-wide"><img src="assets/logos/shukun.png" alt=""></span><span>2024</span><strong data-i18n="experience.shukun-tech.title">Algorithm Engineering Intern</strong><small data-i18n="experience.shukun-tech.company">Shukun Technology</small></a>
-                            <a href="pages/experience-details.html?id=casia"><span class="institution-logo institution-logo-small institution-logo-emblem"><img src="assets/logos/casia-official.jpg" alt=""></span><span>2023–2024</span><strong data-i18n="experience.casia.title">Software &amp; ML Engineer Intern</strong><small data-i18n="experience.casia.company">Chinese Academy of Sciences</small></a>
-                            <a href="pages/experience-details.html?id=ustb-research"><span class="institution-logo institution-logo-small institution-logo-emblem"><img src="assets/logos/ustb.png" alt=""></span><span>2023</span><strong data-i18n="experience.ustb-research.title">Research Intern</strong><small data-i18n="experience.ustb-research.company">University of Science and Technology Beijing</small></a>
-                            <a href="pages/experience-details.html?id=ntu-research"><span class="institution-logo institution-logo-small institution-logo-wide"><img src="assets/logos/ntu.png" alt=""></span><span>2022</span><strong data-i18n="experience.ntu-research.title">Research Intern</strong><small data-i18n="experience.ntu-research.company">Nanyang Technological University</small></a>
-                        </div>
-                    </details>
-                </div>
-            </div>
+            <h3 data-i18n="experience.earlier">Earlier experience</h3>
+            <ul class="cv-list cv-list-compact">
+                <li><span class="cv-meta">2024 – 2025</span> · <strong data-i18n="experience.personal-trainer.title">Personal Trainer</strong>, <span data-i18n="experience.personal-trainer.company">Brown University Athletics</span> · <a href="pages/experience-details.html?id=personal-trainer" data-i18n="common.details">View details</a></li>
+                <li><span class="cv-meta">2024 – 2025</span> · <strong data-i18n="experience.rici.title">Lead Web Developer &amp; Designer</strong>, <span data-i18n="experience.rici.company">Rhode Island Coalition for Israel</span> · <a href="pages/experience-details.html?id=rici" data-i18n="common.details">View details</a></li>
+                <li><span class="cv-meta">2024</span> · <strong data-i18n="experience.shukun-tech.title">Algorithm Engineering Intern</strong>, <span data-i18n="experience.shukun-tech.company">Shukun Technology</span> · <a href="pages/experience-details.html?id=shukun-tech" data-i18n="common.details">View details</a></li>
+                <li><span class="cv-meta">2023 – 2024</span> · <strong data-i18n="experience.casia.title">Software &amp; ML Engineer Intern</strong>, <span data-i18n="experience.casia.company">Chinese Academy of Sciences</span> · <a href="pages/experience-details.html?id=casia" data-i18n="common.details">View details</a></li>
+                <li><span class="cv-meta">2023</span> · <strong data-i18n="experience.ustb-research.title">Research Intern</strong>, <span data-i18n="experience.ustb-research.company">University of Science and Technology Beijing</span> · <a href="pages/experience-details.html?id=ustb-research" data-i18n="common.details">View details</a></li>
+                <li><span class="cv-meta">2022</span> · <strong data-i18n="experience.ntu-research.title">Research Intern</strong>, <span data-i18n="experience.ntu-research.company">Nanyang Technological University</span> · <a href="pages/experience-details.html?id=ntu-research" data-i18n="common.details">View details</a></li>
+            </ul>
         </section>
 
-        <section id="academic" class="section academic-section section-anchor">
-            <div class="container">
-                <div class="section-heading section-heading-row reveal">
-                    <div><h2 data-i18n="academic.title">Academic</h2></div>
-                    <p data-i18n="academic.intro">My work spans multimodal language models, medical image analysis, clinical AI evaluation, and agentic systems.</p>
-                </div>
+        <section id="academic" class="section">
+            <h2 data-i18n="academic.title">Academic</h2>
+            <p><strong data-i18n="academic.researchTitle">Research interests</strong>: Multimodal LLMs · Medical Image Analysis · AI in Healthcare · Agentic AI</p>
+            <p class="scholar-line">
+                <span data-i18n="academic.citations">Citations</span>: <span data-scholar-metric="citations">47</span> ·
+                h-index: <span data-scholar-metric="hIndex">2</span> ·
+                i10-index: <span data-scholar-metric="i10Index">1</span> ·
+                <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ&amp;hl=en" target="_blank" rel="noreferrer" data-i18n="academic.scholar">View Google Scholar</a>
+                <br><small class="muted" data-i18n="academic.updated" data-scholar-updated>Updated September 2026</small>
+            </p>
 
-                <div class="academic-overview">
-                    <div class="research-interests reveal">
-                        <div class="academic-card-heading"><span data-i18n="academic.researchTitle">Research interests</span></div>
-                        <div class="interest-list"><span>Multimodal LLMs</span><span>Medical Image Analysis</span><span>AI in Healthcare</span><span>Agentic AI</span></div>
-                    </div>
-                    <div class="scholar-summary reveal">
-                        <div class="academic-card-heading"><span data-i18n="academic.metricsTitle">Google Scholar</span><small data-i18n="academic.updated" data-scholar-updated>Updated September 2026</small></div>
-                        <div class="metric-grid">
-                            <div><strong data-scholar-metric="citations">47</strong><span data-i18n="academic.citations">Citations</span></div>
-                            <div><strong data-scholar-metric="hIndex">2</strong><span>h-index</span></div>
-                            <div><strong data-scholar-metric="i10Index">1</strong><span>i10-index</span></div>
-                            <div><strong data-scholar-metric="publications">6</strong><span data-i18n="academic.publications">Publications</span></div>
-                        </div>
-                        <a class="text-link scholar-link" href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ&amp;hl=en" target="_blank" rel="noreferrer"><span data-i18n="academic.scholar">View Google Scholar</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-
-                <div class="publication-heading reveal"><h3 data-i18n="academic.publicationsTitle">Publications</h3><p data-i18n="academic.note" data-scholar-note>Metrics and publication citations are synchronized from Google Scholar.</p></div>
-                <div class="publication-list" data-scholar-publications>
-                    <a class="publication-card reveal" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:zYLM7Y9cAGgC" target="_blank" rel="noreferrer">
-                        <span class="publication-year">2026</span>
-                        <div><h3>Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models</h3><p class="publication-authors">X Yang, Z Zhong, S Collins, G Baird, X Wang, Z Jiao</p><p class="publication-venue">2026 IEEE/ACM Conference on Connected Health: Applications, Systems and Technologies</p></div>
-                        <div class="publication-side"><span class="publication-citations"><strong>0</strong><small data-i18n="academic.citedBy">cited by</small></span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
-                    </a>
-                    <a class="publication-card reveal" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:IjCSPb-OGe4C" target="_blank" rel="noreferrer">
-                        <span class="publication-year">2026</span>
-                        <div><h3>Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging</h3><p class="publication-authors">X Yang, Z Zhong, S Collins, M Bernstein, G Baird, T Healey, M Atalay, et al.</p><p class="publication-venue">Smart Health · 100689</p></div>
-                        <div class="publication-side"><span class="publication-citations"><strong>0</strong><small data-i18n="academic.citedBy">cited by</small></span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
-                    </a>
-                    <a class="publication-card reveal" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:qjMakFHDy7sC" target="_blank" rel="noreferrer">
-                        <span class="publication-year">2025</span>
-                        <div><h3>A Unified Platform for Radiology Report Generation and Clinician-Centered AI Evaluation</h3><p class="publication-authors">Z Ma, X Yang, Z Atalay, A Yang, S Collins, H Bai, M Bernstein, G Baird, et al.</p><p class="publication-venue">medRxiv · 2025.07.07.25331018</p></div>
-                        <div class="publication-side"><span class="publication-citations"><strong>1</strong><small data-i18n="academic.citedBy">cited by</small></span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
-                    </a>
-                    <a class="publication-card reveal" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:UeHWp8X0CEIC" target="_blank" rel="noreferrer">
-                        <span class="publication-year">2025</span>
-                        <div><h3>The AI Challenge: A Turing Test Pilot Study of Attendings and Residents in Identifying AI-Generated Content</h3><p class="publication-authors">Z Ma, X Yang, Z Atalay, Z Zhong, S Collins, H Bai, M Bernstein, A Pandey, et al.</p><p class="publication-venue">Meta-Radiology · 100199</p></div>
-                        <div class="publication-side"><span class="publication-citations"><strong>0</strong><small data-i18n="academic.citedBy">cited by</small></span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
-                    </a>
-                    <a class="publication-card reveal" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:u-x6o8ySG0sC" target="_blank" rel="noreferrer">
-                        <span class="publication-year">2023</span>
-                        <div><h3>Understanding the brain with attention: A survey of transformers in brain sciences</h3><p class="publication-authors">C Chen, H Wang, Y Chen, Z Yin, X Yang, H Ning, Q Zhang, W Li, R Xiao, et al.</p><p class="publication-venue">Brain-X · 1(3), e29</p></div>
-                        <div class="publication-side"><span class="publication-citations"><strong>44</strong><small data-i18n="academic.citedBy">cited by</small></span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
-                    </a>
-                    <a class="publication-card reveal" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:2osOgNQ5qMEC" target="_blank" rel="noreferrer">
-                        <span class="publication-year">2022</span>
-                        <div><h3>Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression</h3><p class="publication-authors">X Yang, Y Liu, Z Lin, L Zhong, TT Toe</p><p class="publication-venue">15th International Symposium on Computational Intelligence and Design</p></div>
-                        <div class="publication-side"><span class="publication-citations"><strong>2</strong><small data-i18n="academic.citedBy">cited by</small></span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
-                    </a>
-                </div>
-            </div>
+            <h3 data-i18n="academic.publicationsTitle">Publications</h3>
+            <p class="muted pub-note" data-i18n="academic.note" data-scholar-note>Metrics and publication citations are synchronized from Google Scholar.</p>
+            <ul class="pub-list" data-scholar-publications>
+                <li>
+                    <span class="pub-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:zYLM7Y9cAGgC" target="_blank" rel="noreferrer">Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models</a></span>
+                    <span class="pub-authors"><strong>X Yang</strong>, Z Zhong, S Collins, G Baird, X Wang, Z Jiao</span>
+                    <span class="pub-venue">2026 IEEE/ACM Conference on Connected Health: Applications, Systems and Technologies, 2026.</span>
+                </li>
+                <li>
+                    <span class="pub-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:IjCSPb-OGe4C" target="_blank" rel="noreferrer">Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging</a></span>
+                    <span class="pub-authors"><strong>X Yang</strong>, Z Zhong, S Collins, M Bernstein, G Baird, T Healey, M Atalay, et al.</span>
+                    <span class="pub-venue">Smart Health · 100689, 2026.</span>
+                </li>
+                <li>
+                    <span class="pub-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:qjMakFHDy7sC" target="_blank" rel="noreferrer">A Unified Platform for Radiology Report Generation and Clinician-Centered AI Evaluation</a></span>
+                    <span class="pub-authors">Z Ma, <strong>X Yang</strong>, Z Atalay, A Yang, S Collins, H Bai, M Bernstein, G Baird, et al.</span>
+                    <span class="pub-venue">medRxiv · 2025.07.07.25331018, 2025.</span>
+                    <span class="pub-cite"><span data-i18n="academic.citedBy">cited by</span> 1</span>
+                </li>
+                <li>
+                    <span class="pub-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:UeHWp8X0CEIC" target="_blank" rel="noreferrer">The AI Challenge: A Turing Test Pilot Study of Attendings and Residents in Identifying AI-Generated Content</a></span>
+                    <span class="pub-authors">Z Ma, <strong>X Yang</strong>, Z Atalay, Z Zhong, S Collins, H Bai, M Bernstein, A Pandey, et al.</span>
+                    <span class="pub-venue">Meta-Radiology · 100199, 2025.</span>
+                </li>
+                <li>
+                    <span class="pub-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:u-x6o8ySG0sC" target="_blank" rel="noreferrer">Understanding the brain with attention: A survey of transformers in brain sciences</a></span>
+                    <span class="pub-authors">C Chen, H Wang, Y Chen, Z Yin, <strong>X Yang</strong>, H Ning, Q Zhang, W Li, R Xiao, et al.</span>
+                    <span class="pub-venue">Brain-X · 1(3), e29, 2023.</span>
+                    <span class="pub-cite"><span data-i18n="academic.citedBy">cited by</span> 44</span>
+                </li>
+                <li>
+                    <span class="pub-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=xEgmvx4AAAAJ&amp;citation_for_view=xEgmvx4AAAAJ:2osOgNQ5qMEC" target="_blank" rel="noreferrer">Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression</a></span>
+                    <span class="pub-authors"><strong>X Yang</strong>, Y Liu, Z Lin, L Zhong, TT Toe</span>
+                    <span class="pub-venue">15th International Symposium on Computational Intelligence and Design, 2022.</span>
+                    <span class="pub-cite"><span data-i18n="academic.citedBy">cited by</span> 2</span>
+                </li>
+            </ul>
         </section>
 
-        <section id="education" class="section section-anchor">
-            <div class="container">
-                <div class="section-heading section-heading-row reveal">
-                    <div><h2 data-i18n="education.title">Education</h2></div>
-                </div>
-                <div class="education-grid">
-                    <a class="education-card reveal" href="pages/education-details.html?id=brown">
-                        <div class="institution-logo institution-logo-education institution-logo-wide"><img src="assets/logos/brown.png" alt=""></div>
-                        <div><span class="education-date" data-i18n="education.brown.date">2024 – 2026</span><h3 data-i18n="education.brown.degree">Master of Science in Computer Science</h3><p data-i18n="education.brown.school">Brown University</p><small data-i18n="education.brown.summary">Focus on AI, machine learning, and software systems.</small></div>
-                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                    </a>
-                    <a class="education-card reveal" href="pages/education-details.html?id=ustb">
-                        <div class="institution-logo institution-logo-education"><img src="assets/logos/ustb.png" alt=""></div>
-                        <div><span class="education-date" data-i18n="education.ustb.date">2020 – 2024</span><h3 data-i18n="education.ustb.degree">Bachelor of Engineering in Artificial Intelligence</h3><p data-i18n="education.ustb.school">University of Science and Technology Beijing</p><small data-i18n="education.ustb.summary">Graduated with honors · GPA 3.83/4.0.</small></div>
-                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
+        <section id="education" class="section">
+            <h2 data-i18n="education.title">Education</h2>
+            <ul class="cv-list">
+                <li>
+                    <p class="cv-head"><strong data-i18n="education.brown.degree">Master of Science in Computer Science</strong>, <span data-i18n="education.brown.school">Brown University</span></p>
+                    <p class="cv-meta" data-i18n="education.brown.date">2024 – 2026</p>
+                    <p class="cv-note" data-i18n="education.brown.summary">Focus on AI, machine learning, and software systems.</p>
+                    <p class="cv-more"><a href="pages/education-details.html?id=brown" data-i18n="common.details">View details</a></p>
+                </li>
+                <li>
+                    <p class="cv-head"><strong data-i18n="education.ustb.degree">Bachelor of Engineering in Artificial Intelligence</strong>, <span data-i18n="education.ustb.school">University of Science and Technology Beijing</span></p>
+                    <p class="cv-meta" data-i18n="education.ustb.date">2020 – 2024</p>
+                    <p class="cv-note" data-i18n="education.ustb.summary">Graduated with honors · GPA 3.83/4.0.</p>
+                    <p class="cv-more"><a href="pages/education-details.html?id=ustb" data-i18n="common.details">View details</a></p>
+                </li>
+            </ul>
         </section>
 
-        <section id="skills" class="section section-tinted section-anchor">
-            <div class="container skills-layout">
-                <div class="section-heading reveal"><h2 data-i18n="skills.title">Skills</h2><p data-i18n="skills.intro">A practical toolkit shaped by product engineering, AI systems, and research.</p></div>
-                <div class="skills-grid reveal">
-                    <div class="skill-group"><span>01</span><h3 data-i18n="skills.languages">Languages</h3><p>TypeScript · JavaScript · Python · Java · C/C++ · SQL · Go</p></div>
-                    <div class="skill-group"><span>02</span><h3 data-i18n="skills.ai">AI &amp; Data</h3><p>LLM Systems · RAG · MCP · PyTorch · TensorFlow · Computer Vision</p></div>
-                    <div class="skill-group"><span>03</span><h3 data-i18n="skills.frameworks">Frameworks</h3><p>React · Node.js · Flask · Spring Boot · MySQL</p></div>
-                    <div class="skill-group"><span>04</span><h3 data-i18n="skills.tools">Tools</h3><p>AWS · Docker · Git · Google Cloud · Vite · Figma</p></div>
-                </div>
-            </div>
+        <section id="skills" class="section">
+            <h2 data-i18n="skills.title">Skills</h2>
+            <ul class="skills-list">
+                <li><strong data-i18n="skills.languages">Languages</strong>: TypeScript · JavaScript · Python · Java · C/C++ · SQL · Go</li>
+                <li><strong data-i18n="skills.ai">AI &amp; Data</strong>: LLM Systems · RAG · MCP · PyTorch · TensorFlow · Computer Vision</li>
+                <li><strong data-i18n="skills.frameworks">Frameworks</strong>: React · Node.js · Flask · Spring Boot · MySQL</li>
+                <li><strong data-i18n="skills.tools">Tools</strong>: AWS · Docker · Git · Google Cloud · Vite · Figma</li>
+            </ul>
         </section>
 
-        <section id="contact" class="section contact-section section-anchor">
-            <div class="container contact-card reveal">
-                <div><h2 data-i18n="contact.title">Contact</h2><p data-i18n="contact.description">I’m always glad to connect with people working on thoughtful AI products, developer tools, and healthcare technology.</p></div>
-                <div class="contact-actions">
-                    <a class="button button-primary" href="mailto:charlieyangxinye@gmail.com"><span data-i18n="contact.email">Send me an email</span><i class="fa-regular fa-envelope" aria-hidden="true"></i></a>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/in/xinye-charlie-yang-939674286/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                        <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ&amp;hl=en" target="_blank" rel="noreferrer" aria-label="Google Scholar"><i class="fa-solid fa-graduation-cap"></i></a>
-                        <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-                    </div>
-                </div>
-            </div>
+        <section id="contact" class="section">
+            <h2 data-i18n="contact.title">Contact</h2>
+            <p data-i18n="contact.description">I’m always glad to connect with people working on thoughtful AI products, developer tools, and healthcare technology.</p>
+            <p>
+                <a href="mailto:charlieyangxinye@gmail.com">charlieyangxinye@gmail.com</a> ·
+                <a href="https://www.linkedin.com/in/xinye-charlie-yang-939674286/" target="_blank" rel="noreferrer">LinkedIn</a> ·
+                <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Google Scholar</a> ·
+                <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a>
+            </p>
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="container"><p>© <span data-current-year>2026</span> Charlie Yang</p><a href="#home"><span data-i18n="footer.back">Back to top</span><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a></div>
+    <footer class="page-footer">
+        <span>© <span data-current-year>2026</span> Charlie Yang</span>
+        <a href="#home" data-i18n="footer.back">Back to top</a>
     </footer>
 
-    <script src="js/i18n.js?v=20260909-sections"></script>
-    <script src="js/script.js?v=20260909-sections"></script>
+    <script src="js/i18n.js?v=20260911-minimal"></script>
+    <script src="js/script.js?v=20260911-minimal"></script>
 </body>
 </html>

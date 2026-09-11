@@ -1,73 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const header = document.querySelector('[data-header]');
-    const menuToggle = document.querySelector('[data-menu-toggle]');
-    const navPanel = document.querySelector('[data-nav-panel]');
-    const navLinks = [...document.querySelectorAll('.nav-link')];
-    const sections = [...document.querySelectorAll('.section-anchor[id]')];
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const closeMenu = () => {
-        navPanel?.classList.remove('open');
-        menuToggle?.setAttribute('aria-expanded', 'false');
-        menuToggle?.setAttribute('aria-label', 'Open menu');
-        document.body.classList.remove('menu-open');
-    };
-
-    menuToggle?.addEventListener('click', () => {
-        const open = menuToggle.getAttribute('aria-expanded') === 'true';
-        navPanel?.classList.toggle('open', !open);
-        menuToggle.setAttribute('aria-expanded', String(!open));
-        menuToggle.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
-        document.body.classList.toggle('menu-open', !open);
-    });
-
-    navLinks.forEach((link) => link.addEventListener('click', closeMenu));
-    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMenu(); });
-
-    const syncHeader = () => header?.classList.toggle('scrolled', window.scrollY > 12);
-    syncHeader();
-    window.addEventListener('scroll', syncHeader, { passive: true });
-
-    if ('IntersectionObserver' in window) {
-        const navObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) return;
-                navLinks.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
-            });
-        }, { rootMargin: '-30% 0px -62% 0px' });
-        sections.forEach((section) => navObserver.observe(section));
-
-        if (!reduceMotion) {
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return;
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                });
-            }, { threshold: 0.1, rootMargin: '0px 0px -40px' });
-            document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
-        }
-    }
-
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-        document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
-    }
-
-    document.querySelectorAll('a[href^="pages/"]').forEach((link) => {
-        link.addEventListener('click', () => {
-            try { sessionStorage.setItem('pageScrollPosition', String(window.scrollY)); } catch (_) { /* optional */ }
-        });
-    });
-
-    const restoredPosition = (() => {
-        try { return sessionStorage.getItem('pageScrollPosition'); } catch (_) { return null; }
-    })();
-    if (restoredPosition) {
-        requestAnimationFrame(() => window.scrollTo({ top: Number(restoredPosition), behavior: 'auto' }));
-        try { sessionStorage.removeItem('pageScrollPosition'); } catch (_) { /* optional */ }
-    }
-
     let scholarData = null;
 
     const currentLanguage = () => document.documentElement.lang.startsWith('zh') ? 'zh' : 'en';
@@ -82,12 +13,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return language === 'zh' ? `更新于 ${formatted}` : `Updated ${formatted}`;
     };
 
-    const appendTextElement = (parent, tagName, className, value) => {
-        const element = document.createElement(tagName);
-        if (className) element.className = className;
-        element.textContent = value;
-        parent.append(element);
-        return element;
+    // Render an author string, bolding the site owner's name.
+    const appendAuthors = (parent, authors) => {
+        const span = document.createElement('span');
+        span.className = 'pub-authors';
+        const ownName = 'X Yang';
+        String(authors || '').split(ownName).forEach((part, index) => {
+            if (index > 0) {
+                const strong = document.createElement('strong');
+                strong.textContent = ownName;
+                span.append(strong);
+            }
+            if (part) span.append(document.createTextNode(part));
+        });
+        parent.append(span);
     };
 
     const renderScholarData = () => {
@@ -100,39 +39,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const updated = document.querySelector('[data-scholar-updated]');
-        if (updated) updated.textContent = formatScholarDate(scholarData.updatedAt, language);
+        if (updated) {
+            const formatted = formatScholarDate(scholarData.updatedAt, language);
+            if (formatted) updated.textContent = formatted;
+        }
 
         const list = document.querySelector('[data-scholar-publications]');
         if (!list || !Array.isArray(scholarData.publications) || scholarData.publications.length === 0) return;
         const fragment = document.createDocumentFragment();
 
         scholarData.publications.forEach((publication) => {
-            const card = document.createElement('a');
-            card.className = 'publication-card reveal is-visible';
-            card.href = publication.link || scholarData.profile;
-            card.target = '_blank';
-            card.rel = 'noreferrer';
+            const item = document.createElement('li');
 
-            appendTextElement(card, 'span', 'publication-year', publication.year || '—');
-            const body = document.createElement('div');
-            appendTextElement(body, 'h3', '', publication.title || 'Untitled publication');
-            appendTextElement(body, 'p', 'publication-authors', publication.authors || '');
-            appendTextElement(body, 'p', 'publication-venue', publication.venue || '');
-            card.append(body);
+            const title = document.createElement('span');
+            title.className = 'pub-title';
+            const link = document.createElement('a');
+            link.href = publication.link || scholarData.profile;
+            link.target = '_blank';
+            link.rel = 'noreferrer';
+            link.textContent = publication.title || 'Untitled publication';
+            title.append(link);
+            item.append(title);
 
-            const side = document.createElement('div');
-            side.className = 'publication-side';
-            const citations = document.createElement('span');
-            citations.className = 'publication-citations';
-            appendTextElement(citations, 'strong', '', String(publication.citations || 0));
-            appendTextElement(citations, 'small', '', language === 'zh' ? '引用' : 'cited by');
-            side.append(citations);
-            const icon = document.createElement('i');
-            icon.className = 'fa-solid fa-arrow-up-right-from-square';
-            icon.setAttribute('aria-hidden', 'true');
-            side.append(icon);
-            card.append(side);
-            fragment.append(card);
+            appendAuthors(item, publication.authors);
+
+            const venue = document.createElement('span');
+            venue.className = 'pub-venue';
+            venue.textContent = `${publication.venue || ''}${publication.venue && publication.year ? ', ' : ''}${publication.year || ''}.`;
+            item.append(venue);
+
+            const citations = Number(publication.citations || 0);
+            if (citations > 0) {
+                const cite = document.createElement('span');
+                cite.className = 'pub-cite';
+                cite.textContent = language === 'zh' ? `引用 ${citations}` : `cited by ${citations}`;
+                item.append(cite);
+            }
+
+            fragment.append(item);
         });
 
         list.replaceChildren(fragment);

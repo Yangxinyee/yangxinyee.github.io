@@ -17,7 +17,7 @@ This website now supports **Chinese and English** language switching!
 
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
 - **Bilingual Support**: Full Chinese and English language switching
-- **Professional UI**: A restrained engineering and research portfolio design
+- **Minimal academic design**: A plain, static, single-column researcher homepage with no animations
 - **Scholar Snapshot**: Publication and citation data loaded from `data/scholar.json`
 - **Performance Optimized**: Fast loading and smooth user experience
 
