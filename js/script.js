@@ -26,11 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Optional teaser figures keyed by exact publication title, e.g. { 'Paper title': 'assets/papers/figure.png' }.
     const paperFigures = {};
 
+    // Papers selected for oral presentation, matched by a distinctive title fragment.
+    const oralPapers = [
+        'Reliability Stress Tests and Decision-Time Routing',
+        'Confidence-gated cloud-edge cascade triage'
+    ];
+
     const badgeFor = (publication) => {
         const venue = String(publication.venue || '');
         const match = venueBadges.find(([pattern]) => pattern.test(venue));
         const label = match ? match[1] : venue.split(' · ')[0].replace(/^\d{4}\s+/, '').slice(0, 24);
-        return [label, publication.year].filter(Boolean).join(' ');
+        const oral = oralPapers.some((fragment) => String(publication.title || '').toLowerCase().includes(fragment.toLowerCase()));
+        return [label, publication.year, oral ? 'Oral' : ''].filter(Boolean).join(' ');
     };
 
     const element = (tag, className, text) => {
