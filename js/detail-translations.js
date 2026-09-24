@@ -191,7 +191,7 @@ const detailTranslations = {
                 school: "University of Science and Technology Beijing",
                 date: "Sep 2020 - Jul 2024",
                 location: "Beijing, China",
-                summary: "Graduated with honors and received Dean's Medal for outstanding academic performance, leadership, and significant contributions to university projects.",
+                summary: "Graduated with honors and received the Dean's Medal of the School of Artificial Intelligence for outstanding academic performance, leadership, and significant contributions to university projects.",
                 activity1: {
                     title: "Peer Study Counselor",
                     description: "SIST, USTB - Mentoring fellow students"
@@ -216,7 +216,7 @@ const detailTranslations = {
                 focus2: "Computer Vision and Image Processing",
                 focus3: "Data Structures and Algorithms",
                 focus4: "Software Engineering and Development",
-                achievement1: "Dean's Medal Recipient (2024) - Awarded for outstanding academic performance, leadership, and significant contributions to university projects",
+                achievement1: "Dean's Medal Recipient, School of Artificial Intelligence (2024) - Awarded for outstanding academic performance, leadership, and significant contributions to university projects",
                 achievement2: "Outstanding Student Scholarship (2021, 2022, 2023) - Top 7% of students",
                 achievement3: "First Prize - 16th iCAN National Innovation and Entrepreneurship Competition for College Students (2022)",
                 achievement4: "Second Prize - China 'Internet +' College Student Innovation and Entrepreneurship Competition (2022)",
@@ -420,7 +420,7 @@ const detailTranslations = {
                 school: "北京科技大学",
                 date: "2020年9月 - 2024年7月",
                 location: "北京，中国",
-                summary: "以优异成绩毕业并获得院长奖章，表彰杰出的学术表现、领导力和对大学项目的重大贡献。",
+                summary: "以优异成绩毕业并获得人工智能学院院长奖章，表彰杰出的学术表现、领导力和对大学项目的重大贡献。",
                 activity1: {
                     title: "同伴学习辅导员",
                     description: "SIST，USTB - 指导同学学习"
@@ -445,7 +445,7 @@ const detailTranslations = {
                 focus2: "计算机视觉与图像处理",
                 focus3: "数据结构与算法",
                 focus4: "软件工程与开发",
-                achievement1: "院长奖章获得者（2024年）- 因杰出的学术表现、领导力和对大学项目的重大贡献而获奖",
+                achievement1: "人工智能学院院长奖章获得者（2024年）- 因杰出的学术表现、领导力和对大学项目的重大贡献而获奖",
                 achievement2: "优秀学生奖学金（2021、2022、2023年）- 前7%学生",
                 achievement3: "第十六届iCAN全国大学生创新创业大赛一等奖（2022年）",
                 achievement4: "中国'互联网+'大学生创新创业大赛二等奖（2022年）",

@@ -193,15 +193,16 @@ img { max-width: 100%; }
 .paper-box {
     display: flex;
     gap: 30px;
-    padding: 1.6em 0;
+    padding: .5em 0;
     border-bottom: 1px solid var(--box-line);
 }
 .paper-box:last-child { border-bottom: 0; }
 .paper-box-image { position: relative; flex: 0 0 38%; align-self: center; }
 .paper-box-image img { display: block; width: 100%; box-shadow: 3px 3px 6px #888888; }
 .paper-box-image .badge { position: absolute; top: 6px; left: -6px; }
-.paper-box-text { flex: 1 1 auto; min-width: 0; }
-.paper-box-text p { margin: 0 0 .4em; }
+.paper-box-text { flex: 1 1 auto; min-width: 0; line-height: 1.4; }
+.paper-box-text p { margin: 0 0 .1em; }
+.paper-box-text p:last-child { margin-bottom: 0; }
 
 .badge {
     display: inline-block;
@@ -211,7 +212,9 @@ img { max-width: 100%; }
     font-size: 12px;
     line-height: 18px;
 }
-.paper-box-text > .badge { margin-bottom: .6em; }
+/* Text-only entries: badge sits inline before the title. */
+.paper-box-text > .badge { margin-right: .5em; vertical-align: .1em; }
+.paper-box-text > .badge + .paper-title { display: inline; }
 
 .paper-title { font-weight: 700; }
 .paper-authors strong { color: var(--heading); }

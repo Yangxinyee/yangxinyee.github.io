@@ -4,7 +4,7 @@ const translations = {
             title: "Xinye Yang (Charlie) | Software Development Engineer at AWS",
             description: "Xinye Yang (Charlie) is a Software Development Engineer at AWS building agentic AI developer experiences and researching medical imaging AI agents."
         },
-        nav: { home: "Homepage", about: "About Me", news: "News", publications: "Publications", experience: "Experience", education: "Education", honors: "Honors", skills: "Skills" },
+        nav: { home: "Homepage", about: "About Me", news: "News", publications: "Publications", experience: "Experience", education: "Education", honors: "Honors", skills: "Skills", services: "Services" },
         common: { skip: "Skip to content", details: "Details", present: "Present", advisedBy: "Advised by", and: "and" },
         sidebar: {
             name: "Xinye Yang (Charlie)",
@@ -56,7 +56,7 @@ const translations = {
             n7: "I join AWS Kiro as a Software Engineer Intern, working on context management for agentic coding.",
             n8: "I join Brown University Health as a Research Intern on AI-powered medical imaging.",
             n9: "I join Brown University as a Master’s student in Computer Science!",
-            n10: "I graduate from University of Science and Technology Beijing with the Dean’s Medal."
+            n10: "I graduate from University of Science and Technology Beijing with the Dean’s Medal of the School of Artificial Intelligence."
         },
         academic: {
             publicationsTitle: "Publications",
@@ -87,9 +87,10 @@ const translations = {
             title: "Honors and Awards",
             patentsLabel: "Patents",
             patents: "U.S. provisional patent on an intelligent radiology reporting platform; software patent for a real-time ICU patient monitoring system (Chinese Academy of Sciences, Institute of Automation).",
-            h1: "Dean’s Medal, University of Science and Technology Beijing."
+            h1: "Dean’s Medal, School of Artificial Intelligence, University of Science and Technology Beijing."
         },
         skills: { title: "Skills", languages: "Languages", ai: "AI & Data", frameworks: "Frameworks", tools: "Tools" },
+        services: { title: "Services", reviewer: "Journal Reviewer", volunteer: "Volunteer" },
         footer: { back: "Back to top" }
     },
     zh: {
@@ -97,7 +98,7 @@ const translations = {
             title: "杨新烨 | AWS 软件开发工程师",
             description: "杨新烨是 AWS 软件开发工程师，专注于智能代理 AI、开发者工具与医疗影像 AI 智能体研究。"
         },
-        nav: { home: "主页", about: "关于我", news: "动态", publications: "论文", experience: "经历", education: "教育", honors: "荣誉", skills: "技能" },
+        nav: { home: "主页", about: "关于我", news: "动态", publications: "论文", experience: "经历", education: "教育", honors: "荣誉", skills: "技能", services: "学术服务" },
         common: { skip: "跳转到正文", details: "详情", present: "至今", advisedBy: "导师：", and: "和" },
         sidebar: {
             name: "杨新烨",
@@ -149,7 +150,7 @@ const translations = {
             n7: "以软件工程师实习生身份加入 AWS Kiro，负责智能编程的上下文管理。",
             n8: "加入布朗大学健康中心，担任 AI 医学影像研究实习生。",
             n9: "进入布朗大学攻读计算机科学硕士！",
-            n10: "从北京科技大学毕业，并获得院长奖章。"
+            n10: "从北京科技大学毕业，并获得人工智能学院院长奖章。"
         },
         academic: {
             publicationsTitle: "论文",
@@ -180,9 +181,10 @@ const translations = {
             title: "荣誉与奖项",
             patentsLabel: "专利",
             patents: "智能放射报告平台美国临时专利；实时 ICU 患者监护系统软件专利（中国科学院自动化研究所）。",
-            h1: "北京科技大学院长奖章。"
+            h1: "北京科技大学人工智能学院院长奖章。"
         },
         skills: { title: "技能", languages: "编程语言", ai: "AI 与数据", frameworks: "框架", tools: "工具" },
+        services: { title: "学术服务", reviewer: "期刊审稿人", volunteer: "志愿者" },
         footer: { back: "返回顶部" }
     }
 };
