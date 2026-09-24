@@ -156,6 +156,11 @@ img { max-width: 100%; }
 .author__urls a:hover { text-decoration: underline; }
 .author__urls i { width: 1.4em; margin-right: .2rem; color: var(--heading); text-align: center; }
 
+/* MapMyVisitors widget */
+.visitor-map { margin-top: 1.5rem; max-width: 175px; }
+.visitor-map #mapmyvisitors-widget { display: block; width: 100% !important; max-width: 100%; }
+.visitor-map img, .visitor-map canvas, .visitor-map iframe { display: block; max-width: 100%; height: auto; }
+
 /* Content */
 .page__content { min-width: 0; max-width: 820px; }
 .page__content p { margin: 0 0 .75em; }
@@ -223,6 +228,11 @@ img { max-width: 100%; }
 }
 .page-footer a { color: inherit; }
 
+/* Short desktop windows: let the sidebar scroll with the page so the visitor map stays reachable. */
+@media (min-width: 901px) and (max-height: 820px) {
+    .sidebar { position: static; }
+}
+
 /* Tablet & phone: sidebar becomes a compact header above the content. */
 @media (max-width: 900px) {
     .masthead__inner { padding: 0 16px; gap: 1rem; }
@@ -244,6 +254,7 @@ img { max-width: 100%; }
     .author__tagline { grid-column: 1 / -1; margin: 1rem 0 .6rem; }
     .author__urls { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .2rem 1rem; }
     .author__urls li { margin: 0; }
+    .visitor-map { grid-column: 1 / -1; max-width: 240px; margin-top: 1rem; }
 }
 
 @media (max-width: 600px) {

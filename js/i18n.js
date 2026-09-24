@@ -13,6 +13,7 @@ const translations = {
             location: "Seattle, WA, USA"
         },
         about: {
+            welcome: "Welcome to my homepage!",
             paragraph1a: "I’m a software engineer at AWS Kiro",
             paragraph1b: ", where I work on agentic AI developer experiences.",
             paragraph2a: "Alongside product engineering, I contribute to medical imaging and AI agent research at the University of Colorado Anschutz School of Medicine",
@@ -96,6 +97,7 @@ const translations = {
             location: "美国华盛顿州西雅图"
         },
         about: {
+            welcome: "欢迎来到我的主页！",
             paragraph1a: "我目前是 AWS Kiro",
             paragraph1b: " 的软件工程师，负责智能代理 AI 开发者体验。",
             paragraph2a: "在产品工程之外，我也在科罗拉多大学安舒茨医学院",
