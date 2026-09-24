@@ -4,7 +4,7 @@ This repository contains the source code for my personal website.
 
 ## 🌐 Live Website
 
-Visit my personal website: [Charlie Yang - Personal Website](https://yangxinyee.github.io)
+Visit my personal website: [Xinye Yang (Charlie) - Personal Website](https://yangxinyee.github.io)
 
 ## 🌍 Bilingual Support
 
@@ -17,7 +17,7 @@ This website now supports **Chinese and English** language switching!
 
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
 - **Bilingual Support**: Full Chinese and English language switching
-- **Minimal academic design**: A plain, static, single-column researcher homepage with no animations
+- **Academic homepage layout**: AcadHomepage-style sticky navigation, profile sidebar, news feed, and publication list with venue badges
 - **Scholar Snapshot**: Publication and citation data loaded from `data/scholar.json`
 - **Performance Optimized**: Fast loading and smooth user experience
 
@@ -27,4 +27,4 @@ The `Update Google Scholar data` GitHub Actions workflow checks the Scholar auth
 
 ---
 
-**Charlie Yang** - Software Development Engineer at AWS
+**Xinye Yang (Charlie)** - Software Development Engineer at AWS

@@ -92,7 +92,7 @@ function renderDetail(lang) {
         ? `<h2>${escapeHtml(heading)}</h2><ul class="detail-list">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
         : '';
 
-    document.title = `${title} | Charlie Yang`;
+    document.title = `${title} | Xinye Yang (Charlie)`;
     root.innerHTML = `
         <article class="detail">
             <p class="detail-kicker muted">${escapeHtml(config.kicker[language])}</p>
@@ -106,7 +106,7 @@ function renderDetail(lang) {
             ${listSection(config.highlights[language], highlights)}
         </article>
         <footer class="page-footer">
-            <span>© ${new Date().getFullYear()} Charlie Yang</span>
+            <span>© ${new Date().getFullYear()} Xinye Yang (Charlie)</span>
             <a href="../index.html#${type}">${escapeHtml(config.back[language])}</a>
         </footer>`;
 }

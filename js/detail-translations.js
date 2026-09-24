@@ -175,10 +175,6 @@ const detailTranslations = {
                     description: "Working on AI-powered medical imaging research"
                 },
                 activity2: {
-                    title: "Teaching Assistant",
-                    description: "Assisting in computer science courses"
-                },
-                activity3: {
                     title: "Personal Trainer",
                     description: "Working at Brown Nelson Fitness Center"
                 },
@@ -408,10 +404,6 @@ const detailTranslations = {
                     description: "从事AI驱动的医疗影像研究"
                 },
                 activity2: {
-                    title: "助教",
-                    description: "协助计算机科学课程"
-                },
-                activity3: {
                     title: "私人教练",
                     description: "在布朗大学Nelson健身中心工作"
                 },

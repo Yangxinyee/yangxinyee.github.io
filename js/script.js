@@ -13,20 +13,42 @@ document.addEventListener('DOMContentLoaded', () => {
         return language === 'zh' ? `更新于 ${formatted}` : `Updated ${formatted}`;
     };
 
+    // Short venue labels for the publication badges; unmatched venues fall back to their first segment.
+    const venueBadges = [
+        [/Connected Health/i, 'CHASE'],
+        [/Smart Health/i, 'Smart Health'],
+        [/medRxiv/i, 'medRxiv'],
+        [/Meta-Radiology/i, 'Meta-Radiology'],
+        [/Brain-X/i, 'Brain-X'],
+        [/Computational Intelligence and Design/i, 'ISCID']
+    ];
+
+    // Optional teaser figures keyed by exact publication title, e.g. { 'Paper title': 'assets/papers/figure.png' }.
+    const paperFigures = {};
+
+    const badgeFor = (publication) => {
+        const venue = String(publication.venue || '');
+        const match = venueBadges.find(([pattern]) => pattern.test(venue));
+        const label = match ? match[1] : venue.split(' · ')[0].replace(/^\d{4}\s+/, '').slice(0, 24);
+        return [label, publication.year].filter(Boolean).join(' ');
+    };
+
+    const element = (tag, className, text) => {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+    };
+
     // Render an author string, bolding the site owner's name.
-    const appendAuthors = (parent, authors) => {
-        const span = document.createElement('span');
-        span.className = 'pub-authors';
+    const renderAuthors = (authors) => {
+        const paragraph = element('p', 'paper-authors');
         const ownName = 'X Yang';
         String(authors || '').split(ownName).forEach((part, index) => {
-            if (index > 0) {
-                const strong = document.createElement('strong');
-                strong.textContent = ownName;
-                span.append(strong);
-            }
-            if (part) span.append(document.createTextNode(part));
+            if (index > 0) paragraph.append(element('strong', '', ownName));
+            if (part) paragraph.append(document.createTextNode(part));
         });
-        parent.append(span);
+        return paragraph;
     };
 
     const renderScholarData = () => {
@@ -34,8 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const language = currentLanguage();
 
         Object.entries(scholarData.metrics || {}).forEach(([key, value]) => {
-            const element = document.querySelector(`[data-scholar-metric="${key}"]`);
-            if (element && Number.isFinite(Number(value))) element.textContent = Number(value).toLocaleString(language === 'zh' ? 'zh-CN' : 'en-US');
+            const metric = document.querySelector(`[data-scholar-metric="${key}"]`);
+            if (metric && Number.isFinite(Number(value))) metric.textContent = Number(value).toLocaleString(language === 'zh' ? 'zh-CN' : 'en-US');
         });
 
         const updated = document.querySelector('[data-scholar-updated]');
@@ -49,34 +71,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const fragment = document.createDocumentFragment();
 
         scholarData.publications.forEach((publication) => {
-            const item = document.createElement('li');
+            const box = element('div', 'paper-box');
+            const badge = element('span', 'badge', badgeFor(publication));
+            const text = element('div', 'paper-box-text');
 
-            const title = document.createElement('span');
-            title.className = 'pub-title';
-            const link = document.createElement('a');
+            const figure = paperFigures[publication.title];
+            if (figure) {
+                const image = element('div', 'paper-box-image');
+                const img = element('img');
+                img.src = figure;
+                img.alt = '';
+                img.loading = 'lazy';
+                image.append(badge, img);
+                box.append(image);
+            } else {
+                text.append(badge);
+            }
+
+            const title = element('p', 'paper-title');
+            const link = element('a', '', publication.title || 'Untitled publication');
             link.href = publication.link || scholarData.profile;
             link.target = '_blank';
             link.rel = 'noreferrer';
-            link.textContent = publication.title || 'Untitled publication';
             title.append(link);
-            item.append(title);
 
-            appendAuthors(item, publication.authors);
-
-            const venue = document.createElement('span');
-            venue.className = 'pub-venue';
-            venue.textContent = `${publication.venue || ''}${publication.venue && publication.year ? ', ' : ''}${publication.year || ''}.`;
-            item.append(venue);
-
+            const venue = element('p', 'paper-venue');
+            venue.append(element('em', '', [publication.venue, publication.year].filter(Boolean).join(', ')));
             const citations = Number(publication.citations || 0);
-            if (citations > 0) {
-                const cite = document.createElement('span');
-                cite.className = 'pub-cite';
-                cite.textContent = language === 'zh' ? `引用 ${citations}` : `cited by ${citations}`;
-                item.append(cite);
-            }
+            if (citations > 0) venue.append(document.createTextNode(language === 'zh' ? ` · 引用 ${citations}` : ` · cited by ${citations}`));
 
-            fragment.append(item);
+            text.append(title, renderAuthors(publication.authors), venue);
+            box.append(text);
+            fragment.append(box);
         });
 
         list.replaceChildren(fragment);

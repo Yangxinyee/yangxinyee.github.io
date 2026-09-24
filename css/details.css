@@ -1,26 +1,39 @@
-/* Detail pages — same plain academic style as the main page. */
+/* Detail pages — shares the masthead and typography of the main page. */
 
-.header-right {
-    display: flex;
-    align-items: baseline;
-    gap: 1.25rem;
-    font-size: .95rem;
+.detail-main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 2rem 3rem;
+}
+
+.detail h1 {
+    margin: 0 0 .3rem;
+    color: var(--heading);
+    font-size: 1.6em;
+    line-height: 1.2;
 }
 
 .detail-kicker {
-    margin: 0 0 .35rem;
-    font-size: .85rem;
+    margin: 0 0 .5rem;
+    font-size: .85em;
     letter-spacing: .08em;
     text-transform: uppercase;
 }
 
-.detail-org { margin: 0 0 .2rem; font-size: 1.05rem; }
-.detail-meta { margin: 0 0 1.25rem; font-size: .92rem; }
+.detail-org { margin: 0 0 .2rem; font-size: 1.05em; }
+.detail-meta { margin: 0 0 1.25rem; font-size: .92em; }
 
 .detail h2 {
-    margin-top: 2rem;
-    font-size: 1.15rem;
+    margin: 1.6em 0 .7em;
+    padding-bottom: .5em;
+    border-bottom: 1px solid var(--line);
+    color: var(--heading);
+    font-size: 1.2em;
 }
 
-.detail-list { margin: 0 0 1rem; padding-left: 1.3rem; }
+.detail-list { margin: 0 0 1rem; padding-left: 1.5rem; }
 .detail-list li { margin-bottom: .45rem; }
+
+@media (max-width: 900px) {
+    .detail-main { padding: 1.25rem 16px 2.5rem; }
+}
