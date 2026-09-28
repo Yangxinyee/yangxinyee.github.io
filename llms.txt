@@ -20,7 +20,7 @@ Multimodal LLMs; medical image analysis; AI in healthcare; agentic AI; EHR-based
 
 ## Open-source projects
 
-- [EHR2Trace](https://github.com/Yangxinyee/ehr2trace): converts hospital EHR exports into OMOP CDM 5.4 and MEDS, with row-level source lineage and 55 validation checks on the published outputs. Built for patient world models and clinical agents. Apache-2.0.
+- [EHR2Trace](https://yangxinyee.github.io/projects/ehr2trace/) ([code](https://github.com/Yangxinyee/ehr2trace)): converts hospital EHR exports into OMOP CDM 5.4 and MEDS from one canonical layer, with row-level source lineage, separate event and availability times, and 55 validation checks on the published outputs. Built for patient world models and clinical agents. Apache-2.0. The project page compares it with MEDS-Extract, meds_etl, ehr2meds and the OHDSI MIMIC-IV ETL.
 - [vrm-edge-triage](https://github.com/Yangxinyee/vrm-edge-triage): code for the Smart Health 2026 paper on confidence-gated cloud-edge cascade triage via variational risk minimization (VRM) for chest X-ray triage.
 - [Q-DISTILL](https://github.com/Yangxinyee/Q-DISTILL): self-supervised Q-Former distillation for image-only chest X-ray triage using MedGemma pseudo-reports; accuracy 76.5% to 89.1%. Part of the Smart Health 2026 work.
 - [brain_mri_preprocess_pipeline](https://github.com/Yangxinyee/brain_mri_preprocess_pipeline): stroke brain MRI preprocessing (DICOM to NIfTI, registration, skull stripping, encryption).
