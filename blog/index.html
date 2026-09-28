@@ -23,6 +23,12 @@
       "blogPost": [
         {
           "@type": "BlogPosting",
+          "headline": "Stress-Testing Chest X-ray Vision-Language Models Before Deployment",
+          "url": "https://yangxinyee.github.io/blog/cxr-vlm-stress-test/",
+          "datePublished": "2026-09-28"
+        },
+        {
+          "@type": "BlogPosting",
           "headline": "How to Keep Data Lineage When Building EHR Training Datasets",
           "url": "https://yangxinyee.github.io/blog/ehr-data-lineage/",
           "datePublished": "2026-09-28"
@@ -36,6 +42,11 @@
     <nav class="crumbs"><a href="../">Xinye Yang</a> / Blog</nav>
     <header><h1>Blog</h1><p class="venue">Notes on EHR data infrastructure, patient world models, and reliable medical imaging AI.</p></header>
     <ul class="post-list">
+        <li>
+            <a class="post-title" href="cxr-vlm-stress-test/">Stress-Testing Chest X-ray Vision-Language Models Before Deployment</a>
+            <p class="venue"><time datetime="2026-09-28">September 28, 2026</time> · 7 min read</p>
+            <p>Before a medical vision-language model (VLM) reads chest X-rays in a clinical workflow, test it the way it will be used: with more than one prompt, more than one workflow, and more than one metric. In our CHASE 2026 workshop paper we ran CheXagent, MedGemma-4B and MedGemma-27B through 36 configurations on two balanced 50-study cohorts. Exact-match accuracy made conservative models look good. A multi-agent pipeline lifted one model&#x27;s macro F1 from 0.138 to 0.335 and dropped another&#x27;s from 0.457 to 0.118. The practical answer is to decide per case whether the extra reasoning is worth it. The code, per-case MIMIC-CXR results and tables are in cxr-vlm-routing.</p>
+        </li>
         <li>
             <a class="post-title" href="ehr-data-lineage/">How to Keep Data Lineage When Building EHR Training Datasets</a>
             <p class="venue"><time datetime="2026-09-28">September 28, 2026</time> · 9 min read</p>
