@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Xinye Yang</title>
+    <meta name="description" content="Notes by Xinye Yang on EHR data infrastructure, patient world models, and reliable medical imaging AI.">
+    <link rel="canonical" href="https://yangxinyee.github.io/blog/">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../css/paper.css?v=1">
+    <link rel="stylesheet" href="../css/blog.css?v=1">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Xinye Yang's Blog",
+      "url": "https://yangxinyee.github.io/blog/",
+      "author": {
+        "@type": "Person",
+        "name": "Xinye Yang",
+        "url": "https://yangxinyee.github.io/"
+      },
+      "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "headline": "How to Keep Data Lineage When Building EHR Training Datasets",
+          "url": "https://yangxinyee.github.io/blog/ehr-data-lineage/",
+          "datePublished": "2026-09-28"
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper">
+    <nav class="crumbs"><a href="../">Xinye Yang</a> / Blog</nav>
+    <header><h1>Blog</h1><p class="venue">Notes on EHR data infrastructure, patient world models, and reliable medical imaging AI.</p></header>
+    <ul class="post-list">
+        <li>
+            <a class="post-title" href="ehr-data-lineage/">How to Keep Data Lineage When Building EHR Training Datasets</a>
+            <p class="venue"><time datetime="2026-09-28">September 28, 2026</time> · 9 min read</p>
+            <p>An EHR training dataset is only as trustworthy as your ability to answer one question for any row in it: which source rows produced this, and what did the model know at that moment? In practice that means giving every raw row an ID at ingest, deriving every output format from a single canonical event layer, storing event time and information-availability time separately, refusing to guess, making builds reproducible by hash, and validating the artifacts you ship against something independent of them. This post walks through each practice, with examples from building EHR2Trace, an open-source converter from hospital EHR exports to OMOP CDM 5.4 and MEDS.</p>
+        </li>
+    </ul>
+    <footer><p><a href="../">Xinye Yang (Charlie)</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p></footer>
+</main>
+</body>
+</html>
