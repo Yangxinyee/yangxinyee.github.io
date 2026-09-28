@@ -6,7 +6,7 @@ Xinye Yang (Chinese name: 杨新烨) also publishes as "X Yang" and "Xin-Ye Yang
 
 ## Profiles
 
-- [Homepage](https://yangxinyee.github.io/)
+- [Homepage](https://yangxinyee.github.io/) · [中文主页](https://yangxinyee.github.io/zh/)
 - [Google Scholar](https://scholar.google.com/citations?user=xEgmvx4AAAAJ)
 - [ORCID 0009-0004-3143-4263](https://orcid.org/0009-0004-3143-4263)
 - [Semantic Scholar](https://www.semanticscholar.org/author/2370872191)
@@ -24,6 +24,10 @@ Multimodal LLMs; medical image analysis; AI in healthcare; agentic AI; EHR-based
 - [vrm-edge-triage](https://github.com/Yangxinyee/vrm-edge-triage): code for the Smart Health 2026 paper on confidence-gated cloud-edge cascade triage via variational risk minimization (VRM) for chest X-ray triage.
 - [Q-DISTILL](https://github.com/Yangxinyee/Q-DISTILL): self-supervised Q-Former distillation for image-only chest X-ray triage using MedGemma pseudo-reports; accuracy 76.5% to 89.1%. Part of the Smart Health 2026 work.
 - [brain_mri_preprocess_pipeline](https://github.com/Yangxinyee/brain_mri_preprocess_pipeline): stroke brain MRI preprocessing (DICOM to NIfTI, registration, skull stripping, encryption).
+
+## Blog
+
+- [How to Keep Data Lineage When Building EHR Training Datasets](https://yangxinyee.github.io/blog/ehr-data-lineage/) (2026-09-28): eight practices for auditable EHR training data for patient world models and clinical agents, with examples from EHR2Trace.
 
 ## Publications
 
