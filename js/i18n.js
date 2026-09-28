@@ -219,9 +219,19 @@ function getSavedLanguage() {
     try { return localStorage.getItem('preferredLanguage') || 'en'; } catch (_) { return 'en'; }
 }
 
+// Pages with a fixed language (data-page-lang on <html>) render that language and switch by URL: / is English, /zh/ is Chinese.
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-lang]').forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
-    setLanguage(getSavedLanguage());
+    const pageLang = document.documentElement.dataset.pageLang;
+    document.querySelectorAll('[data-lang]').forEach((button) => button.addEventListener('click', () => {
+        const lang = button.dataset.lang;
+        if (pageLang && lang !== pageLang) {
+            try { localStorage.setItem('preferredLanguage', lang); } catch (_) { /* preference is optional */ }
+            window.location.href = (lang === 'zh' ? '/zh/' : '/') + window.location.hash;
+            return;
+        }
+        setLanguage(lang);
+    }));
+    setLanguage(pageLang || getSavedLanguage());
 });
 
 window.siteTranslations = translations;
