@@ -1,8 +1,8 @@
 const translations = {
     en: {
         meta: {
-            title: "Xinye Yang (Charlie) | Software Development Engineer at AWS",
-            description: "Xinye Yang (Charlie) is a Software Development Engineer at AWS building agentic AI developer experiences and researching medical imaging AI agents."
+            title: "Xinye Yang (Charlie) | AI for Healthcare Research · Software Engineer at AWS",
+            description: "Xinye Yang (Charlie) is a Software Development Engineer at AWS Kiro and a research assistant at the University of Colorado Anschutz School of Medicine, working on EHR-based patient world models, reliable medical imaging AI, and clinical AI agents."
         },
         nav: { home: "Homepage", about: "About Me", news: "News", publications: "Publications", experience: "Experience", education: "Education", honors: "Honors", skills: "Skills", services: "Services" },
         common: { skip: "Skip to content", details: "Details", present: "Present", advisedBy: "Advised by", and: "and" },
@@ -95,8 +95,8 @@ const translations = {
     },
     zh: {
         meta: {
-            title: "杨新烨 | AWS 软件开发工程师",
-            description: "杨新烨是 AWS 软件开发工程师，专注于智能代理 AI、开发者工具与医疗影像 AI 智能体研究。"
+            title: "杨新烨（Xinye Yang）| 医疗 AI 研究 · AWS 软件工程师",
+            description: "杨新烨（Xinye Yang，Charlie）是 AWS Kiro 软件开发工程师、科罗拉多大学安舒茨医学院研究助理，研究基于 EHR 的患者世界模型、可靠的医学影像 AI 与临床 AI 智能体。"
         },
         nav: { home: "主页", about: "关于我", news: "动态", publications: "论文", experience: "经历", education: "教育", honors: "荣誉", skills: "技能", services: "学术服务" },
         common: { skip: "跳转到正文", details: "详情", present: "至今", advisedBy: "导师：", and: "和" },
