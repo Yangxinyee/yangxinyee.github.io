@@ -187,6 +187,11 @@
         <details><summary>What problem does this paper solve?</summary><p>Chest X-ray triage decisions are made before the radiology report exists, so models that need both image and report cannot be used at triage time. The paper trains an image-only model that still benefits from report knowledge.</p></details><details><summary>What is Variational Risk Minimization (VRM)?</summary><p>A distillation framework that treats several LVLM-generated report variants as Monte Carlo samples of possible clinical interpretations, and trains the student against the teacher&#x27;s marginalized distribution rather than one teacher target.</p></details><details><summary>How does the cloud-edge cascade work?</summary><p>A compact student model runs at the edge and handles confident cases; uncertain cases are escalated to the cloud. The reported operating point is AUC 0.941 at 103 ms average latency with 20.3% of cases escalated.</p></details><details><summary>Is the code available?</summary><p>Yes. The VRM implementation is at github.com/Yangxinyee/vrm-edge-triage, and the related Q-Former distillation work is at github.com/Yangxinyee/Q-DISTILL.</p></details><details><summary>Where was it presented?</summary><p>It was published in Smart Health (2026) and presented as an oral at IEEE/ACM CHASE 2026.</p></details>
     </section>
 
+    <section>
+        <h2>Related work by the authors</h2>
+        <ul><li><a href="../cxr-vlm-reliability-routing/">Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models</a>. CHASE 2026 Workshop. When to escalate from a single VLM to a multi-agent pipeline, measured across 36 configurations.</li><li><a href="../lung-disease-cnn/">Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression</a>. ISCID 2022. Earlier chest X-ray classification work.</li></ul>
+    </section>
+
     <footer>
         <p><a href="../../">Xinye Yang (Charlie)</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ" target="_blank" rel="noreferrer">Google Scholar</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
     </footer>
