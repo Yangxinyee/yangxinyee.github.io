@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EHR2Trace: EHR to OMOP CDM and MEDS with Row-Level Lineage | Xinye Yang</title>
+    <meta name="description" content="EHR2Trace is an open-source converter from hospital EHR exports to OMOP CDM 5.4 and MEDS 0.4, derived from one canonical event layer, with row-level source lineage, separate event and availability times, and 55 validation checks. Compared with MEDS-Extract, meds_etl, ehr2meds and the OHDSI MIMIC-IV ETL.">
+    <meta name="author" content="Xinye Yang">
+    <link rel="canonical" href="https://yangxinyee.github.io/projects/ehr2trace/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <link rel="stylesheet" href="../../css/blog.css?v=1">
+    <style>
+        .post article td.y { font-weight:600; }
+        .table-wrap { overflow-x:auto; }
+        .table-wrap table { min-width:720px; }
+        .disclosure { border-left:3px solid var(--accent); background:var(--soft); padding:10px 14px; border-radius:0 6px 6px 0; font-size:15px; }
+    </style>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="EHR2Trace: EHR to OMOP CDM and MEDS with Row-Level Lineage">
+    <meta property="og:description" content="Open-source converter from hospital EHR exports to OMOP CDM 5.4 and MEDS 0.4 with row-level lineage, availability times and 55 validation checks.">
+    <meta property="og:url" content="https://yangxinyee.github.io/projects/ehr2trace/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareSourceCode",
+      "name": "EHR2Trace",
+      "alternateName": "ehr2trace",
+      "description": "A deterministic converter from local hospital EHR exports to OMOP CDM 5.4 and MEDS 0.4. Both targets are derived from one canonical event layer; every published row links to the source rows it came from; event time and information-availability time are stored separately; medication orders, dispensing and administration stay distinct; and 55 checks validate the saved outputs.",
+      "url": "https://yangxinyee.github.io/projects/ehr2trace/",
+      "codeRepository": "https://github.com/Yangxinyee/ehr2trace",
+      "programmingLanguage": "Python",
+      "runtimePlatform": "Python 3.11+",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "version": "0.7.0",
+      "dateModified": "2026-09-21",
+      "keywords": ["OMOP CDM", "MEDS", "electronic health records", "ETL", "data lineage", "data provenance", "ETL validation", "temporal leakage", "clinical machine learning", "patient world models", "MIMIC-IV"],
+      "author": [
+        {"@type": "Person", "name": "Xinye Yang", "url": "https://yangxinyee.github.io/", "sameAs": ["https://orcid.org/0009-0004-3143-4263", "https://github.com/Yangxinyee"]},
+        {"@type": "Person", "name": "Yuli Wang"},
+        {"@type": "Person", "name": "Cheng Ting Lin"},
+        {"@type": "Person", "name": "Harrison Bai"}
+      ],
+      "isAccessibleForFree": true,
+      "subjectOf": {
+        "@type": "BlogPosting",
+        "name": "How to Keep Data Lineage When Building EHR Training Datasets",
+        "url": "https://yangxinyee.github.io/blog/ehr-data-lineage/"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "What is EHR2Trace?", "acceptedAnswer": {"@type": "Answer", "text": "EHR2Trace is open-source research software (Apache-2.0) that converts hospital EHR exports into OMOP CDM 5.4 and MEDS 0.4 from one canonical event layer, with row-level source lineage, separate event and availability times, and 55 validation checks on the saved outputs."}},
+        {"@type": "Question", "name": "How is EHR2Trace different from MEDS-Extract or meds_etl?", "acceptedAnswer": {"@type": "Answer", "text": "MEDS-Extract and meds_etl produce MEDS only. EHR2Trace produces both OMOP CDM and MEDS from one canonical layer, links every published event to its source rows, stores information-availability time next to event time, keeps medication orders, dispensing and administration distinct, and validates the outputs against each other. MEDS-Extract is the more mature and widely used MEDS pipeline."}},
+        {"@type": "Question", "name": "How is EHR2Trace different from the OHDSI MIMIC-IV to OMOP ETL?", "acceptedAnswer": {"@type": "Answer", "text": "The OHDSI MIMIC ETL converts MIMIC-IV only, into OMOP, on Google BigQuery, and ships curated custom concept mappings, so it maps far more rows to concepts. EHR2Trace is configured for any delimited or spreadsheet export, writes OMOP and MEDS, and keeps row-level lineage in the published output."}},
+        {"@type": "Question", "name": "Can I try EHR2Trace without credentialed data access?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It runs unchanged on the openly licensed MIMIC-IV demonstration subset (100 patients) in a few minutes on a laptop, and the same conversion runs in CI on every push."}},
+        {"@type": "Question", "name": "Does EHR2Trace use large language models to convert data?", "acceptedAnswer": {"@type": "Answer", "text": "No. A language model never parses dates, numbers or table structure, never invents a concept ID and never writes to an output layer. An optional local model can rank terminology candidates for a human reviewer, and whether that helps is measured against confirmed decisions."}},
+        {"@type": "Question", "name": "How do I cite EHR2Trace?", "acceptedAnswer": {"@type": "Answer", "text": "Cite the software using CITATION.cff in the repository: Xinye Yang, Yuli Wang, Cheng Ting Lin, Harrison Bai. EHR2Trace, version 0.7.0, 2026, https://github.com/Yangxinyee/ehr2trace. A companion paper is forthcoming."}}
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper post">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / Projects / EHR2Trace</nav>
+    <header>
+        <div class="badges"><span class="badge">Open source</span><span class="badge">Apache-2.0</span><span class="badge">Python 3.11+</span><span class="badge">OMOP CDM 5.4</span><span class="badge">MEDS 0.4</span><span class="badge">v0.7.0</span></div>
+        <h1>EHR2Trace: auditable EHR conversion to OMOP CDM and MEDS</h1>
+        <p class="authors"><strong>Xinye Yang</strong>, Yuli Wang, Cheng Ting Lin, Harrison Bai</p>
+        <p class="venue">University of Colorado Anschutz School of Medicine · Johns Hopkins University School of Medicine</p>
+        <div class="links"><a class="btn" href="https://github.com/Yangxinyee/ehr2trace" target="_blank" rel="noreferrer">Code on GitHub</a><a class="btn" href="https://github.com/Yangxinyee/ehr2trace/blob/main/docs/FAULT_CATALOGUE.md" target="_blank" rel="noreferrer">Fault catalogue</a><a class="btn" href="https://github.com/Yangxinyee/ehr2trace/tree/main/experiments" target="_blank" rel="noreferrer">Experiments</a><a class="btn" href="../../blog/ehr-data-lineage/">Blog: data lineage</a><a class="btn btn-quiet" href="#cite">Cite</a></div>
+    </header>
+
+    <article>
+    <section>
+        <h2>TL;DR</h2>
+        <p class="tldr">EHR2Trace converts hospital EHR exports into OMOP CDM 5.4 and MEDS 0.4 from one canonical layer of patient events. Every published row links back to the source rows it came from, event time and information-availability time are stored separately, and 55 checks run on the saved outputs. Where the data can't answer a question, the converter stops and says so instead of guessing. It is built for preparing patient histories for patient world models, clinical agents and offline reinforcement learning.</p>
+        <p class="tldr-zh" lang="zh-CN">中文简介：EHR2Trace 是一个开源工具，把医院 EHR 导出数据从同一个规范事件层同时转换为 OMOP CDM 5.4 和 MEDS 0.4。每条输出记录都能追溯到来源行；事件发生时间与信息可得时间分开存储，避免时间泄漏；55 项检查直接校验落盘结果；数据回答不了的问题会阻断运行，不做猜测。面向患者世界模型、临床智能体和离线强化学习的训练数据准备。</p>
+    </section>
+
+    <section>
+        <h2>What it does</h2>
+        <ul>
+            <li><strong>One canonical layer, two targets.</strong> OMOP and MEDS are each derived from the same canonical events, not one from the other, so identity, time and unit decisions are made once.</li>
+            <li><strong>Row-level lineage.</strong> Every canonical, OMOP and MEDS record carries a <code>source_row_id</code>; OMOP adds an <code>etl_audit</code> lineage table. <code>ehr2trace trace --patient &lt;key&gt;</code> follows one patient through every layer.</li>
+            <li><strong>Two clocks per event.</strong> Clinical time and the time the information became available are stored separately, so a downstream episode builder can avoid temporal leakage.</li>
+            <li><strong>Medication actions stay distinct.</strong> Orders, pharmacy dispensing and administration are separate records.</li>
+            <li><strong>No guessing.</strong> <code>inspect</code> lists blockers such as an unknown source timezone and exits non-zero until they're answered in configuration. Uncertain values go to quarantine or a review queue.</li>
+            <li><strong>Reproducible by hash.</strong> Outputs are content-addressed by input, configuration and code version; four concurrency settings produce one digest.</li>
+            <li><strong>Validation on what ships.</strong> 55 checks, including cross-layer checks (MEDS concepts against OMOP concepts, published deaths against canonical deaths, merged rows against source rows). Skipped checks are reported as skipped, not passed.</li>
+            <li><strong>Configuration, not code, per site.</strong> Everything dataset-specific lives in one YAML file; a test fails the build if a hospital-specific string appears in the core code.</li>
+            <li><strong>Language models propose, people decide.</strong> A model never parses data, invents a concept ID or writes an output layer; that rule is enforced by a test.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>How it works</h2>
+<pre><code>raw export (read-only)          delimited text, spreadsheets, or prepared Parquet
+    ↓ ingest                    deterministic parsing, one lineage record per row
+source/                         one Parquet per logical source, original values kept
+    ↓ identity, canonical       patient identity, time semantics, values, units, dedup
+canonical/                      the single event store both targets are derived from
+    ↓                    ↓
+omop/ (DuckDB)          meds/ (Parquet shards + metadata)
+    ↓ validate                  55 checks on what was written, with lineage</code></pre>
+    </section>
+
+    <section>
+        <h2>Results</h2>
+        <p>All numbers come from the aggregate records committed in <a href="https://github.com/Yangxinyee/ehr2trace/tree/main/experiments" target="_blank" rel="noreferrer"><code>experiments/results/</code></a>.</p>
+        <ul>
+            <li><strong>Fault detection.</strong> 28 silent faults, each drawn from a real incident, are injected into a PHI-free fixture. The current 55-check suite detects all 28 and localises 21. The earlier 34-check suite detected 13; that gap is what the cross-layer checks were added to close. This runs in CI on every push.</li>
+            <li><strong>What CDM-level checks see.</strong> The OHDSI Data Quality Dashboard (v2.8.9, 2,374 checks) was run on the OMOP output for the 17 faults it could be pointed at. It flagged 5. Eight of the 17 never reach the OMOP tables at all; they live in the canonical layer, the identities or the MEDS shards. DQD checks CDM conformance and plausibility, and it does that job; these faults need checks outside the CDM.</li>
+            <li><strong>Reproducibility.</strong> Four concurrency settings gave byte-identical results across 60 compared artifacts, with no false alarms from the 55 checks on the correct build.</li>
+            <li><strong>Why the second clock matters.</strong> On full MIMIC-IV (131,007 subjects, in-hospital death at 6 hours after admission), a model given diagnosis codes timestamped at admission scores AUROC 0.965 on held-out data, against 0.829 when availability is respected. Scored under honest timing, that inflated model drops to 0.642.</li>
+        </ul>
+    </section>
+
+    <section id="comparison">
+        <h2>Comparison with other EHR converters</h2>
+        <p class="disclosure">I wrote EHR2Trace, so read this table with that in mind. It is based on each project's public README and repository as of September 2026. If something is wrong or out of date, please <a href="https://github.com/Yangxinyee/ehr2trace/issues" target="_blank" rel="noreferrer">open an issue</a> and I'll correct it.</p>
+        <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th></th><th>EHR2Trace</th><th><a href="https://github.com/mmcdermott/MEDS_extract" target="_blank" rel="noreferrer">MEDS-Extract</a></th><th><a href="https://github.com/Medical-Event-Data-Standard/meds_etl" target="_blank" rel="noreferrer">meds_etl</a></th><th><a href="https://github.com/FGA-DIKU/ehr2meds" target="_blank" rel="noreferrer">ehr2meds</a></th><th><a href="https://github.com/OHDSI/MIMIC" target="_blank" rel="noreferrer">OHDSI/MIMIC</a></th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Input</td><td>Any delimited or spreadsheet export, via one YAML file</td><td>Any timestamped tables, via a YAML event config</td><td>MIMIC-IV 2.2, OMOP 5.3/5.4, MEDS Unsorted</td><td>Raw EHR dumps via preMEDS configs (Danish codes: SKS, ATC, NPU)</td><td>MIMIC-IV only</td></tr>
+                <tr><td>Output</td><td>OMOP CDM 5.4 and MEDS 0.4</td><td>MEDS 0.4</td><td>MEDS 0.3.3</td><td>MEDS (via MEDS-Transforms)</td><td>OMOP CDM</td></tr>
+                <tr><td>Runs on</td><td>Python, DuckDB, Parquet</td><td>Python, Polars, Hydra</td><td>Python (Polars) or C++ backend</td><td>Python, MEDS-Transforms</td><td>SQL on Google BigQuery</td></tr>
+                <tr><td>Source link in published output</td><td class="y">Row-level <code>source_row_ids</code>; OMOP <code>etl_audit</code> table</td><td>Config block (<code>source_block</code>)</td><td>Not documented</td><td><code>row_idx</code> column in the default pipeline</td><td>Row IDs in intermediate tables; removed at unload</td></tr>
+                <tr><td>Availability time stored apart from event time</td><td class="y">Yes, on every event</td><td colspan="3">No dedicated field (an extra column could be configured)</td><td>No CDM field for it</td></tr>
+                <tr><td>Order / dispense / administration kept distinct</td><td class="y">Yes, by design</td><td colspan="3">Depends on configuration</td><td>Drug type concept per row</td></tr>
+                <tr><td>Checks on the published output</td><td class="y">55, incl. cross-layer; 28 injected faults gated in CI</td><td>Unit and integration tests of the pipeline</td><td>Unit tests</td><td>Not documented</td><td>Unit tests and QA metrics; DQD-compatible</td></tr>
+                <tr><td>Stops on unanswered questions</td><td class="y">Yes (<code>inspect</code> blockers)</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td>Maturity</td><td>New (v0.7.0), one team, not yet on PyPI</td><td class="y">Established: on PyPI, docs site, Zenodo DOI</td><td>On PyPI</td><td>Research group tool</td><td class="y">Official OHDSI ETL, works with ATLAS and DQD</td></tr>
+                <tr><td>License</td><td>Apache-2.0</td><td>MIT</td><td>Apache-2.0</td><td>MIT</td><td>Apache-2.0</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Measured on the same data: MIMIC-IV demo (100 patients)</h3>
+        <p>The feature table above comes from documentation. This one comes from reading the files. For the two baselines I used the conversions their own maintainers published for the open MIMIC-IV demonstration subset, so nothing depends on me running someone else's tool well. The script is <a href="https://github.com/Yangxinyee/ehr2trace/blob/main/experiments/run_converter_comparison.py" target="_blank" rel="noreferrer"><code>run_converter_comparison.py</code></a>.</p>
+        <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th></th><th>EHR2Trace (MEDS + OMOP)</th><th>Published demo MEDS<br><span class="note">MEDS-Transforms 0.0.9, MEDS 0.3.3</span></th><th>Published demo OMOP<br><span class="note">OHDSI/MIMIC, CDM 5.3.1</span></th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Events (MEDS) / clinical rows (OMOP)</td><td>971,545 / 897,487</td><td>916,166</td><td>423,057</td></tr>
+                <tr><td>Events that name their source table and row</td><td class="y">971,545 (100%)</td><td>0; 872,430 (95.2%) carry a foreign key such as <code>hadm_id</code> or <code>emar_id</code></td><td>0 (lineage fields are removed at unload)</td></tr>
+                <tr><td>Events with a later availability time</td><td class="y">693,360 (71.4%)</td><td>No availability column</td><td>No availability field</td></tr>
+                <tr><td>Medication actions</td><td>17,498 orders, 15,225 dispenses, 81,638 administrations</td><td>63,696 <code>MEDICATION</code> events; action inferable from keys (35,835 administration, 27,721 order)</td><td>18,229 drug rows, all typed as prescription</td></tr>
+                <tr><td>OMOP rows mapped to a concept</td><td>169,717 of 897,487 (18.9%)</td><td>—</td><td class="y">415,661 of 423,057 (98.3%)</td></tr>
+            </tbody>
+        </table>
+        </div>
+        <p>The last row is where EHR2Trace is clearly behind. The OHDSI ETL ships curated custom mappings for MIMIC-specific codes. EHR2Trace maps a code only when an exact or unambiguous vocabulary lookup, or a confirmed human decision, resolves it; the rest stay at concept 0 and go to the review queue. If concept coverage for OHDSI analytics on MIMIC-IV is what you need today, use the OHDSI ETL.</p>
+
+        <h3>Which one should you use?</h3>
+        <ul>
+            <li><strong>MIMIC-IV into OMOP for ATLAS or cohort studies:</strong> <a href="https://github.com/OHDSI/MIMIC" target="_blank" rel="noreferrer">OHDSI/MIMIC</a>.</li>
+            <li><strong>MEDS for foundation-model training, from MIMIC-IV or any timestamped tables:</strong> <a href="https://github.com/mmcdermott/MEDS_extract" target="_blank" rel="noreferrer">MEDS-Extract</a>, the most established MEDS extraction pipeline.</li>
+            <li><strong>MEDS from an existing OMOP database:</strong> <a href="https://github.com/Medical-Event-Data-Standard/meds_etl" target="_blank" rel="noreferrer">meds_etl</a>.</li>
+            <li><strong>Danish registry and hospital data into MEDS:</strong> <a href="https://github.com/FGA-DIKU/ehr2meds" target="_blank" rel="noreferrer">ehr2meds</a>.</li>
+            <li><strong>A local hospital export into both OMOP and MEDS, where you must be able to audit any row back to its source and avoid temporal leakage:</strong> EHR2Trace.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Try it on open data</h2>
+        <p>The MIMIC-IV demonstration subset is openly licensed and needs no credential. This takes a few minutes on a laptop.</p>
+<pre><code>git clone https://github.com/Yangxinyee/ehr2trace && cd ehr2trace
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.lock -e ".[dev]"
+wget -r -N -c -np -nH --cut-dirs=1 -P data https://physionet.org/files/mimic-iv-demo/2.2/
+python3 tools/prepare_mimiciv.py --mimic-root data/mimic-iv-demo/2.2 --out prepared/mimiciv
+export MIMICIV_DATA_ROOT=$PWD/prepared EHR_WORK_ROOT=$PWD/work OFFLINE_MODE=1
+for step in inspect ingest identity canonical omop meds validate; do
+  .venv/bin/ehr2trace $step -d datasets/mimiciv.yaml
+done
+.venv/bin/ehr2trace trace -d datasets/mimiciv.yaml --patient &lt;key&gt;</code></pre>
+    </section>
+
+    <section>
+        <h2>Limitations</h2>
+        <ul>
+            <li>Research software from one team, at v0.7.0. Not yet on PyPI; install from source.</li>
+            <li>OMOP concept coverage depends on the vocabulary you install from Athena and on reviewed decisions, and starts low on a new site (see above).</li>
+            <li>Full MIMIC-IV converts on 48 cores and 251 GB of memory; the demo subset runs on a laptop.</li>
+            <li>Episodes, rewards and models are downstream of EHR2Trace and not included.</li>
+            <li>The companion paper is forthcoming, so the method hasn't been peer reviewed yet.</li>
+        </ul>
+    </section>
+
+    <section id="cite">
+        <h2>Citation</h2>
+        <p>Xinye Yang, Yuli Wang, Cheng Ting Lin, Harrison Bai. EHR2Trace: a deterministic converter from local EHR exports to OMOP CDM 5.4 and MEDS, with row-level lineage and an executable correctness contract. Version 0.7.0, 2026. https://github.com/Yangxinyee/ehr2trace</p>
+<pre><code>@software{yang2026ehr2trace,
+  author  = {Yang, Xinye and Wang, Yuli and Lin, Cheng Ting and Bai, Harrison},
+  title   = {{EHR2Trace}: a deterministic converter from local {EHR} exports to {OMOP CDM} 5.4 and {MEDS}, with row-level lineage and an executable correctness contract},
+  version = {0.7.0},
+  year    = {2026},
+  url     = {https://github.com/Yangxinyee/ehr2trace},
+  license = {Apache-2.0}
+}</code></pre>
+        <p class="note">Companion paper: <em>EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents</em> (forthcoming).</p>
+    </section>
+
+    <section>
+        <h2>FAQ</h2>
+        <details><summary>What is EHR2Trace?</summary><p>Open-source research software (Apache-2.0) that converts hospital EHR exports into OMOP CDM 5.4 and MEDS 0.4 from one canonical event layer, with row-level source lineage, separate event and availability times, and 55 validation checks on the saved outputs.</p></details>
+        <details><summary>How is it different from MEDS-Extract or meds_etl?</summary><p>MEDS-Extract and meds_etl produce MEDS only. EHR2Trace produces both OMOP and MEDS from one canonical layer, links every published event to its source rows, stores availability time next to event time, keeps medication actions distinct, and validates the outputs against each other. MEDS-Extract is the more mature and widely used MEDS pipeline.</p></details>
+        <details><summary>How is it different from the OHDSI MIMIC-IV to OMOP ETL?</summary><p>The OHDSI ETL converts MIMIC-IV only, into OMOP, on Google BigQuery, and ships curated custom mappings, so it maps far more rows to concepts. EHR2Trace is configured for any delimited or spreadsheet export, writes OMOP and MEDS, and keeps row-level lineage in the published output.</p></details>
+        <details><summary>Can I try it without credentialed data access?</summary><p>Yes. It runs unchanged on the openly licensed MIMIC-IV demonstration subset (100 patients) in a few minutes on a laptop, and the same conversion runs in CI on every push.</p></details>
+        <details><summary>Does it use large language models to convert data?</summary><p>No. A language model never parses dates, numbers or table structure, never invents a concept ID and never writes to an output layer. An optional local model can rank terminology candidates for a human reviewer, and whether that helps is measured against confirmed decisions.</p></details>
+        <details><summary>How do I cite it?</summary><p>Use the BibTeX above or CITATION.cff in the repository. A companion paper is forthcoming.</p></details>
+    </section>
+    </article>
+
+    <footer>
+        <p><a href="../../">Xinye Yang (Charlie)</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ" target="_blank" rel="noreferrer">Google Scholar</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a> · Last reviewed 2026-09-28</p>
+    </footer>
+</main>
+</body>
+</html>
