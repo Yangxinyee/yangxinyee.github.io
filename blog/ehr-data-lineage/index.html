@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Keep Data Lineage When Building EHR Training Datasets | Xinye Yang</title>
+    <meta name="description" content="Eight practices for keeping data lineage in EHR training datasets for patient world models and clinical agents: row-level source IDs, one canonical event layer, separate event and availability times, no guessing, reproducible builds, and validating what ships.">
+    <meta name="author" content="Xinye Yang">
+    <link rel="canonical" href="https://yangxinyee.github.io/blog/ehr-data-lineage/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <link rel="stylesheet" href="../../css/blog.css?v=1">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to Keep Data Lineage When Building EHR Training Datasets">
+    <meta property="og:description" content="Eight practices for keeping data lineage in EHR training datasets for patient world models and clinical agents: row-level source IDs, one canonical event layer, separate event and availability times, no guessing, reproducible builds, and validating what ships.">
+    <meta property="og:url" content="https://yangxinyee.github.io/blog/ehr-data-lineage/">
+    <meta property="article:published_time" content="2026-09-28">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "How to Keep Data Lineage When Building EHR Training Datasets",
+      "description": "Eight practices for keeping data lineage in EHR training datasets for patient world models and clinical agents: row-level source IDs, one canonical event layer, separate event and availability times, no guessing, reproducible builds, and validating what ships.",
+      "url": "https://yangxinyee.github.io/blog/ehr-data-lineage/",
+      "mainEntityOfPage": "https://yangxinyee.github.io/blog/ehr-data-lineage/",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-09-28",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Xinye Yang",
+        "url": "https://yangxinyee.github.io/",
+        "sameAs": [
+          "https://orcid.org/0009-0004-3143-4263",
+          "https://github.com/Yangxinyee"
+        ]
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Data lineage"
+        },
+        {
+          "@type": "Thing",
+          "name": "Electronic health records"
+        },
+        {
+          "@type": "Thing",
+          "name": "OMOP CDM"
+        },
+        {
+          "@type": "Thing",
+          "name": "MEDS"
+        }
+      ],
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "name": "EHR2Trace",
+        "codeRepository": "https://github.com/Yangxinyee/ehr2trace",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "keywords": "EHR, data lineage, MEDS, OMOP CDM, MIMIC-IV, temporal leakage, patient world models, clinical AI, EHR2Trace"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is data lineage in an EHR dataset?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The ability to trace any published record back to the exact source rows, configuration and code version that produced it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is OMOP or MEDS better for training models?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They serve different purposes: OMOP is a relational common data model built for observational research, while MEDS is a minimal event-stream format built for machine learning. Deriving both from one canonical layer avoids choosing and keeps them consistent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is temporal leakage in EHR data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Using information at a time before it was actually available, for example a diagnosis code entered days after the visit but timestamped at the visit. Storing information-availability time separately prevents it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use EHR2Trace with my hospital's export?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Everything dataset-specific lives in one YAML configuration; a new export needs a new configuration and no core code changes. The repository contains no patient data."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper post">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../">Blog</a></nav>
+    <header>
+        <h1>How to Keep Data Lineage When Building EHR Training Datasets</h1>
+        <p class="venue">Xinye Yang · <time datetime="2026-09-28">September 28, 2026</time> · 9 min read</p>
+    </header>
+    <article>
+<p><strong>TL;DR.</strong> An EHR training dataset is only as trustworthy as your ability to answer one question for any row in it: <em>which source rows produced this, and what did the model know at that moment?</em> In practice that means giving every raw row an ID at ingest, deriving every output format from a single canonical event layer, storing event time and information-availability time separately, refusing to guess, making builds reproducible by hash, and validating the artifacts you ship against something independent of them. This post walks through each practice, with examples from building <a href="https://github.com/Yangxinyee/ehr2trace">EHR2Trace</a>, an open-source converter from hospital EHR exports to OMOP CDM 5.4 and MEDS.</p>
+<hr />
+<h2>Why lineage matters more for training data than for analytics</h2>
+<p>Most EHR pipelines were designed for cohort studies and dashboards, where a small error shifts an estimate. Training data for patient world models, clinical agents and offline reinforcement learning fails differently. A model learns whatever regularity the data contains, including the ones the pipeline introduced. A diagnosis that appears a few hours before it was actually entered, a cohort label that leaks in as a condition, a lab value copied onto the wrong timestamp: each becomes a shortcut the model will happily learn, and none of them makes the pipeline crash.</p>
+<p>Lineage is what lets you find these problems after the fact. If every published event links back to the source rows it came from, you can audit a suspicious prediction down to the export that caused it. Without lineage, a clean-looking dataset is a claim you cannot check.</p>
+<h2>1. Treat the raw export as read-only and give every row an ID at ingest</h2>
+<p>The first transformation is where lineage is usually lost, so it is where it should start.</p>
+<ul>
+<li><strong>Never modify the raw export.</strong> Read it; write everything else somewhere else.</li>
+<li><strong>Assign a stable <code>source_row_id</code> to every row as it is parsed</strong>, and keep the original values next to any normalized ones.</li>
+<li><strong>Record a manifest</strong>: input files with their hashes, rows added or dropped by any preparation step, and every delivered file the pipeline did <em>not</em> read.</li>
+</ul>
+<p>If the source is a normalized relational database, flatten it into one table per logical source first, so that lineage stays row-level instead of pointing at a join.</p>
+<p>In EHR2Trace, <code>ingest</code> writes one Parquet file per logical source with the original values and a <code>source_row_id</code>, and the preparation scripts write a manifest of input and output hashes.</p>
+<h2>2. Derive every output format from one canonical event layer</h2>
+<p>It is tempting to write an OMOP ETL and a separate MEDS ETL. Two pipelines means two sets of decisions about identity, time and units, and they will drift.</p>
+<p>A better structure is:</p>
+<pre><code class="language-text">raw export (read-only)
+    ↓ ingest                one lineage record per row
+source/                     original values + source_row_id
+    ↓ identity, canonical   patient identity, time semantics, values, units, dedup
+canonical/                  the single event store
+    ↓                ↓
+omop/               meds/
+    ↓ validate      checks on what was written, with lineage
+</code></pre>
+<p>Every decision about what an event <em>is</em> happens once, in the canonical layer. Each canonical event keeps links to its source rows, and both targets inherit them. In EHR2Trace every canonical, OMOP and MEDS record traces to a <code>source_row_id</code>, and OMOP carries an <code>etl_audit</code> lineage table.</p>
+<h2>3. Store event time and information-availability time separately</h2>
+<p>This is the single most important practice for training data.</p>
+<p>A lab result has a time the specimen was collected and a later time the result became available. A diagnosis code has a clinical time and a time it was entered, sometimes days later at billing. If you store only one timestamp, you will eventually put information in front of the model before a clinician could have seen it. That is temporal leakage, and it inflates offline metrics while producing a model that fails in deployment.</p>
+<p>Keep both clocks on every event, and let the downstream episode builder decide which one to respect. Watch for layouts that invite the wrong choice: one export I worked with repeated every ancillary result once per index study and carried the study's date on each repeated row. Reading that column as the result's own time is exactly the mistake the layout suggests.</p>
+<h2>4. Keep orders, dispensing and administration as distinct records</h2>
+<p>A medication order is not evidence the patient received the drug. Pharmacy dispensing is closer; administration records are closer still. Collapsing them into one "drug exposure" event is convenient for analytics and wrong for a model that is supposed to learn what happened to the patient. Keep them as separate event types with their own times and lineage, and let the consumer decide how to combine them.</p>
+<h2>5. Refuse to guess</h2>
+<p>Many silent errors start as a reasonable default: assume the source timezone, assume a missing birth year from an age, map an unknown unit to the most common one. Each default is a decision the data never made.</p>
+<p>Two mechanisms help:</p>
+<ul>
+<li><strong>Blockers before conversion.</strong> Before reading any data, list the questions only the data owner can answer, such as the source timezone or the reference date an age is measured from, and refuse to run until they are answered in configuration. EHR2Trace's <code>inspect</code> step prints these and exits non-zero while any remain open.</li>
+<li><strong>Quarantine during conversion.</strong> Anything that cannot be resolved with certainty goes to a quarantine table or a human review queue, with its lineage, instead of being coerced into a plausible value.</li>
+</ul>
+<h2>6. Make builds reproducible by hash</h2>
+<p>If you cannot rebuild the same dataset, you cannot tell whether a change in model behaviour came from the model or the data.</p>
+<ul>
+<li>Pin the environment, including the version of the data standard (MEDS's schema is a data contract).</li>
+<li><strong>Address outputs by content</strong>: input hash, configuration hash and code version. Same input, configuration and mapping version should give the same output hash.</li>
+<li>Test it: run the build at several concurrency settings and assert that they produce one digest.</li>
+</ul>
+<p>A side benefit is incremental rebuilds. When outputs are content-addressed, a rerun reuses whatever already exists for identical inputs.</p>
+<h2>7. Validate what ships, against something independent</h2>
+<p>This is the lesson that cost me the most to learn.</p>
+<p>A validation suite that reads each output in isolation will pass on a surprising number of broken datasets. When I injected 28 silent faults drawn from real incidents into a fixture, every one is now detected, but <strong>15 of the 28 had gotten past the checks at the time they happened</strong>. Nine of those fifteen were found only by re-reading three finished conversions, about 300 million events that had already been published, validated and reported clean.</p>
+<p>The six misses found by the fault-injection experiment itself had a common cause: each was a check looking at the wrong artifact.</p>
+<table>
+<thead>
+<tr>
+<th>Silent fault</th>
+<th>Why a single-artifact check missed it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anchor dates used as event times</td>
+<td>The configuration was checked, but the data already carried anchor dates as clinical times.</td>
+</tr>
+<tr>
+<td>Subject IDs the identity map never issued</td>
+<td>The identity map was internally consistent; nothing joined it to the events.</td>
+</tr>
+<tr>
+<td>A declared text column that published nothing</td>
+<td>Every check read what was published; none compared it to what the configuration said would be published.</td>
+</tr>
+<tr>
+<td>A MEDS layer built without the vocabulary its OMOP layer used</td>
+<td>Each target validated on its own; nothing compared the two.</td>
+</tr>
+</tbody>
+</table>
+<p>The checks added in response all have the same shape: <strong>check the artifact that ships, against something derived independently of it</strong>, such as another artifact, the dataset's own declaration, or a reference table. Cross-layer checks compare merged rows against their source rows, values and units against reference ranges, published deaths against the deaths the canonical layer holds, and MEDS concepts against OMOP concepts.</p>
+<p>Two more rules make validation honest:</p>
+<ul>
+<li>A check with nothing to examine should report <strong>skipped</strong>, not passed.</li>
+<li>Known gaps belong in configuration as declared thresholds, so they are reported with their measurement instead of being tuned away.</li>
+</ul>
+<p>Also note where the faults lived: 21 of the 28 never reach an OMOP database, so CDM-level data-quality tooling alone cannot see them. They are in the canonical layer, the manifest, the identities or the MEDS shards.</p>
+<h2>8. Keep language models out of the data path</h2>
+<p>LLMs are useful for proposing terminology mappings or interpreting column names. They should not parse dates, numbers or table structure, invent concept IDs, or write to any output layer. In EHR2Trace the rule is enforced by a test: a model may propose, and a person confirms. Accepted decisions are compiled into a mapping registry, which is the only thing that turns a source string into a concept ID. Whether model-assisted ranking actually helps reviewers is itself measured against confirmed decisions rather than assumed.</p>
+<h2>A checklist</h2>
+<ul class="checklist">
+<li>Raw export is read-only; all outputs live outside the source and outside the code repository.</li>
+<li>Every raw row has a <code>source_row_id</code>; a manifest records input hashes and unread files.</li>
+<li>One canonical event layer; OMOP, MEDS or any other target is derived from it.</li>
+<li>Event time and information-availability time are stored separately.</li>
+<li>Orders, dispensing and administration are distinct event types.</li>
+<li>Open questions block the run; uncertain values go to quarantine or review.</li>
+<li>Outputs are content-addressed; rebuilds are tested for identical digests.</li>
+<li>Validation checks shipped artifacts against independent references, and reports skips.</li>
+<li>Faults you have actually hit are injected into a fixture and gated in CI.</li>
+<li>Language models propose; people decide; nothing model-written reaches an output layer.</li>
+</ul>
+<h2>Trying it</h2>
+<p>EHR2Trace implements all of the above. It runs on the openly licensed MIMIC-IV demonstration subset (100 patients) without credentials, and a single command traces one patient through every layer:</p>
+<pre><code class="language-bash">.venv/bin/ehr2trace trace -d datasets/mimiciv.yaml --patient &lt;key&gt;
+</code></pre>
+<p>The repository is at <a href="https://github.com/Yangxinyee/ehr2trace">github.com/Yangxinyee/ehr2trace</a> (Apache-2.0). The fault catalogue with every injected fault and the incident behind it is in <a href="https://github.com/Yangxinyee/ehr2trace/blob/main/docs/FAULT_CATALOGUE.md">docs/FAULT_CATALOGUE.md</a>. The companion paper, <em>EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents</em>, is forthcoming.</p>
+<h2>FAQ</h2>
+<p><strong>What is data lineage in an EHR dataset?</strong>
+The ability to trace any published record back to the exact source rows, configuration and code version that produced it.</p>
+<p><strong>Is OMOP or MEDS better for training models?</strong>
+They serve different purposes: OMOP is a relational common data model built for observational research, while MEDS is a minimal event-stream format built for machine learning. Deriving both from one canonical layer avoids choosing and keeps them consistent.</p>
+<p><strong>What is temporal leakage in EHR data?</strong>
+Using information at a time before it was actually available, for example a diagnosis code entered days after the visit but timestamped at the visit. Storing information-availability time separately prevents it.</p>
+<p><strong>Can I use EHR2Trace with my hospital's export?</strong>
+Yes. Everything dataset-specific lives in one YAML configuration; a new export needs a new configuration and no core code changes. The repository contains no patient data.</p>
+    </article>
+    <footer>
+        <p>Xinye Yang is a software engineer at AWS and a research assistant at the University of Colorado Anschutz School of Medicine, working on EHR-based patient world models.</p>
+        <p><a href="../../">Homepage</a> · <a href="../">All posts</a> · <a href="https://github.com/Yangxinyee/ehr2trace" target="_blank" rel="noreferrer">EHR2Trace</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
