@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lung Disease Diagnosis with Lung Segmentation and Rib Suppression | ISCID 2022 | Xinye Yang</title>
+    <meta name="description" content="Two U-Nets for lung segmentation and rib suppression, plus histogram equalization, feed an Xception-based CNN for chest X-ray lung disease classification; the pipeline classifies more accurately than Xception applied directly.">
+    <link rel="canonical" href="https://yangxinyee.github.io/papers/lung-disease-cnn/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <meta name="citation_title" content="Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression">
+    <meta name="citation_author" content="Xinye Yang">
+    <meta name="citation_author" content="Yuhang Liu">
+    <meta name="citation_author" content="Zhiwei Lin">
+    <meta name="citation_author" content="Lingyu Zhong">
+    <meta name="citation_author" content="Teoh Teik Toe">
+    <meta name="citation_publication_date" content="2022/12">
+    <meta name="citation_conference_title" content="2022 15th International Symposium on Computational Intelligence and Design (ISCID)">
+    <meta name="citation_doi" content="10.1109/iscid56505.2022.00063">
+    <meta name="citation_abstract_html_url" content="https://yangxinyee.github.io/papers/lung-disease-cnn/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "headline": "Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression",
+      "name": "Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression",
+      "url": "https://yangxinyee.github.io/papers/lung-disease-cnn/",
+      "sameAs": "https://doi.org/10.1109/iscid56505.2022.00063",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.1109/iscid56505.2022.00063"
+      },
+      "datePublished": "2022-12",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Xinye Yang",
+          "url": "https://yangxinyee.github.io/",
+          "sameAs": "https://orcid.org/0009-0004-3143-4263"
+        },
+        {
+          "@type": "Person",
+          "name": "Yuhang Liu"
+        },
+        {
+          "@type": "Person",
+          "name": "Zhiwei Lin"
+        },
+        {
+          "@type": "Person",
+          "name": "Lingyu Zhong"
+        },
+        {
+          "@type": "Person",
+          "name": "Teoh Teik Toe"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Event",
+        "name": "2022 15th International Symposium on Computational Intelligence and Design (ISCID)"
+      },
+      "abstract": "The discrimination of lung diseases by chest X-ray images is a clinically important tool. How to use artificial intelligence to accurately and quickly help doctors to diagnose different lung diseases is very important in the context of the current COVID-19 global pandemic. In this paper, we propose a model structure, including two U-Net, which implement lung segmentation and rib suppression for chest X-ray images respectively, image enhancement techniques such as histogram equalization, which enhances images contrast, and a Xception-based CNN, which classifies the processed images finally. The model can effectively avoid the interference of regions outside the lung to CNN for feature recognition and the influence of environmental factors such as X-ray machines on the quality of X-ray images and thus on the classification. The experimental results show that the classification accuracy of the model is higher than that of the direct use of the Xception model for classification.",
+      "description": "Two U-Nets for lung segmentation and rib suppression, plus histogram equalization, feed an Xception-based CNN for chest X-ray lung disease classification; the pipeline classifies more accurately than Xception applied directly."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why segment the lungs and suppress ribs first?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It stops the classifier from relying on regions outside the lungs and reduces the effect of X-ray machine differences on image quality."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which classifier is used?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An Xception-based CNN, applied after segmentation, rib suppression and histogram equalization."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../../#publications">Publications</a></nav>
+    <header>
+        <div class="badges"><span class="badge">ISCID 2022</span></div>
+        <h1>Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression</h1>
+        <p class="authors"><strong>Xinye Yang</strong>, Yuhang Liu, Zhiwei Lin, Lingyu Zhong, Teoh Teik Toe</p>
+        <p class="venue">15th International Symposium on Computational Intelligence and Design (ISCID 2022) · DOI: <a href="https://doi.org/10.1109/iscid56505.2022.00063" target="_blank" rel="noreferrer">10.1109/iscid56505.2022.00063</a></p>
+        <div class="links"><a class="btn" href="https://doi.org/10.1109/iscid56505.2022.00063" target="_blank" rel="noreferrer">Paper (DOI)</a><a class="btn btn-quiet" href="#cite">Cite</a></div>
+    </header>
+
+    <section>
+        <h2>TL;DR</h2>
+        <p class="tldr">Two U-Nets for lung segmentation and rib suppression, plus histogram equalization, feed an Xception-based CNN for chest X-ray lung disease classification; the pipeline classifies more accurately than Xception applied directly.</p>
+        <p class="tldr-zh" lang="zh-CN">中文简介：用两个 U-Net 分别做肺部分割和肋骨抑制，再经直方图均衡化增强后输入基于 Xception 的 CNN 进行胸片肺病分类，准确率高于直接使用 Xception。</p>
+    </section>
+
+    <section>
+        <h2>Key points</h2>
+        <ul><li>One U-Net segments the lungs and another suppresses ribs in chest X-ray images.</li><li>Histogram equalization enhances image contrast before classification.</li><li>An Xception-based CNN classifies the processed images.</li><li>The pipeline reduces interference from regions outside the lungs and from X-ray machine variation, and outperforms direct Xception classification.</li></ul>
+    </section>
+
+    <section>
+        <h2>Abstract</h2>
+        <p>The discrimination of lung diseases by chest X-ray images is a clinically important tool. How to use artificial intelligence to accurately and quickly help doctors to diagnose different lung diseases is very important in the context of the current COVID-19 global pandemic. In this paper, we propose a model structure, including two U-Net, which implement lung segmentation and rib suppression for chest X-ray images respectively, image enhancement techniques such as histogram equalization, which enhances images contrast, and a Xception-based CNN, which classifies the processed images finally. The model can effectively avoid the interference of regions outside the lung to CNN for feature recognition and the influence of environmental factors such as X-ray machines on the quality of X-ray images and thus on the classification. The experimental results show that the classification accuracy of the model is higher than that of the direct use of the Xception model for classification.</p>
+        
+    </section>
+
+    <section id="cite">
+        <h2>Citation</h2>
+        <p>Xinye Yang, Yuhang Liu, Zhiwei Lin, Lingyu Zhong, Teoh Teik Toe. Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression. 15th International Symposium on Computational Intelligence and Design (ISCID 2022). https://doi.org/10.1109/iscid56505.2022.00063</p>
+        <pre><code>@inproceedings{yang2022lung,
+  title   = {Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression},
+  author  = {Yang, Xinye and Liu, Yuhang and Lin, Zhiwei and Zhong, Lingyu and Teoh, Teik Toe},
+  booktitle = {2022 15th International Symposium on Computational Intelligence and Design (ISCID)},
+  year    = {2022},
+  doi     = {10.1109/iscid56505.2022.00063}
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>FAQ</h2>
+        <details><summary>Why segment the lungs and suppress ribs first?</summary><p>It stops the classifier from relying on regions outside the lungs and reduces the effect of X-ray machine differences on image quality.</p></details><details><summary>Which classifier is used?</summary><p>An Xception-based CNN, applied after segmentation, rib suppression and histogram equalization.</p></details>
+    </section>
+
+    <footer>
+        <p><a href="../../">Xinye Yang (Charlie)</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ" target="_blank" rel="noreferrer">Google Scholar</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
