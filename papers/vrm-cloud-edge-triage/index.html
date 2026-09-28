@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRM: Cloud-Edge Cascade Triage for Chest X-rays | Smart Health 2026 | Xinye Yang</title>
+    <meta name="description" content="Variational Risk Minimization (VRM) distills a multimodal chest X-ray teacher into an image-only edge model by treating LVLM-generated report variants as Monte Carlo samples; a confidence-gated cloud-edge cascade reaches AUC 0.941 at 103 ms average latency with 20.3% cloud escalation.">
+    <link rel="canonical" href="https://yangxinyee.github.io/papers/vrm-cloud-edge-triage/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <meta name="citation_title" content="Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging">
+    <meta name="citation_author" content="Xinye Yang">
+    <meta name="citation_author" content="Zhusi Zhong">
+    <meta name="citation_author" content="Scott Collins">
+    <meta name="citation_author" content="Michael Bernstein">
+    <meta name="citation_author" content="Grayson Baird">
+    <meta name="citation_author" content="Terrence Healey">
+    <meta name="citation_author" content="Michael Atalay">
+    <meta name="citation_author" content="Mahesh Jayaraman">
+    <meta name="citation_author" content="Xuyu Wang">
+    <meta name="citation_author" content="Zhicheng Jiao">
+    <meta name="citation_publication_date" content="2026/09">
+    <meta name="citation_journal_title" content="Smart Health">
+    <meta name="citation_volume" content="41">
+    <meta name="citation_firstpage" content="100689">
+    <meta name="citation_doi" content="10.1016/j.smhl.2026.100689">
+    <meta name="citation_abstract_html_url" content="https://yangxinyee.github.io/papers/vrm-cloud-edge-triage/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "headline": "Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging",
+      "name": "Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging",
+      "url": "https://yangxinyee.github.io/papers/vrm-cloud-edge-triage/",
+      "sameAs": "https://doi.org/10.1016/j.smhl.2026.100689",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.1016/j.smhl.2026.100689"
+      },
+      "datePublished": "2026-09",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Xinye Yang",
+          "url": "https://yangxinyee.github.io/",
+          "sameAs": "https://orcid.org/0009-0004-3143-4263"
+        },
+        {
+          "@type": "Person",
+          "name": "Zhusi Zhong"
+        },
+        {
+          "@type": "Person",
+          "name": "Scott Collins"
+        },
+        {
+          "@type": "Person",
+          "name": "Michael Bernstein"
+        },
+        {
+          "@type": "Person",
+          "name": "Grayson Baird"
+        },
+        {
+          "@type": "Person",
+          "name": "Terrence Healey"
+        },
+        {
+          "@type": "Person",
+          "name": "Michael Atalay"
+        },
+        {
+          "@type": "Person",
+          "name": "Mahesh Jayaraman"
+        },
+        {
+          "@type": "Person",
+          "name": "Xuyu Wang"
+        },
+        {
+          "@type": "Person",
+          "name": "Zhicheng Jiao"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "Smart Health"
+      },
+      "abstract": "Emergency chest X-ray (CXR) triage has a structural modality gap: reports arrive after triage decisions, yet multimodal foundation models require image-text inputs. We present Variational Risk Minimization (VRM), a distillation framework that treats LVLM-generated report variants as Monte Carlo samples of latent clinical interpretations. Rather than distilling from a single teacher target, VRM learns from a variationally marginalized teacher distribution, enabling uncertainty-aware supervision under missing-modality constraints. Under matched encoder families, VRM outperforms direct fine-tuning baselines and improves calibration with strong recovery from hallucinated supervision. Marginalized supervision reduces report-selection instability. In our compact edge-student instantiation, a confidence-gated cascade reaches AUC 0.941 at 103ms average latency with 20.3% cloud escalation, yielding an explicit reliability-latency operating point for cloud–edge clinical workflows.",
+      "description": "Variational Risk Minimization (VRM) distills a multimodal chest X-ray teacher into an image-only edge model by treating LVLM-generated report variants as Monte Carlo samples; a confidence-gated cloud-edge cascade reaches AUC 0.941 at 103 ms average latency with 20.3% cloud escalation."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What problem does this paper solve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Chest X-ray triage decisions are made before the radiology report exists, so models that need both image and report cannot be used at triage time. The paper trains an image-only model that still benefits from report knowledge."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Variational Risk Minimization (VRM)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A distillation framework that treats several LVLM-generated report variants as Monte Carlo samples of possible clinical interpretations, and trains the student against the teacher's marginalized distribution rather than one teacher target."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the cloud-edge cascade work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A compact student model runs at the edge and handles confident cases; uncertain cases are escalated to the cloud. The reported operating point is AUC 0.941 at 103 ms average latency with 20.3% of cases escalated."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the code available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The VRM implementation is at github.com/Yangxinyee/vrm-edge-triage, and the related Q-Former distillation work is at github.com/Yangxinyee/Q-DISTILL."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where was it presented?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It was published in Smart Health (2026) and presented as an oral at IEEE/ACM CHASE 2026."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../../#publications">Publications</a></nav>
+    <header>
+        <div class="badges"><span class="badge">Smart Health 2026</span><span class="badge">CHASE 2026 Oral</span></div>
+        <h1>Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging</h1>
+        <p class="authors"><strong>Xinye Yang</strong>, Zhusi Zhong, Scott Collins, Michael Bernstein, Grayson Baird, Terrence Healey, Michael Atalay, Mahesh Jayaraman, Xuyu Wang, Zhicheng Jiao</p>
+        <p class="venue">Smart Health, vol. 41, 100689 (2026) · DOI: <a href="https://doi.org/10.1016/j.smhl.2026.100689" target="_blank" rel="noreferrer">10.1016/j.smhl.2026.100689</a></p>
+        <div class="links"><a class="btn" href="https://doi.org/10.1016/j.smhl.2026.100689" target="_blank" rel="noreferrer">Paper (DOI)</a><a class="btn" href="https://github.com/Yangxinyee/vrm-edge-triage" target="_blank" rel="noreferrer">Code: vrm-edge-triage</a><a class="btn" href="https://github.com/Yangxinyee/Q-DISTILL" target="_blank" rel="noreferrer">Code: Q-DISTILL (related)</a><a class="btn btn-quiet" href="#cite">Cite</a></div>
+    </header>
+
+    <section>
+        <h2>TL;DR</h2>
+        <p class="tldr">Variational Risk Minimization (VRM) distills a multimodal chest X-ray teacher into an image-only edge model by treating LVLM-generated report variants as Monte Carlo samples; a confidence-gated cloud-edge cascade reaches AUC 0.941 at 103 ms average latency with 20.3% cloud escalation.</p>
+        <p class="tldr-zh" lang="zh-CN">中文简介：VRM 把大视觉语言模型生成的多份报告当作潜在临床解读的蒙特卡洛样本，将多模态胸片教师模型蒸馏为只看图像的边缘模型；置信度门控的云边级联在平均 103 毫秒延迟、20.3% 上云比例下达到 AUC 0.941。</p>
+    </section>
+
+    <section>
+        <h2>Key points</h2>
+        <ul><li>Emergency chest X-ray triage has a modality gap: reports arrive after triage decisions, yet multimodal foundation models need image and text.</li><li>VRM learns from a variationally marginalized teacher distribution instead of a single teacher target, giving uncertainty-aware supervision when the report is missing.</li><li>Under matched encoder families, VRM outperforms direct fine-tuning baselines, improves calibration, and recovers well from hallucinated supervision.</li><li>Marginalized supervision reduces report-selection instability.</li><li>The confidence-gated cascade reaches AUC 0.941 at 103 ms average latency with 20.3% cloud escalation.</li></ul>
+    </section>
+
+    <section>
+        <h2>Abstract</h2>
+        <p>Emergency chest X-ray (CXR) triage has a structural modality gap: reports arrive after triage decisions, yet multimodal foundation models require image-text inputs. We present Variational Risk Minimization (VRM), a distillation framework that treats LVLM-generated report variants as Monte Carlo samples of latent clinical interpretations. Rather than distilling from a single teacher target, VRM learns from a variationally marginalized teacher distribution, enabling uncertainty-aware supervision under missing-modality constraints. Under matched encoder families, VRM outperforms direct fine-tuning baselines and improves calibration with strong recovery from hallucinated supervision. Marginalized supervision reduces report-selection instability. In our compact edge-student instantiation, a confidence-gated cascade reaches AUC 0.941 at 103ms average latency with 20.3% cloud escalation, yielding an explicit reliability-latency operating point for cloud–edge clinical workflows.</p>
+        <p class="note">License: CC BY 4.0 (open access).</p>
+    </section>
+
+    <section id="cite">
+        <h2>Citation</h2>
+        <p>Xinye Yang, Zhusi Zhong, Scott Collins, Michael Bernstein, Grayson Baird, Terrence Healey, Michael Atalay, Mahesh Jayaraman, Xuyu Wang, Zhicheng Jiao. Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging. Smart Health, vol. 41, 100689 (2026). https://doi.org/10.1016/j.smhl.2026.100689</p>
+        <pre><code>@article{yang2026vrm,
+  title   = {Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging},
+  author  = {Yang, Xinye and Zhong, Zhusi and Collins, Scott and Bernstein, Michael and Baird, Grayson and Healey, Terrence and Atalay, Michael and Jayaraman, Mahesh and Wang, Xuyu and Jiao, Zhicheng},
+  journal = {Smart Health},
+  volume  = {41},
+  pages   = {100689},
+  year    = {2026},
+  doi     = {10.1016/j.smhl.2026.100689}
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>FAQ</h2>
+        <details><summary>What problem does this paper solve?</summary><p>Chest X-ray triage decisions are made before the radiology report exists, so models that need both image and report cannot be used at triage time. The paper trains an image-only model that still benefits from report knowledge.</p></details><details><summary>What is Variational Risk Minimization (VRM)?</summary><p>A distillation framework that treats several LVLM-generated report variants as Monte Carlo samples of possible clinical interpretations, and trains the student against the teacher&#x27;s marginalized distribution rather than one teacher target.</p></details><details><summary>How does the cloud-edge cascade work?</summary><p>A compact student model runs at the edge and handles confident cases; uncertain cases are escalated to the cloud. The reported operating point is AUC 0.941 at 103 ms average latency with 20.3% of cases escalated.</p></details><details><summary>Is the code available?</summary><p>Yes. The VRM implementation is at github.com/Yangxinyee/vrm-edge-triage, and the related Q-Former distillation work is at github.com/Yangxinyee/Q-DISTILL.</p></details><details><summary>Where was it presented?</summary><p>It was published in Smart Health (2026) and presented as an oral at IEEE/ACM CHASE 2026.</p></details>
+    </section>
+
+    <footer>
+        <p><a href="../../">Xinye Yang (Charlie)</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ" target="_blank" rel="noreferrer">Google Scholar</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
