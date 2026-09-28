@@ -59,6 +59,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://yangxinyee.github.io/blog/cxr-vlm-stress-test/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yangxinyee.github.io/blog/ehr-data-lineage/</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
