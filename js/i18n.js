@@ -93,6 +93,7 @@ const translations = {
         services: { title: "Services", reviewer: "Journal Reviewer", volunteer: "Volunteer" },
         blog: {
             title: "Blog",
+            cxrSummary: "How to stress-test chest X-ray VLMs before deployment: prompts, workflows, metrics, and when to escalate to a multi-agent pipeline.",
             lineageSummary: "Eight practices for auditable EHR training data, from row-level source IDs to validating what ships.",
             all: "All posts"
         },
@@ -192,6 +193,7 @@ const translations = {
         services: { title: "学术服务", reviewer: "期刊审稿人", volunteer: "志愿者" },
         blog: {
             title: "博客",
+            cxrSummary: "胸片视觉语言模型上线前怎么做压力测试：提示词、工作流、评价指标，以及何时升级到多智能体流程。",
             lineageSummary: "构建可审计的 EHR 训练数据的八条做法：从行级来源 ID 到检查最终交付的数据。",
             all: "全部文章"
         },
