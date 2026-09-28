@@ -1,0 +1,42 @@
+# Xinye Yang (Charlie)
+
+> Software Development Engineer at AWS Kiro and research assistant at the University of Colorado Anschutz School of Medicine. Research on AI for healthcare: EHR-based patient world models, reliable medical imaging AI, clinical AI agents, and the data infrastructure to train them (EHR2Trace).
+
+Xinye Yang also publishes as "X Yang" and "Xin-Ye Yang", and is known as Charlie Yang. He received an M.S. in Computer Science from Brown University (2026) and a B.Eng. in Artificial Intelligence from the University of Science and Technology Beijing (2024).
+
+## Profiles
+
+- [Homepage](https://yangxinyee.github.io/)
+- [Google Scholar](https://scholar.google.com/citations?user=xEgmvx4AAAAJ)
+- [ORCID 0009-0004-3143-4263](https://orcid.org/0009-0004-3143-4263)
+- [Semantic Scholar](https://www.semanticscholar.org/author/2370872191)
+- [GitHub](https://github.com/Yangxinyee)
+- [LinkedIn](https://www.linkedin.com/in/xinye-charlie-yang-939674286/)
+- [CV (PDF)](https://yangxinyee.github.io/assets/Yang_Xinye_CV.pdf)
+
+## Research interests
+
+Multimodal LLMs; medical image analysis; AI in healthcare; agentic AI; EHR-based patient world models; reliable and parameter-efficient AI for clinical decision support and hospital triage.
+
+## Open-source projects
+
+- [EHR2Trace](https://github.com/Yangxinyee/ehr2trace): converts hospital EHR exports into OMOP CDM 5.4 and MEDS, with row-level source lineage and 55 validation checks on the published outputs. Built for patient world models and clinical agents. Apache-2.0.
+- [vrm-edge-triage](https://github.com/Yangxinyee/vrm-edge-triage): code for the Smart Health 2026 paper on confidence-gated cloud-edge cascade triage via variational risk minimization (VRM) for chest X-ray triage.
+- [Q-DISTILL](https://github.com/Yangxinyee/Q-DISTILL): self-supervised Q-Former distillation for image-only chest X-ray triage using MedGemma pseudo-reports; accuracy 76.5% to 89.1%. Part of the Smart Health 2026 work.
+- [brain_mri_preprocess_pipeline](https://github.com/Yangxinyee/brain_mri_preprocess_pipeline): stroke brain MRI preprocessing (DICOM to NIfTI, registration, skull stripping, encryption).
+
+## Publications
+
+- Xinye Yang, Zhusi Zhong, Scott Collins, Michael Bernstein, Grayson Baird, Terrence Healey, Michael Atalay, Mahesh Jayaraman, Xuyu Wang, Zhicheng Jiao. Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging. Smart Health 41, 100689 (2026). Presented as an oral at IEEE/ACM CHASE 2026. https://doi.org/10.1016/j.smhl.2026.100689
+- Xinye Yang, Zhusi Zhong, Scott Collins, Grayson Baird, Xuyu Wang, Zhicheng Jiao. Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models. IEEE/ACM CHASE 2026 Workshop. https://doi.org/10.1109/CHASE69719.2026.00073
+- Zhuoqi Ma, Xinye Yang, et al. The AI Challenge: A Turing Test Pilot Study of Attendings and Residents in Identifying AI-Generated Content. Meta-Radiology (2025). https://doi.org/10.1016/j.metrad.2025.100199
+- Zhuoqi Ma, Xinye Yang, et al. A Unified Platform for Radiology Report Generation and Clinician-Centered AI Evaluation. medRxiv (2025). https://doi.org/10.1101/2025.07.07.25331018
+- Cheng Chen, Huilin Wang, Yunqing Chen, Zihan Yin, Xinye Yang, et al. Understanding the brain with attention: A survey of transformers in brain sciences. Brain-X (2023). https://doi.org/10.1002/brx2.29
+- Xinye Yang, Yuhang Liu, Zhiwei Lin, Lingyu Zhong, Teoh Teik Toe. Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression. ISCID 2022. https://doi.org/10.1109/iscid56505.2022.00063
+
+## Experience
+
+- 2026-present: Software Development Engineer, Amazon Web Services (Kiro), Seattle.
+- 2026-present: Research Assistant, University of Colorado Anschutz School of Medicine (advised by Prof. Harrison Bai and Prof. Yuli Wang).
+- 2025: Software Engineer Intern, AWS Kiro; Research Intern, Brown University Health.
+- 2023-2024: Software & ML Engineer Intern, Institute of Automation, Chinese Academy of Sciences.
