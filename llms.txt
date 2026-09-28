@@ -22,6 +22,7 @@ Multimodal LLMs; medical image analysis; AI in healthcare; agentic AI; EHR-based
 
 - [EHR2Trace](https://yangxinyee.github.io/projects/ehr2trace/) ([code](https://github.com/Yangxinyee/ehr2trace)): converts hospital EHR exports into OMOP CDM 5.4 and MEDS from one canonical layer, with row-level source lineage, separate event and availability times, and 55 validation checks on the published outputs. Built for patient world models and clinical agents. Apache-2.0. The project page compares it with MEDS-Extract, meds_etl, ehr2meds and the OHDSI MIMIC-IV ETL.
 - [vrm-edge-triage](https://github.com/Yangxinyee/vrm-edge-triage): code for the Smart Health 2026 paper on confidence-gated cloud-edge cascade triage via variational risk minimization (VRM) for chest X-ray triage.
+- [cxr-vlm-routing](https://github.com/Yangxinyee/cxr-vlm-routing): code, MIMIC-CXR per-case results and tables for the CHASE 2026 workshop paper on reliability stress tests and decision-time routing for chest X-ray vision-language models (CheXagent, MedGemma-4B, MedGemma-27B). Apache-2.0.
 - [Q-DISTILL](https://github.com/Yangxinyee/Q-DISTILL): self-supervised Q-Former distillation for image-only chest X-ray triage using MedGemma pseudo-reports; accuracy 76.5% to 89.1%. Part of the Smart Health 2026 work.
 - [brain_mri_preprocess_pipeline](https://github.com/Yangxinyee/brain_mri_preprocess_pipeline): stroke brain MRI preprocessing (DICOM to NIfTI, registration, skull stripping, encryption).
 
@@ -32,7 +33,7 @@ Multimodal LLMs; medical image analysis; AI in healthcare; agentic AI; EHR-based
 ## Publications
 
 - Xinye Yang, Zhusi Zhong, Scott Collins, Michael Bernstein, Grayson Baird, Terrence Healey, Michael Atalay, Mahesh Jayaraman, Xuyu Wang, Zhicheng Jiao. Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging. Smart Health 41, 100689 (2026). Presented as an oral at IEEE/ACM CHASE 2026. https://doi.org/10.1016/j.smhl.2026.100689
-- Xinye Yang, Zhusi Zhong, Scott Collins, Grayson Baird, Xuyu Wang, Zhicheng Jiao. Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models. IEEE/ACM CHASE 2026 Workshop. https://doi.org/10.1109/CHASE69719.2026.00073
+- Xinye Yang, Zhusi Zhong, Scott Collins, Grayson Baird, Xuyu Wang, Zhicheng Jiao. Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models. IEEE/ACM CHASE 2026 Workshop. https://doi.org/10.1109/CHASE69719.2026.00073 Code: https://github.com/Yangxinyee/cxr-vlm-routing
 - Zhuoqi Ma, Xinye Yang, et al. The AI Challenge: A Turing Test Pilot Study of Attendings and Residents in Identifying AI-Generated Content. Meta-Radiology (2025). https://doi.org/10.1016/j.metrad.2025.100199
 - Zhuoqi Ma, Xinye Yang, et al. A Unified Platform for Radiology Report Generation and Clinician-Centered AI Evaluation. medRxiv (2025). https://doi.org/10.1101/2025.07.07.25331018
 - Cheng Chen, Huilin Wang, Yunqing Chen, Zihan Yin, Xinye Yang, et al. Understanding the brain with attention: A survey of transformers in brain sciences. Brain-X (2023). https://doi.org/10.1002/brx2.29
