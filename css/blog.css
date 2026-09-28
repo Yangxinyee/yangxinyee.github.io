@@ -1,0 +1,14 @@
+.post article h2 { margin-top:36px; }
+.post article p, .post article li { font-size:16.5px; }
+.post article table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
+.post article th, .post article td { border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
+.post article th { background:var(--soft); }
+.post article code { background:var(--soft); border:1px solid var(--line); border-radius:4px; padding:1px 5px; font-size:0.9em; }
+.post article pre code { border:0; padding:0; background:none; }
+.post article hr { border:0; border-top:1px solid var(--line); margin:28px 0; }
+.checklist { list-style:none; padding-left:4px; }
+.checklist li::before { content:"\2610"; margin-right:8px; color:var(--muted); }
+.post-list { list-style:none; padding:0; }
+.post-list li { padding:16px 0; border-bottom:1px solid var(--line); }
+.post-title { font-size:19px; font-weight:600; }
+.post-list p { margin:4px 0; }
