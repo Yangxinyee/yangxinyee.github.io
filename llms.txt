@@ -2,7 +2,7 @@
 
 > Software Development Engineer at AWS Kiro and research assistant at the University of Colorado Anschutz School of Medicine. Research on AI for healthcare: EHR-based patient world models, reliable medical imaging AI, clinical AI agents, and the data infrastructure to train them (EHR2Trace).
 
-Xinye Yang also publishes as "X Yang" and "Xin-Ye Yang", and is known as Charlie Yang. He received an M.S. in Computer Science from Brown University (2026) and a B.Eng. in Artificial Intelligence from the University of Science and Technology Beijing (2024).
+Xinye Yang (Chinese name: 杨新烨) also publishes as "X Yang" and "Xin-Ye Yang", and is known as Charlie Yang. He received an M.S. in Computer Science from Brown University (2026) and a B.Eng. in Artificial Intelligence from the University of Science and Technology Beijing (2024).
 
 ## Profiles
 
