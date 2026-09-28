@@ -155,6 +155,11 @@
         <details><summary>Which models were tested?</summary><p>CheXagent, MedGemma-4B and MedGemma-27B, each under three prompt styles and two workflows (single-VLM and multi-agent), 36 configurations in total.</p></details><details><summary>Why is exact-match accuracy not enough?</summary><p>Conservative models that default to &quot;Normal&quot; can score well on exact match while missing abnormal findings, so accuracy alone overstates their reliability.</p></details><details><summary>Does multi-agent reasoning always help?</summary><p>No. It helps some model and prompt configurations and hurts others, depending on model family and scale.</p></details><details><summary>What is decision-time routing?</summary><p>A framework that decides per case whether to escalate from a single VLM to multi-agent inference, doing so only when it is expected to help, which improves the cost-quality trade-off over any fixed workflow.</p></details>
     </section>
 
+    <section>
+        <h2>Related work by the authors</h2>
+        <ul><li><a href="../vrm-cloud-edge-triage/">Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging</a>. Smart Health 2026. Chest X-ray triage with a confidence-gated escalation from edge to cloud.</li><li><a href="../lung-disease-cnn/">Optimization of CNN for Diagnosis on Lung Disease by Lung Segmentation and Rib Suppression</a>. ISCID 2022. Earlier chest X-ray classification work.</li></ul>
+    </section>
+
     <footer>
         <p><a href="../../">Xinye Yang (Charlie)</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ" target="_blank" rel="noreferrer">Google Scholar</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
     </footer>
