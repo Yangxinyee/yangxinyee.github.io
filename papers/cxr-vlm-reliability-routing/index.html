@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reliability Stress Tests for Chest X-ray VLMs | CHASE 2026 Workshop | Xinye Yang</title>
+    <meta name="description" content="A reliability stress test for chest X-ray vision-language models (CheXagent, MedGemma-4B, MedGemma-27B) across 36 prompt and workflow configurations shows that exact-match accuracy can overstate conservative models; a decision-time router escalates to multi-agent inference only when it helps.">
+    <link rel="canonical" href="https://yangxinyee.github.io/papers/cxr-vlm-reliability-routing/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <meta name="citation_title" content="Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models">
+    <meta name="citation_author" content="Xinye Yang">
+    <meta name="citation_author" content="Zhusi Zhong">
+    <meta name="citation_author" content="Scott Collins">
+    <meta name="citation_author" content="Grayson Baird">
+    <meta name="citation_author" content="Xuyu Wang">
+    <meta name="citation_author" content="Zhicheng Jiao">
+    <meta name="citation_publication_date" content="2026/08">
+    <meta name="citation_conference_title" content="2026 IEEE/ACM Conference on Connected Health: Applications, Systems and Engineering Technologies (CHASE)">
+    <meta name="citation_doi" content="10.1109/CHASE69719.2026.00073">
+    <meta name="citation_abstract_html_url" content="https://yangxinyee.github.io/papers/cxr-vlm-reliability-routing/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "headline": "Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models",
+      "name": "Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models",
+      "url": "https://yangxinyee.github.io/papers/cxr-vlm-reliability-routing/",
+      "sameAs": "https://doi.org/10.1109/CHASE69719.2026.00073",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.1109/CHASE69719.2026.00073"
+      },
+      "datePublished": "2026-08",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Xinye Yang",
+          "url": "https://yangxinyee.github.io/",
+          "sameAs": "https://orcid.org/0009-0004-3143-4263"
+        },
+        {
+          "@type": "Person",
+          "name": "Zhusi Zhong"
+        },
+        {
+          "@type": "Person",
+          "name": "Scott Collins"
+        },
+        {
+          "@type": "Person",
+          "name": "Grayson Baird"
+        },
+        {
+          "@type": "Person",
+          "name": "Xuyu Wang"
+        },
+        {
+          "@type": "Person",
+          "name": "Zhicheng Jiao"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Event",
+        "name": "2026 IEEE/ACM Conference on Connected Health: Applications, Systems and Engineering Technologies (CHASE)"
+      },
+      "abstract": "Medical vision-language model (VLM) evaluation is sensitive to workflow design, prompting strategy, and benchmark construction, yet most studies treat these factors in isolation. We introduce a reliability stress test for chest X-ray interpretation built on two balanced datasets (a private report-backed set and a curated MIMIC subset). Three medical VLMs—CheXagent, MedGemma-4B, and MedGemma-27B—are evaluated across three prompt styles and two workflows (single-VLM and multi-agent), producing 36 configurations. We show that exact-match accuracy alone can overstate the effectiveness of conservative models that default to \"Normal\" predictions. Diagnostic reliability also depends heavily on model family and scale: multi-agent reasoning helps some configurations but hurts others. Building on these observations, we propose a decision-time routing framework that selectively escalates to multi-agent inference only when beneficial, improving the cost–quality trade-off over fixed workflows. Our results highlight the need for evaluation protocols that jointly consider prompt sensitivity, failure-mode diversity, and workflow choice before clinical deployment.",
+      "description": "A reliability stress test for chest X-ray vision-language models (CheXagent, MedGemma-4B, MedGemma-27B) across 36 prompt and workflow configurations shows that exact-match accuracy can overstate conservative models; a decision-time router escalates to multi-agent inference only when it helps."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which models were tested?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CheXagent, MedGemma-4B and MedGemma-27B, each under three prompt styles and two workflows (single-VLM and multi-agent), 36 configurations in total."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is exact-match accuracy not enough?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Conservative models that default to \"Normal\" can score well on exact match while missing abnormal findings, so accuracy alone overstates their reliability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does multi-agent reasoning always help?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It helps some model and prompt configurations and hurts others, depending on model family and scale."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is decision-time routing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A framework that decides per case whether to escalate from a single VLM to multi-agent inference, doing so only when it is expected to help, which improves the cost-quality trade-off over any fixed workflow."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../../#publications">Publications</a></nav>
+    <header>
+        <div class="badges"><span class="badge">CHASE 2026 Workshop</span><span class="badge">Oral</span></div>
+        <h1>Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models</h1>
+        <p class="authors"><strong>Xinye Yang</strong>, Zhusi Zhong, Scott Collins, Grayson Baird, Xuyu Wang, Zhicheng Jiao</p>
+        <p class="venue">IEEE/ACM CHASE 2026 Workshop (oral) · DOI: <a href="https://doi.org/10.1109/CHASE69719.2026.00073" target="_blank" rel="noreferrer">10.1109/CHASE69719.2026.00073</a></p>
+        <div class="links"><a class="btn" href="https://doi.org/10.1109/CHASE69719.2026.00073" target="_blank" rel="noreferrer">Paper (DOI)</a><a class="btn btn-quiet" href="#cite">Cite</a></div>
+    </header>
+
+    <section>
+        <h2>TL;DR</h2>
+        <p class="tldr">A reliability stress test for chest X-ray vision-language models (CheXagent, MedGemma-4B, MedGemma-27B) across 36 prompt and workflow configurations shows that exact-match accuracy can overstate conservative models; a decision-time router escalates to multi-agent inference only when it helps.</p>
+        <p class="tldr-zh" lang="zh-CN">中文简介：针对胸片视觉语言模型（CheXagent、MedGemma-4B、MedGemma-27B）的可靠性压力测试，覆盖 36 种提示词与工作流配置；结果显示仅看精确匹配准确率会高估偏保守的模型，并提出只在有益时才升级到多智能体推理的决策时路由。</p>
+    </section>
+
+    <section>
+        <h2>Key points</h2>
+        <ul><li>Two balanced datasets: a private report-backed set and a curated MIMIC subset.</li><li>Three medical VLMs (CheXagent, MedGemma-4B, MedGemma-27B) x three prompt styles x two workflows (single-VLM and multi-agent) = 36 configurations.</li><li>Exact-match accuracy alone can overstate models that default to &quot;Normal&quot; predictions.</li><li>Reliability depends on model family and scale; multi-agent reasoning helps some configurations and hurts others.</li><li>Decision-time routing escalates to multi-agent inference only when beneficial, improving the cost-quality trade-off over fixed workflows.</li></ul>
+    </section>
+
+    <section>
+        <h2>Abstract</h2>
+        <p>Medical vision-language model (VLM) evaluation is sensitive to workflow design, prompting strategy, and benchmark construction, yet most studies treat these factors in isolation. We introduce a reliability stress test for chest X-ray interpretation built on two balanced datasets (a private report-backed set and a curated MIMIC subset). Three medical VLMs—CheXagent, MedGemma-4B, and MedGemma-27B—are evaluated across three prompt styles and two workflows (single-VLM and multi-agent), producing 36 configurations. We show that exact-match accuracy alone can overstate the effectiveness of conservative models that default to &quot;Normal&quot; predictions. Diagnostic reliability also depends heavily on model family and scale: multi-agent reasoning helps some configurations but hurts others. Building on these observations, we propose a decision-time routing framework that selectively escalates to multi-agent inference only when beneficial, improving the cost–quality trade-off over fixed workflows. Our results highlight the need for evaluation protocols that jointly consider prompt sensitivity, failure-mode diversity, and workflow choice before clinical deployment.</p>
+        
+    </section>
+
+    <section id="cite">
+        <h2>Citation</h2>
+        <p>Xinye Yang, Zhusi Zhong, Scott Collins, Grayson Baird, Xuyu Wang, Zhicheng Jiao. Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models. IEEE/ACM CHASE 2026 Workshop (oral). https://doi.org/10.1109/CHASE69719.2026.00073</p>
+        <pre><code>@inproceedings{yang2026cxr,
+  title   = {Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models},
+  author  = {Yang, Xinye and Zhong, Zhusi and Collins, Scott and Baird, Grayson and Wang, Xuyu and Jiao, Zhicheng},
+  booktitle = {2026 IEEE/ACM Conference on Connected Health: Applications, Systems and Engineering Technologies (CHASE)},
+  year    = {2026},
+  doi     = {10.1109/CHASE69719.2026.00073}
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>FAQ</h2>
+        <details><summary>Which models were tested?</summary><p>CheXagent, MedGemma-4B and MedGemma-27B, each under three prompt styles and two workflows (single-VLM and multi-agent), 36 configurations in total.</p></details><details><summary>Why is exact-match accuracy not enough?</summary><p>Conservative models that default to &quot;Normal&quot; can score well on exact match while missing abnormal findings, so accuracy alone overstates their reliability.</p></details><details><summary>Does multi-agent reasoning always help?</summary><p>No. It helps some model and prompt configurations and hurts others, depending on model family and scale.</p></details><details><summary>What is decision-time routing?</summary><p>A framework that decides per case whether to escalate from a single VLM to multi-agent inference, doing so only when it is expected to help, which improves the cost-quality trade-off over any fixed workflow.</p></details>
+    </section>
+
+    <footer>
+        <p><a href="../../">Xinye Yang (Charlie)</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ" target="_blank" rel="noreferrer">Google Scholar</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
