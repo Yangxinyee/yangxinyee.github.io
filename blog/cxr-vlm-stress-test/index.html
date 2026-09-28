@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress-Testing Chest X-ray Vision-Language Models Before Deployment | Xinye Yang</title>
+    <meta name="description" content="How to stress-test chest X-ray vision-language models (CheXagent, MedGemma-4B, MedGemma-27B) before deployment: vary prompts and workflows, report more than exact match, measure multi-agent pipelines per model, and decide per case when to escalate.">
+    <meta name="author" content="Xinye Yang">
+    <link rel="canonical" href="https://yangxinyee.github.io/blog/cxr-vlm-stress-test/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <link rel="stylesheet" href="../../css/blog.css?v=1">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Stress-Testing Chest X-ray Vision-Language Models Before Deployment">
+    <meta property="og:description" content="How to stress-test chest X-ray vision-language models (CheXagent, MedGemma-4B, MedGemma-27B) before deployment: vary prompts and workflows, report more than exact match, measure multi-agent pipelines per model, and decide per case when to escalate.">
+    <meta property="og:url" content="https://yangxinyee.github.io/blog/cxr-vlm-stress-test/">
+    <meta property="article:published_time" content="2026-09-28">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Stress-Testing Chest X-ray Vision-Language Models Before Deployment",
+      "description": "How to stress-test chest X-ray vision-language models (CheXagent, MedGemma-4B, MedGemma-27B) before deployment: vary prompts and workflows, report more than exact match, measure multi-agent pipelines per model, and decide per case when to escalate.",
+      "url": "https://yangxinyee.github.io/blog/cxr-vlm-stress-test/",
+      "mainEntityOfPage": "https://yangxinyee.github.io/blog/cxr-vlm-stress-test/",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-09-28",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Xinye Yang",
+        "url": "https://yangxinyee.github.io/",
+        "sameAs": [
+          "https://orcid.org/0009-0004-3143-4263",
+          "https://github.com/Yangxinyee"
+        ]
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Medical vision-language models"
+        },
+        {
+          "@type": "Thing",
+          "name": "Chest X-ray"
+        },
+        {
+          "@type": "Thing",
+          "name": "Model evaluation"
+        },
+        {
+          "@type": "Thing",
+          "name": "Multi-agent systems"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "cxr-vlm-routing",
+          "codeRepository": "https://github.com/Yangxinyee/cxr-vlm-routing",
+          "license": "https://www.apache.org/licenses/LICENSE-2.0"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "name": "Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models",
+          "url": "https://yangxinyee.github.io/papers/cxr-vlm-reliability-routing/",
+          "sameAs": "https://doi.org/10.1109/CHASE69719.2026.00073"
+        }
+      ],
+      "keywords": "chest X-ray, vision-language models, MedGemma, CheXagent, MIMIC-CXR, multi-agent, routing, reliability, clinical AI evaluation"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which chest X-ray VLM is best?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the prompt and the workflow. On our MIMIC subset, MedGemma-27B with a structured multi-agent pipeline had the highest macro F1 (0.335). On our private cohort, CheXagent with a labels-only single pass was best (0.457). With 50 cases per cohort, treat these as directions to test, not a leaderboard."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is exact-match accuracy misleading for chest X-ray models?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "With half the cases normal, a model that answers \"Normal\" by default scores well on exact match while missing disease. Macro F1 and abnormal-case sensitivity expose this."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do multi-agent pipelines improve medical VLMs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sometimes. In our tests the same four-stage pipeline raised MedGemma-27B's macro F1 on MIMIC from 0.138 to 0.335 and lowered CheXagent's on a private cohort from 0.457 to 0.118."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is decision-time routing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Running a fast single pass first, then deciding for each case whether to escalate to a slower multi-agent pipeline. A hindsight oracle shows that escalating 10–20% of cases can match or beat always running the pipeline."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the code available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, at github.com/Yangxinyee/cxr-vlm-routing, with per-case MIMIC-CXR results and scripts that check the paper's numbers."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper post">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../">Blog</a></nav>
+    <header>
+        <h1>Stress-Testing Chest X-ray Vision-Language Models Before Deployment</h1>
+        <p class="venue">Xinye Yang · <time datetime="2026-09-28">September 28, 2026</time> · 7 min read</p>
+    </header>
+    <article>
+<p><strong>TL;DR.</strong> Before a medical vision-language model (VLM) reads chest X-rays in a clinical workflow, test it the way it will be used: with more than one prompt, more than one workflow, and more than one metric. In our <a href="https://yangxinyee.github.io/papers/cxr-vlm-reliability-routing/">CHASE 2026 workshop paper</a> we ran CheXagent, MedGemma-4B and MedGemma-27B through 36 configurations on two balanced 50-study cohorts. Exact-match accuracy made conservative models look good. A multi-agent pipeline lifted one model's macro F1 from 0.138 to 0.335 and dropped another's from 0.457 to 0.118. The practical answer is to decide per case whether the extra reasoning is worth it. The code, per-case MIMIC-CXR results and tables are in <a href="https://github.com/Yangxinyee/cxr-vlm-routing">cxr-vlm-routing</a>.</p>
+<hr />
+<h2>Why a single benchmark number is not enough</h2>
+<p>Most reports on medical VLMs give one number: accuracy or F1 for one prompt, in one workflow, on one dataset. Deployment changes all three. Someone rewrites the prompt to make outputs shorter, an engineer wraps the model in an agent pipeline, and the hospital's case mix differs from the benchmark.</p>
+<p>We wanted to know how much each of those choices moves the result, and in which direction. So instead of proposing a new model we held the weights fixed and varied everything around them.</p>
+<h2>The setup</h2>
+<ul>
+<li><strong>Models.</strong> CheXagent-8B, MedGemma-4B-IT and MedGemma-27B-IT, all frozen, greedy decoding.</li>
+<li><strong>Data.</strong> Two cohorts of 50 chest X-ray studies each, 25 normal and 25 abnormal. One is a private hospital cohort with labels read from the clinical reports. The other is a curated MIMIC-CXR subset whose labels we audited against the matched reports.</li>
+<li><strong>Labels.</strong> <code>Normal</code> plus 10 findings: atelectasis, cardiomegaly, consolidation, edema, enlarged cardiomediastinum, lung lesion, lung opacity, pleural effusion, pneumonia and pneumothorax.</li>
+<li><strong>Prompts.</strong> <em>Structured</em> (report the key findings, then choose labels, and don't report a finding without clear evidence), <em>concise</em> (only definite findings, then labels), and <em>labels-only</em> (one line of labels, nothing else).</li>
+<li><strong>Workflows.</strong> A <em>single-VLM</em> pass, or a four-stage <em>multi-agent</em> pipeline on the same weights: extract findings, map them to candidate labels from a radiology view, re-check them from an internal-medicine view, and reconcile the two.</li>
+</ul>
+<p>Three models, three prompts, two workflows and two datasets give 36 configurations. For each one we report exact match, partial match, macro F1, a hallucination false-positive rate, accuracy on normal cases, partial match on abnormal cases, latency and tokens.</p>
+<h2>Finding 1: exact match rewards saying "Normal"</h2>
+<p>Half of each cohort is normal. A model that answers <code>Normal</code> to almost everything gets about half the cases exactly right while missing most disease.</p>
+<p>MedGemma-4B shows this clearly. On MIMIC-CXR with the labels-only prompt it reached 52% exact match and 70% partial match in 0.20 seconds per study. Its macro F1 was 0.252, because it covered few pathology classes. MedGemma-27B with the same prompt scored 100% on normal cases and caught at least one correct finding on only 20% of abnormal ones.</p>
+<p><strong>What to do:</strong> report accuracy on normal and abnormal cases separately, next to macro F1. If normal-case accuracy is near 100% and abnormal partial match is low, the model is defaulting to <code>Normal</code>.</p>
+<h2>Finding 2: multi-agent reasoning helps some models and hurts others</h2>
+<p>Adding the four-stage pipeline did not have a consistent effect:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Single-VLM macro F1</th>
+<th>Multi-agent macro F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MIMIC · MedGemma-27B · structured</td>
+<td>0.138</td>
+<td>0.335</td>
+</tr>
+<tr>
+<td>Private · CheXagent · labels-only</td>
+<td>0.457</td>
+<td>0.118</td>
+</tr>
+<tr>
+<td>MIMIC · MedGemma-4B · labels-only</td>
+<td>0.252</td>
+<td>0.228</td>
+</tr>
+</tbody>
+</table>
+<p>Paired bootstrap confidence intervals exclude zero for both large shifts: +0.174 [0.059, 0.290] for MedGemma-27B on MIMIC, and +0.295 [0.192, 0.387] in favour of the single pass for CheXagent on the private cohort.</p>
+<p>The mechanism is visible in the errors. We saw two opposite failure modes:</p>
+<ul>
+<li><strong>Abnormal-to-normal collapse.</strong> The single pass calls an abnormal study <code>Normal</code>. For MedGemma-27B on MIMIC this happened on 30% of abnormal cases; the extra extraction stages brought it down to 10%.</li>
+<li><strong>Over-regularization by consensus.</strong> When the stages disagree, the final synthesis falls back to <code>Normal</code>. CheXagent writes short, sparse outputs, so its extraction stage gave the later stages little to work with. Its collapse rate on the private cohort rose from 10% with a single pass to 44% with the pipeline.</li>
+</ul>
+<p>The pipeline also changed hallucinations. CheXagent's single-pass false-positive rate on MIMIC was above 0.35, and the pipeline brought it below 0.13. The MedGemma models' single-pass rates were already below 0.06, and the extra filtering sometimes cost them true positives.</p>
+<p><strong>What to do:</strong> don't assume an agent pipeline improves a model. Measure it per model, per prompt, and per cohort, and look at what kind of error changed, not just the headline number.</p>
+<h2>Finding 3: decide per case whether to escalate</h2>
+<p>If the pipeline helps some cases and hurts others, the fixed choice between "always single" and "always multi-agent" leaves quality or latency on the table. We framed it as a routing decision made at inference time: run the fast single pass, then decide whether this case should go through the multi-agent pipeline.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Strategy</th>
+<th>Macro F1</th>
+<th>Latency (s)</th>
+<th>Escalated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MIMIC · MedGemma-27B · structured</td>
+<td>always single</td>
+<td>0.138</td>
+<td>4.86</td>
+<td>0%</td>
+</tr>
+<tr>
+<td></td>
+<td>always multi-agent</td>
+<td>0.335</td>
+<td>6.27</td>
+<td>100%</td>
+</tr>
+<tr>
+<td></td>
+<td>oracle</td>
+<td>0.338</td>
+<td>5.08</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>Private · CheXagent · labels-only</td>
+<td>always single</td>
+<td>0.457</td>
+<td>1.00</td>
+<td>0%</td>
+</tr>
+<tr>
+<td></td>
+<td>always multi-agent</td>
+<td>0.118</td>
+<td>2.61</td>
+<td>100%</td>
+</tr>
+<tr>
+<td></td>
+<td>oracle</td>
+<td>0.488</td>
+<td>1.17</td>
+<td>10%</td>
+</tr>
+</tbody>
+</table>
+<p>The oracle escalates exactly the cases where the pipeline would have helped, so it is a hindsight upper bound, not a method. What it shows is the headroom: on MIMIC, escalating one case in five matches the quality of always running the pipeline for about a sixth of its extra latency (0.22 s instead of 1.41 s per study). On the private cohort, escalating one case in ten beats both fixed workflows.</p>
+<p>The paper also tests two simple rules and a small logistic-regression router trained on features of the first pass. With only 50 cases per cohort, the learned router has 5 to 10 positive examples per fold, which is too few to separate the classes reliably. The next step is a router trained on more cases, using signals available at inference time, such as the model's own confidence or disagreement between passes.</p>
+<h2>A checklist before deploying a chest X-ray VLM</h2>
+<ul class="checklist">
+<li>Test at least three prompt styles; a rewording should not change the ranking of models you're choosing between.</li>
+<li>Report macro F1, normal-case accuracy and abnormal-case partial match together, not exact match alone.</li>
+<li>Count abnormal-to-normal collapses separately; they are the errors that delay care.</li>
+<li>Measure any agent or multi-stage pipeline per model before adopting it.</li>
+<li>Look at hallucinated findings on normal studies, not only missed findings on abnormal ones.</li>
+<li>Use a balanced evaluation set, or report results by class.</li>
+<li>Record latency and tokens next to quality, so the cost of extra reasoning is visible.</li>
+<li>Keep per-case outputs, so a change in the aggregate can be traced to the cases that caused it.</li>
+</ul>
+<h2>Try it</h2>
+<p>The repository <a href="https://github.com/Yangxinyee/cxr-vlm-routing">cxr-vlm-routing</a> (Apache-2.0) has the model wrappers, the prompts and the multi-agent pipeline. It also has per-case outputs for all 18 MIMIC-CXR configurations and the aggregate tables for both cohorts. Rebuilding the tables and checking them against the paper needs no GPU:</p>
+<pre><code class="language-bash">python scripts/summarize_formal_results.py
+python scripts/build_routing_eval.py
+python scripts/verify_paper_numbers.py
+</code></pre>
+<p>To rerun the models, you need your own credentialed copy of MIMIC-CXR-JPG. <code>scripts/prepare_mimic_images.py</code> fetches the 50 studies by ID. The private cohort is not released.</p>
+<h2>FAQ</h2>
+<p><strong>Which chest X-ray VLM is best?</strong>
+It depends on the prompt and the workflow. On our MIMIC subset, MedGemma-27B with a structured multi-agent pipeline had the highest macro F1 (0.335). On our private cohort, CheXagent with a labels-only single pass was best (0.457). With 50 cases per cohort, treat these as directions to test, not a leaderboard.</p>
+<p><strong>Why is exact-match accuracy misleading for chest X-ray models?</strong>
+With half the cases normal, a model that answers "Normal" by default scores well on exact match while missing disease. Macro F1 and abnormal-case sensitivity expose this.</p>
+<p><strong>Do multi-agent pipelines improve medical VLMs?</strong>
+Sometimes. In our tests the same four-stage pipeline raised MedGemma-27B's macro F1 on MIMIC from 0.138 to 0.335 and lowered CheXagent's on a private cohort from 0.457 to 0.118.</p>
+<p><strong>What is decision-time routing?</strong>
+Running a fast single pass first, then deciding for each case whether to escalate to a slower multi-agent pipeline. A hindsight oracle shows that escalating 10–20% of cases can match or beat always running the pipeline.</p>
+<p><strong>Is the code available?</strong>
+Yes, at github.com/Yangxinyee/cxr-vlm-routing, with per-case MIMIC-CXR results and scripts that check the paper's numbers.</p>
+    </article>
+    <footer>
+        <p>Xinye Yang is a software engineer at AWS and a research assistant at the University of Colorado Anschutz School of Medicine, working on reliable medical imaging AI and EHR-based patient world models.</p>
+        <p><a href="../../">Homepage</a> · <a href="../">All posts</a> · <a href="../../papers/cxr-vlm-reliability-routing/">Paper</a> · <a href="https://github.com/Yangxinyee/cxr-vlm-routing" target="_blank" rel="noreferrer">Code</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
