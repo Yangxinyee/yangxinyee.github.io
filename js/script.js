@@ -32,6 +32,22 @@ document.addEventListener('DOMContentLoaded', () => {
         'Confidence-gated cloud-edge cascade triage'
     ];
 
+    // Canonical DOI links, matched by a distinctive title fragment; they replace Scholar detail links.
+    const paperLinks = [
+        ['Reliability Stress Tests and Decision-Time Routing', 'https://doi.org/10.1109/CHASE69719.2026.00073'],
+        ['Confidence-gated cloud-edge cascade triage', 'https://doi.org/10.1016/j.smhl.2026.100689'],
+        ['Unified Platform for Radiology Report Generation', 'https://doi.org/10.1101/2025.07.07.25331018'],
+        ['Turing Test Pilot Study of Attendings and Residents', 'https://doi.org/10.1016/j.metrad.2025.100199'],
+        ['Understanding the brain with attention', 'https://doi.org/10.1002/brx2.29'],
+        ['Optimization of CNN for Diagnosis on Lung Disease', 'https://doi.org/10.1109/iscid56505.2022.00063']
+    ];
+
+    const linkFor = (publication) => {
+        const title = String(publication.title || '').toLowerCase();
+        const match = paperLinks.find(([fragment]) => title.includes(fragment.toLowerCase()));
+        return match ? match[1] : publication.link;
+    };
+
     const badgeFor = (publication) => {
         const venue = String(publication.venue || '');
         const match = venueBadges.find(([pattern]) => pattern.test(venue));
@@ -97,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const title = element('p', 'paper-title');
             const link = element('a', '', publication.title || 'Untitled publication');
-            link.href = publication.link || scholarData.profile;
+            link.href = linkFor(publication) || scholarData.profile;
             link.target = '_blank';
             link.rel = 'noreferrer';
             title.append(link);
