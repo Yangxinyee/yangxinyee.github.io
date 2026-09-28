@@ -4,7 +4,7 @@ const translations = {
             title: "Xinye Yang (Charlie) | AI for Healthcare Research · Software Engineer at AWS",
             description: "Xinye Yang (Charlie) is a Software Development Engineer at AWS Kiro and a research assistant at the University of Colorado Anschutz School of Medicine, working on EHR-based patient world models, reliable medical imaging AI, and clinical AI agents."
         },
-        nav: { home: "Homepage", about: "About Me", news: "News", publications: "Publications", experience: "Experience", education: "Education", honors: "Honors", skills: "Skills", services: "Services" },
+        nav: { home: "Homepage", about: "About Me", news: "News", publications: "Publications", blog: "Blog", experience: "Experience", education: "Education", honors: "Honors", skills: "Skills", services: "Services" },
         common: { skip: "Skip to content", details: "Details", present: "Present", advisedBy: "Advised by", and: "and" },
         sidebar: {
             name: "Xinye Yang (Charlie)",
@@ -91,6 +91,11 @@ const translations = {
         },
         skills: { title: "Skills", languages: "Languages", ai: "AI & Data", frameworks: "Frameworks", tools: "Tools" },
         services: { title: "Services", reviewer: "Journal Reviewer", volunteer: "Volunteer" },
+        blog: {
+            title: "Blog",
+            lineageSummary: "Eight practices for auditable EHR training data, from row-level source IDs to validating what ships.",
+            all: "All posts"
+        },
         footer: { back: "Back to top" }
     },
     zh: {
@@ -98,7 +103,7 @@ const translations = {
             title: "杨新烨（Xinye Yang）| 医疗 AI 研究 · AWS 软件工程师",
             description: "杨新烨（Xinye Yang，Charlie）是 AWS Kiro 软件开发工程师、科罗拉多大学安舒茨医学院研究助理，研究基于 EHR 的患者世界模型、可靠的医学影像 AI 与临床 AI 智能体。"
         },
-        nav: { home: "主页", about: "关于我", news: "动态", publications: "论文", experience: "经历", education: "教育", honors: "荣誉", skills: "技能", services: "学术服务" },
+        nav: { home: "主页", about: "关于我", news: "动态", publications: "论文", blog: "博客", experience: "经历", education: "教育", honors: "荣誉", skills: "技能", services: "学术服务" },
         common: { skip: "跳转到正文", details: "详情", present: "至今", advisedBy: "导师：", and: "和" },
         sidebar: {
             name: "杨新烨",
@@ -185,6 +190,11 @@ const translations = {
         },
         skills: { title: "技能", languages: "编程语言", ai: "AI 与数据", frameworks: "框架", tools: "工具" },
         services: { title: "学术服务", reviewer: "期刊审稿人", volunteer: "志愿者" },
+        blog: {
+            title: "博客",
+            lineageSummary: "构建可审计的 EHR 训练数据的八条做法：从行级来源 ID 到检查最终交付的数据。",
+            all: "全部文章"
+        },
         footer: { back: "返回顶部" }
     }
 };
