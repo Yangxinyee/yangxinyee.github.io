@@ -28,6 +28,7 @@ Multimodal LLMs; medical image analysis; AI in healthcare; agentic AI; EHR-based
 
 ## Blog
 
+- [Stress-Testing Chest X-ray Vision-Language Models Before Deployment](https://yangxinyee.github.io/blog/cxr-vlm-stress-test/) (2026-09-28): how to test CheXagent- and MedGemma-style chest X-ray VLMs across prompts, workflows and metrics, why exact match misleads, when multi-agent pipelines help or hurt, and per-case routing. Based on the CHASE 2026 workshop paper and the cxr-vlm-routing repository.
 - [How to Keep Data Lineage When Building EHR Training Datasets](https://yangxinyee.github.io/blog/ehr-data-lineage/) (2026-09-28): eight practices for auditable EHR training data for patient world models and clinical agents, with examples from EHR2Trace.
 
 ## Publications
