@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
         [/medRxiv/i, 'medRxiv'],
         [/Meta-Radiology/i, 'Meta-Radiology'],
         [/Brain-X/i, 'Brain-X'],
-        [/Computational Intelligence and Design/i, 'ISCID']
+        [/Computational Intelligence and Design/i, 'ISCID'],
+        [/arXiv/i, 'arXiv']
     ];
 
     // Optional teaser figures keyed by exact publication title, e.g. { 'Paper title': 'assets/papers/figure.png' }.
@@ -39,7 +40,20 @@ document.addEventListener('DOMContentLoaded', () => {
         ['Unified Platform for Radiology Report Generation', '/papers/radiology-report-platform/'],
         ['Turing Test Pilot Study of Attendings and Residents', '/papers/radiology-report-turing-test/'],
         ['Understanding the brain with attention', '/papers/transformers-brain-sciences-survey/'],
-        ['Optimization of CNN for Diagnosis on Lung Disease', '/papers/lung-disease-cnn/']
+        ['Optimization of CNN for Diagnosis on Lung Disease', '/papers/lung-disease-cnn/'],
+        ['EHR2Trace', '/papers/ehr2trace/']
+    ];
+
+    // Recent papers not yet indexed by Google Scholar; skipped automatically once Scholar lists the same title.
+    const manualPublications = [
+        {
+            title: 'EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents',
+            authors: 'X Yang, Y Wang, CT Lin, H Bai',
+            venue: 'arXiv preprint arXiv:2609.38193',
+            year: '2026',
+            citations: 0,
+            link: 'https://arxiv.org/abs/2609.38193'
+        }
     ];
 
     const linkFor = (publication) => {
@@ -92,8 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const list = document.querySelector('[data-scholar-publications]');
         if (!list || !Array.isArray(scholarData.publications) || scholarData.publications.length === 0) return;
         const fragment = document.createDocumentFragment();
+        const normalize = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const listed = new Set(scholarData.publications.map((publication) => normalize(publication.title)));
+        const publications = [
+            ...manualPublications.filter((publication) => !listed.has(normalize(publication.title))),
+            ...scholarData.publications
+        ];
 
-        scholarData.publications.forEach((publication) => {
+        publications.forEach((publication) => {
             const box = element('div', 'paper-box');
             const badge = element('span', 'badge', badgeFor(publication));
             const text = element('div', 'paper-box-text');
