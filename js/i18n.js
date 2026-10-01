@@ -46,6 +46,7 @@ const translations = {
         },
         news: {
             title: "News",
+            ehr2trace: "Our preprint on auditable EHR data infrastructure for patient world models and clinical agents is on arXiv, with open-source code.",
             n1: "I join AWS Kiro as a full-time Software Development Engineer in Seattle!",
             n2: "I start as a Research Assistant at the University of Colorado Anschutz School of Medicine.",
             n3: "Our paper on reliability stress tests and decision-time routing for chest X-ray VLMs appears at IEEE/ACM CHASE 2026 and is selected as an Oral presentation 🏅!",
@@ -145,6 +146,7 @@ const translations = {
         },
         news: {
             title: "动态",
+            ehr2trace: "我们关于面向患者世界模型与临床智能体的可审计 EHR 数据基础设施的预印本已发布在 arXiv，代码已开源。",
             n1: "全职加入 AWS Kiro，任软件开发工程师（西雅图）！",
             n2: "开始在科罗拉多大学安舒茨医学院担任研究助理。",
             n3: "关于胸片视觉语言模型可靠性压力测试与决策时路由的论文发表于 IEEE/ACM CHASE 2026，并入选口头报告（Oral）🏅！",
