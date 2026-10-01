@@ -42,6 +42,12 @@
         {"@type": "Person", "name": "Harrison Bai"}
       ],
       "isAccessibleForFree": true,
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "name": "EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents",
+        "url": "https://arxiv.org/abs/2609.38193",
+        "sameAs": "https://doi.org/10.48550/arXiv.2609.38193"
+      },
       "subjectOf": {
         "@type": "BlogPosting",
         "name": "How to Keep Data Lineage When Building EHR Training Datasets",
@@ -59,7 +65,7 @@
         {"@type": "Question", "name": "How is EHR2Trace different from the OHDSI MIMIC-IV to OMOP ETL?", "acceptedAnswer": {"@type": "Answer", "text": "The OHDSI MIMIC ETL converts MIMIC-IV only, into OMOP, on Google BigQuery, and ships curated custom concept mappings, so it maps far more rows to concepts. EHR2Trace is configured for any delimited or spreadsheet export, writes OMOP and MEDS, and keeps row-level lineage in the published output."}},
         {"@type": "Question", "name": "Can I try EHR2Trace without credentialed data access?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It runs unchanged on the openly licensed MIMIC-IV demonstration subset (100 patients) in a few minutes on a laptop, and the same conversion runs in CI on every push."}},
         {"@type": "Question", "name": "Does EHR2Trace use large language models to convert data?", "acceptedAnswer": {"@type": "Answer", "text": "No. A language model never parses dates, numbers or table structure, never invents a concept ID and never writes to an output layer. An optional local model can rank terminology candidates for a human reviewer, and whether that helps is measured against confirmed decisions."}},
-        {"@type": "Question", "name": "How do I cite EHR2Trace?", "acceptedAnswer": {"@type": "Answer", "text": "Cite the software using CITATION.cff in the repository: Xinye Yang, Yuli Wang, Cheng Ting Lin, Harrison Bai. EHR2Trace, version 0.7.0, 2026, https://github.com/Yangxinyee/ehr2trace. A companion paper is forthcoming."}}
+        {"@type": "Question", "name": "How do I cite EHR2Trace?", "acceptedAnswer": {"@type": "Answer", "text": "Cite the paper: Xinye Yang, Yuli Wang, Cheng Ting Lin, Harrison Bai. EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents. arXiv:2609.38193, 2026. https://doi.org/10.48550/arXiv.2609.38193. To cite a specific software version, use CITATION.cff in the repository."}}
       ]
     }
     </script>
@@ -72,7 +78,7 @@
         <h1>EHR2Trace: auditable EHR conversion to OMOP CDM and MEDS</h1>
         <p class="authors"><strong>Xinye Yang</strong>, Yuli Wang, Cheng Ting Lin, Harrison Bai</p>
         <p class="venue">University of Colorado Anschutz School of Medicine · Johns Hopkins University School of Medicine</p>
-        <div class="links"><a class="btn" href="https://github.com/Yangxinyee/ehr2trace" target="_blank" rel="noreferrer">Code on GitHub</a><a class="btn" href="https://github.com/Yangxinyee/ehr2trace/blob/main/docs/FAULT_CATALOGUE.md" target="_blank" rel="noreferrer">Fault catalogue</a><a class="btn" href="https://github.com/Yangxinyee/ehr2trace/tree/main/experiments" target="_blank" rel="noreferrer">Experiments</a><a class="btn" href="../../blog/ehr-data-lineage/">Blog: data lineage</a><a class="btn btn-quiet" href="#cite">Cite</a></div>
+        <div class="links"><a class="btn" href="../../papers/ehr2trace/">Paper (arXiv:2609.38193)</a><a class="btn" href="https://github.com/Yangxinyee/ehr2trace" target="_blank" rel="noreferrer">Code on GitHub</a><a class="btn" href="https://github.com/Yangxinyee/ehr2trace/blob/main/docs/FAULT_CATALOGUE.md" target="_blank" rel="noreferrer">Fault catalogue</a><a class="btn" href="https://github.com/Yangxinyee/ehr2trace/tree/main/experiments" target="_blank" rel="noreferrer">Experiments</a><a class="btn" href="../../blog/ehr-data-lineage/">Blog: data lineage</a><a class="btn btn-quiet" href="#cite">Cite</a></div>
     </header>
 
     <article>
@@ -111,10 +117,10 @@ omop/ (DuckDB)          meds/ (Parquet shards + metadata)
 
     <section>
         <h2>Results</h2>
-        <p>All numbers come from the aggregate records committed in <a href="https://github.com/Yangxinyee/ehr2trace/tree/main/experiments" target="_blank" rel="noreferrer"><code>experiments/results/</code></a>.</p>
+        <p>All numbers come from the <a href="../../papers/ehr2trace/">paper</a> and the aggregate records committed in <a href="https://github.com/Yangxinyee/ehr2trace/tree/main/experiments" target="_blank" rel="noreferrer"><code>experiments/results/</code></a>.</p>
         <ul>
             <li><strong>Fault detection.</strong> 28 silent faults, each drawn from a real incident, are injected into a PHI-free fixture. The current 55-check suite detects all 28 and localises 21. The earlier 34-check suite detected 13; that gap is what the cross-layer checks were added to close. This runs in CI on every push.</li>
-            <li><strong>What CDM-level checks see.</strong> The OHDSI Data Quality Dashboard (v2.8.9, 2,374 checks) was run on the OMOP output for the 17 faults it could be pointed at. It flagged 5. Eight of the 17 never reach the OMOP tables at all; they live in the canonical layer, the identities or the MEDS shards. DQD checks CDM conformance and plausibility, and it does that job; these faults need checks outside the CDM.</li>
+            <li><strong>What CDM-level checks see.</strong> Of the nine injected faults that reach the OMOP tables, the OHDSI Data Quality Dashboard (v2.8.9, 2,374 checks) flagged five. Eight other faults never reach OMOP at all; they live in the canonical layer, the identities or the MEDS shards. DQD checks CDM conformance and plausibility, and it does that job; these faults need checks outside the CDM.</li>
             <li><strong>Reproducibility.</strong> Four concurrency settings gave byte-identical results across 60 compared artifacts, with no false alarms from the 55 checks on the correct build.</li>
             <li><strong>Why the second clock matters.</strong> On full MIMIC-IV (131,007 subjects, in-hospital death at 6 hours after admission), a model given diagnosis codes timestamped at admission scores AUROC 0.965 on held-out data, against 0.829 when availability is respected. Scored under honest timing, that inflated model drops to 0.642.</li>
         </ul>
@@ -193,7 +199,7 @@ done
             <li>OMOP concept coverage depends on the vocabulary you install from Athena and on reviewed decisions, and starts low on a new site (see above).</li>
             <li>Full MIMIC-IV converts on 48 cores and 251 GB of memory; the demo subset runs on a laptop.</li>
             <li>Episodes, rewards and models are downstream of EHR2Trace and not included.</li>
-            <li>The companion paper is forthcoming, so the method hasn't been peer reviewed yet.</li>
+            <li>The paper is a preprint (arXiv:2609.38193) and has not been peer reviewed yet.</li>
         </ul>
     </section>
 
@@ -208,7 +214,7 @@ done
   url     = {https://github.com/Yangxinyee/ehr2trace},
   license = {Apache-2.0}
 }</code></pre>
-        <p class="note">Companion paper: <em>EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents</em> (forthcoming).</p>
+        <p class="note">The BibTeX above cites the software. Most uses should cite the paper instead: see the <a href="../../papers/ehr2trace/#cite">paper page</a> for its BibTeX.</p>
     </section>
 
     <section>
@@ -218,7 +224,7 @@ done
         <details><summary>How is it different from the OHDSI MIMIC-IV to OMOP ETL?</summary><p>The OHDSI ETL converts MIMIC-IV only, into OMOP, on Google BigQuery, and ships curated custom mappings, so it maps far more rows to concepts. EHR2Trace is configured for any delimited or spreadsheet export, writes OMOP and MEDS, and keeps row-level lineage in the published output.</p></details>
         <details><summary>Can I try it without credentialed data access?</summary><p>Yes. It runs unchanged on the openly licensed MIMIC-IV demonstration subset (100 patients) in a few minutes on a laptop, and the same conversion runs in CI on every push.</p></details>
         <details><summary>Does it use large language models to convert data?</summary><p>No. A language model never parses dates, numbers or table structure, never invents a concept ID and never writes to an output layer. An optional local model can rank terminology candidates for a human reviewer, and whether that helps is measured against confirmed decisions.</p></details>
-        <details><summary>How do I cite it?</summary><p>Use the BibTeX above or CITATION.cff in the repository. A companion paper is forthcoming.</p></details>
+        <details><summary>How do I cite it?</summary><p>Cite the paper, arXiv:2609.38193 (BibTeX on the <a href="../../papers/ehr2trace/#cite">paper page</a>). To cite a specific software version, use the BibTeX above or CITATION.cff in the repository.</p></details>
     </section>
     </article>
 
