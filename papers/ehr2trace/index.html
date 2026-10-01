@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EHR2Trace: Auditable EHR Data Infrastructure | arXiv 2026 | Xinye Yang</title>
+    <meta name="description" content="EHR2Trace converts EHRs from different sources into source-linked patient events with separate event and availability times, exports OMOP CDM and MEDS, and validates the saved outputs; across three clinical datasets it converted 846.4 million events and detected all 28 injected faults, and backdating diagnoses to admission inflated a mortality model&#x27;s AUROC from 0.829 to 0.965.">
+    <link rel="canonical" href="https://yangxinyee.github.io/papers/ehr2trace/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <meta name="citation_title" content="EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents">
+    <meta name="citation_author" content="Xinye Yang">
+    <meta name="citation_author" content="Yuli Wang">
+    <meta name="citation_author" content="Cheng Ting Lin">
+    <meta name="citation_author" content="Harrison Bai">
+    <meta name="citation_publication_date" content="2026/09/18">
+    <meta name="citation_journal_title" content="arXiv">
+    <meta name="citation_doi" content="10.48550/arXiv.2609.38193">
+    <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2609.38193">
+    <meta name="citation_abstract_html_url" content="https://yangxinyee.github.io/papers/ehr2trace/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "headline": "EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents",
+      "name": "EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents",
+      "url": "https://yangxinyee.github.io/papers/ehr2trace/",
+      "sameAs": "https://doi.org/10.48550/arXiv.2609.38193",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.48550/arXiv.2609.38193"
+      },
+      "datePublished": "2026-09-18",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Xinye Yang",
+          "url": "https://yangxinyee.github.io/",
+          "sameAs": "https://orcid.org/0009-0004-3143-4263"
+        },
+        {
+          "@type": "Person",
+          "name": "Yuli Wang"
+        },
+        {
+          "@type": "Person",
+          "name": "Cheng Ting Lin"
+        },
+        {
+          "@type": "Person",
+          "name": "Harrison Bai"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "arXiv"
+      },
+      "abstract": "Patient world models and clinical agents aim to predict changes in patients' health and support clinical work. Developing these systems requires reliable histories of patient conditions, treatments, and the information available at each decision. Electronic health records (EHRs) contain these histories, but differences in how events are recorded make them difficult to use consistently. We present EHR2Trace, a system that converts EHRs from different sources into traceable patient events for model training and evaluation. It links events to source records, separates event time from information availability, and distinguishes medication orders, dispensing, and administration. A shared event representation supports both OMOP and MEDS exports, with automated validation and reproducible builds. Across three clinical datasets, EHR2Trace converted 846.4 million events, with every applicable check passing except one unit-consistency check on MIMIC-IV, and detected all 28 injected faults. A controlled prediction experiment showed that assigning later diagnoses to admission time substantially inflated measured performance, and that a model trained on such data lost accuracy when deployed on histories filtered by availability. EHR2Trace provides a reusable data foundation for patient world models and clinical agents, helping researchers inspect patient histories, check conversion decisions, and evaluate models with explicit data rules.",
+      "description": "EHR2Trace converts EHRs from different sources into source-linked patient events with separate event and availability times, exports OMOP CDM and MEDS, and validates the saved outputs; across three clinical datasets it converted 846.4 million events and detected all 28 injected faults, and backdating diagnoses to admission inflated a mortality model's AUROC from 0.829 to 0.965."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is EHR2Trace?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An open-source system that converts electronic health records from different sources into source-linked patient events and exports them to OMOP CDM 5.4 and MEDS, with automated validation of the saved outputs and reproducible builds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why separate event time from information-availability time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A result or diagnosis is often recorded after the clinical event it describes. Using event time alone can place information in a model's input before a clinician could have seen it. In the paper, backdating admission diagnoses inflated held-out AUROC from 0.829 to 0.965, and a model trained that way scored 0.642 on availability-filtered histories."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is EHR2Trace validated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "55 automated checks compare saved outputs with source records, audit records and dataset declarations. They detected all 28 faults in an injected catalogue; the OHDSI Data Quality Dashboard detected 5 of the 9 faults that reach OMOP."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which datasets were converted?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Johns Hopkins CT pulmonary embolism extract, MIMIC-IV v3.1, and a University of Colorado CT pulmonary angiography extract, 846.4 million canonical events in total. The code runs on the open MIMIC-IV demonstration subset without credentialed access."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is the code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "github.com/Yangxinyee/ehr2trace, under the Apache-2.0 license, with the experiment records behind the paper's numbers."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../../#publications">Publications</a></nav>
+    <header>
+        <div class="badges"><span class="badge">arXiv 2026</span><span class="badge">Preprint</span><span class="badge">Open source</span></div>
+        <h1>EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents</h1>
+        <p class="authors"><strong>Xinye Yang</strong>, Yuli Wang, Cheng Ting Lin, Harrison Bai</p>
+        <p class="venue">arXiv preprint arXiv:2609.38193 (2026) · DOI: <a href="https://doi.org/10.48550/arXiv.2609.38193" target="_blank" rel="noreferrer">10.48550/arXiv.2609.38193</a></p>
+        <div class="links"><a class="btn" href="https://doi.org/10.48550/arXiv.2609.38193" target="_blank" rel="noreferrer">Paper (DOI)</a><a class="btn" href="https://arxiv.org/pdf/2609.38193" target="_blank" rel="noreferrer">PDF</a><a class="btn" href="https://github.com/Yangxinyee/ehr2trace" target="_blank" rel="noreferrer">Code: EHR2Trace</a><a class="btn" href="https://yangxinyee.github.io/projects/ehr2trace/" target="_blank" rel="noreferrer">Project page</a><a class="btn" href="https://arxiv.org/abs/2609.38193" target="_blank" rel="noreferrer">arXiv abstract</a><a class="btn btn-quiet" href="#cite">Cite</a></div>
+    </header>
+
+    <section>
+        <h2>TL;DR</h2>
+        <p class="tldr">EHR2Trace converts EHRs from different sources into source-linked patient events with separate event and availability times, exports OMOP CDM and MEDS, and validates the saved outputs; across three clinical datasets it converted 846.4 million events and detected all 28 injected faults, and backdating diagnoses to admission inflated a mortality model&#x27;s AUROC from 0.829 to 0.965.</p>
+        <p class="tldr-zh" lang="zh-CN">中文简介：EHR2Trace 把不同来源的 EHR 转换为可追溯到源记录的患者事件，事件时间与信息可得时间分开存储，导出 OMOP CDM 与 MEDS 并校验落盘结果；在三个临床数据集上转换 8.464 亿条事件，28 个注入故障全部检出；把诊断回填到入院时间会把死亡预测模型的 AUROC 从 0.829 虚高到 0.965。</p>
+    </section>
+
+    <section>
+        <h2>Key points</h2>
+        <ul><li>Converts heterogeneous EHR sources into one set of canonical patient events, exported to OMOP CDM 5.4 and MEDS, with every event linked to its source rows.</li><li>Stores event time and information-availability time separately, and keeps medication orders, dispensing and administration as distinct records.</li><li>Across three clinical datasets (JHU-CTPE, MIMIC-IV and CU-CTPA) it converted 846.4 million canonical events; every applicable validation check passed except one unit-consistency check on MIMIC-IV.</li><li>The 55-check suite detected all 28 injected faults; without its 21 cross-layer checks, detection dropped to 13 of 28. The OHDSI Data Quality Dashboard detected 5 of the 9 faults that reach OMOP.</li><li>Four execution configurations produced 60 byte-identical artifacts on synthetic data.</li><li>On a MIMIC-IV mortality-proxy task, backdating diagnoses to admission raised held-out AUROC from 0.829 to 0.965 at six hours; the backdated model scored 0.642 on availability-filtered histories.</li></ul>
+    </section>
+
+    <section>
+        <h2>Abstract</h2>
+        <p>Patient world models and clinical agents aim to predict changes in patients&#x27; health and support clinical work. Developing these systems requires reliable histories of patient conditions, treatments, and the information available at each decision. Electronic health records (EHRs) contain these histories, but differences in how events are recorded make them difficult to use consistently. We present EHR2Trace, a system that converts EHRs from different sources into traceable patient events for model training and evaluation. It links events to source records, separates event time from information availability, and distinguishes medication orders, dispensing, and administration. A shared event representation supports both OMOP and MEDS exports, with automated validation and reproducible builds. Across three clinical datasets, EHR2Trace converted 846.4 million events, with every applicable check passing except one unit-consistency check on MIMIC-IV, and detected all 28 injected faults. A controlled prediction experiment showed that assigning later diagnoses to admission time substantially inflated measured performance, and that a model trained on such data lost accuracy when deployed on histories filtered by availability. EHR2Trace provides a reusable data foundation for patient world models and clinical agents, helping researchers inspect patient histories, check conversion decisions, and evaluate models with explicit data rules.</p>
+        <p class="note">License: CC BY 4.0 (arXiv).</p>
+    </section>
+
+    <section id="cite">
+        <h2>Citation</h2>
+        <p>Xinye Yang, Yuli Wang, Cheng Ting Lin, Harrison Bai. EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents. arXiv preprint arXiv:2609.38193 (2026). https://doi.org/10.48550/arXiv.2609.38193</p>
+        <pre><code>@article{yang2026ehr2trace,
+  title   = {{EHR2Trace}: Auditable {EHR} Data Infrastructure for Patient World Models and Clinical Agents},
+  author  = {Yang, Xinye and Wang, Yuli and Lin, Cheng Ting and Bai, Harrison},
+  journal = {arXiv preprint arXiv:2609.38193},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2609.38193}
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>FAQ</h2>
+        <details><summary>What is EHR2Trace?</summary><p>An open-source system that converts electronic health records from different sources into source-linked patient events and exports them to OMOP CDM 5.4 and MEDS, with automated validation of the saved outputs and reproducible builds.</p></details><details><summary>Why separate event time from information-availability time?</summary><p>A result or diagnosis is often recorded after the clinical event it describes. Using event time alone can place information in a model&#x27;s input before a clinician could have seen it. In the paper, backdating admission diagnoses inflated held-out AUROC from 0.829 to 0.965, and a model trained that way scored 0.642 on availability-filtered histories.</p></details><details><summary>How is EHR2Trace validated?</summary><p>55 automated checks compare saved outputs with source records, audit records and dataset declarations. They detected all 28 faults in an injected catalogue; the OHDSI Data Quality Dashboard detected 5 of the 9 faults that reach OMOP.</p></details><details><summary>Which datasets were converted?</summary><p>A Johns Hopkins CT pulmonary embolism extract, MIMIC-IV v3.1, and a University of Colorado CT pulmonary angiography extract, 846.4 million canonical events in total. The code runs on the open MIMIC-IV demonstration subset without credentialed access.</p></details><details><summary>Where is the code?</summary><p>github.com/Yangxinyee/ehr2trace, under the Apache-2.0 license, with the experiment records behind the paper&#x27;s numbers.</p></details>
+    </section>
+
+    <footer>
+        <p><a href="../../">Xinye Yang (Charlie)</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ" target="_blank" rel="noreferrer">Google Scholar</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
