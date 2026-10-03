@@ -29,8 +29,8 @@ jobs:
           SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
         run: |
           if [ -z "$SERPAPI_KEY" ]; then
-            echo "::warning::Add the SERPAPI_KEY repository secret to enable Scholar synchronization."
-            exit 0
+            echo "::error::SERPAPI_KEY repository secret is missing; Scholar data cannot be synchronized."
+            exit 1
           fi
           python scripts/update_scholar.py
 
