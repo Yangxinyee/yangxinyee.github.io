@@ -1,21 +1,29 @@
 {
   "profile": "https://scholar.google.com/citations?user=xEgmvx4AAAAJ&hl=en",
   "authorId": "xEgmvx4AAAAJ",
-  "updatedAt": "2026-10-03T07:22:14Z",
+  "updatedAt": "2026-10-03T22:52:49Z",
   "source": "Google Scholar via SerpAPI",
   "metrics": {
-    "citations": 48,
+    "citations": 49,
     "hIndex": 2,
     "i10Index": 1,
-    "publications": 6
+    "publications": 7
   },
   "publications": [
+    {
+      "title": "EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents",
+      "authors": "X Yang, Y Wang, CT Lin, H Bai",
+      "venue": "arXiv preprint arXiv:2609.38193, 2026",
+      "year": "2026",
+      "citations": 0,
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=xEgmvx4AAAAJ&citation_for_view=xEgmvx4AAAAJ%3ATyk-4Ss8FVUC"
+    },
     {
       "title": "Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models",
       "authors": "X Yang, Z Zhong, S Collins, G Baird, X Wang, Z Jiao",
       "venue": "2026 IEEE/ACM Conference on Connected Health: Applications, Systems and …, 2026",
       "year": "2026",
-      "citations": 0,
+      "citations": 1,
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=xEgmvx4AAAAJ&citation_for_view=xEgmvx4AAAAJ%3AzYLM7Y9cAGgC"
     },
     {
