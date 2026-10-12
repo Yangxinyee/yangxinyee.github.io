@@ -1,10 +1,10 @@
 {
   "profile": "https://scholar.google.com/citations?user=xEgmvx4AAAAJ&hl=en",
   "authorId": "xEgmvx4AAAAJ",
-  "updatedAt": "2026-10-03T22:52:49Z",
+  "updatedAt": "2026-10-12T19:06:45Z",
   "source": "Google Scholar via SerpAPI",
   "metrics": {
-    "citations": 49,
+    "citations": 50,
     "hIndex": 2,
     "i10Index": 1,
     "publications": 7
@@ -55,7 +55,7 @@
       "authors": "C Chen, H Wang, Y Chen, Z Yin, X Yang, H Ning, Q Zhang, W Li, R Xiao, ...",
       "venue": "Brain‐X 1 (3), e29, 2023",
       "year": "2023",
-      "citations": 45,
+      "citations": 46,
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=xEgmvx4AAAAJ&citation_for_view=xEgmvx4AAAAJ%3Au-x6o8ySG0sC"
     },
     {
