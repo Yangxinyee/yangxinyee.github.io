@@ -154,7 +154,7 @@ done
 <p>Two things in the run are worth knowing before you rely on it:</p>
 <ul>
 <li><strong>Concept IDs are 0 until you install a vocabulary.</strong> The repository ships no SNOMED, LOINC or RxNorm. Download them from <a href="https://athena.ohdsi.org/">Athena</a> and set <code>OMOP_VOCAB_DIR</code>; until then every source value is kept and every term goes to a review queue rather than being mapped silently. For OHDSI analyses that need high concept coverage on MIMIC-IV today, the official OHDSI MIMIC ETL maps far more.</li>
-<li><strong>One check fails on MIMIC-IV, on purpose.</strong> The run reports 43 passed, 10 skipped and 1 failed. The failure says five lab codes mix units with no conversion between them; MCHC (item 51249), for example, appears in both g/L and %. The converter reports this rather than picking one.</li>
+<li><strong>One check fails on MIMIC-IV, on purpose.</strong> The default <code>validate</code> run reports 43 passed, 10 skipped and 1 failed; <code>validate --all</code>, which adds one slower check that rereads every source file, runs all 55 and reports 44 passed. The failure says five lab codes mix units with no conversion between them; MCHC (item 51249), for example, appears in both g/L and %. The converter reports this rather than picking one.</li>
 </ul>
 <p>To follow one patient from raw rows to the outputs: <code>ehr2trace trace -d datasets/mimiciv.yaml --patient &lt;key&gt;</code>.</p>
 <h2>The time column you will want later</h2>
