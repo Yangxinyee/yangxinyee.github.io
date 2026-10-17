@@ -93,6 +93,8 @@ const translations = {
         services: { title: "Services", reviewer: "Journal Reviewer", volunteer: "Volunteer" },
         blog: {
             title: "Blog",
+            medsSummary: "Three open-source routes from MIMIC-IV to MEDS (and OMOP), with commands, a timed demo run, and how to avoid time leakage.",
+            vrmSummary: "Training an image-only chest X-ray triage model when the report arrives after the decision, and escalating uncertain cases to the cloud.",
             cxrSummary: "How to stress-test chest X-ray VLMs before deployment: prompts, workflows, metrics, and when to escalate to a multi-agent pipeline.",
             lineageSummary: "Eight practices for auditable EHR training data, from row-level source IDs to validating what ships.",
             all: "All posts"
@@ -193,6 +195,8 @@ const translations = {
         services: { title: "学术服务", reviewer: "期刊审稿人", volunteer: "志愿者" },
         blog: {
             title: "博客",
+            medsSummary: "把 MIMIC-IV 转成 MEDS（以及 OMOP）的三条开源路线：命令、demo 实测耗时，以及如何避免时间泄漏。",
+            vrmSummary: "急诊胸片分诊时报告还没写出来：怎样训练只看图像的分诊模型，并把不确定的病例交给云端复核。",
             cxrSummary: "胸片视觉语言模型上线前怎么做压力测试：提示词、工作流、评价指标，以及何时升级到多智能体流程。",
             lineageSummary: "构建可审计的 EHR 训练数据的八条做法：从行级来源 ID 到检查最终交付的数据。",
             all: "全部文章"
