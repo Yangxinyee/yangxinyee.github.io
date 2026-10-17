@@ -54,9 +54,15 @@
   </url>
   <url>
     <loc>https://yangxinyee.github.io/blog/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yangxinyee.github.io/blog/omop-vs-meds-patient-world-models/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://yangxinyee.github.io/blog/mimic-iv-to-meds/</loc>
