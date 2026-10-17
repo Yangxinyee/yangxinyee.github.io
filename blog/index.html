@@ -23,6 +23,18 @@
       "blogPost": [
         {
           "@type": "BlogPosting",
+          "headline": "How to Convert MIMIC-IV to MEDS: Three Open-Source Routes and a Five-Minute Demo",
+          "url": "https://yangxinyee.github.io/blog/mimic-iv-to-meds/",
+          "datePublished": "2026-10-16"
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Chest X-ray Triage Before the Report Exists: Distilling a Multimodal Teacher into an Edge Model",
+          "url": "https://yangxinyee.github.io/blog/cxr-triage-before-the-report/",
+          "datePublished": "2026-10-16"
+        },
+        {
+          "@type": "BlogPosting",
           "headline": "Stress-Testing Chest X-ray Vision-Language Models Before Deployment",
           "url": "https://yangxinyee.github.io/blog/cxr-vlm-stress-test/",
           "datePublished": "2026-09-28"
@@ -42,6 +54,16 @@
     <nav class="crumbs"><a href="../">Xinye Yang</a> / Blog</nav>
     <header><h1>Blog</h1><p class="venue">Notes on EHR data infrastructure, patient world models, and reliable medical imaging AI.</p></header>
     <ul class="post-list">
+        <li>
+            <a class="post-title" href="mimic-iv-to-meds/">How to Convert MIMIC-IV to MEDS: Three Open-Source Routes and a Five-Minute Demo</a>
+            <p class="venue"><time datetime="2026-10-16">October 16, 2026</time> · 7 min read</p>
+            <p>There are three maintained open-source ways to turn MIMIC-IV into MEDS: MIMIC_IV_MEDS on MEDS-Extract for MEDS alone, meds_etl for MIMIC-IV 2.2 or an existing OMOP database, and EHR2Trace when you need MEDS and OMOP together, row-level lineage or availability times. This post gives the commands for each, times a full EHR2Trace run on the open MIMIC-IV demo (about two minutes of conversion), and shows how to filter on availability time to avoid leakage.</p>
+        </li>
+        <li>
+            <a class="post-title" href="cxr-triage-before-the-report/">Chest X-ray Triage Before the Report Exists: Distilling a Multimodal Teacher into an Edge Model</a>
+            <p class="venue"><time datetime="2026-10-16">October 16, 2026</time> · 8 min read</p>
+            <p>In an emergency department, chest X-rays are triaged before anyone writes the report, so a model that needs image and text cannot run at the moment it is needed. In our Smart Health paper we train an image-only student from a multimodal teacher whose target is averaged over five reports that MedGemma-27B writes for the same image. The 14 ms student reaches AUC 0.842 on MIMIC-CXR, and sending the 20.3% of cases it is unsure about to the cloud teacher gives AUC 0.941 at 103 ms average latency. The code is in vrm-edge-triage.</p>
+        </li>
         <li>
             <a class="post-title" href="cxr-vlm-stress-test/">Stress-Testing Chest X-ray Vision-Language Models Before Deployment</a>
             <p class="venue"><time datetime="2026-09-28">September 28, 2026</time> · 7 min read</p>
