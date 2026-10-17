@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chest X-ray Triage Before the Report Exists: Distilling a Multimodal Teacher into an Edge Model | Xinye Yang</title>
+    <meta name="description" content="How to train an image-only chest X-ray triage model when the radiology report arrives after the triage decision: sample several LVLM reports per image, average a multimodal teacher over them, distill into a 14 ms edge model, and send uncertain cases to the cloud.">
+    <meta name="author" content="Xinye Yang">
+    <link rel="canonical" href="https://yangxinyee.github.io/blog/cxr-triage-before-the-report/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <link rel="stylesheet" href="../../css/blog.css?v=1">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Chest X-ray Triage Before the Report Exists: Distilling a Multimodal Teacher into an Edge Model">
+    <meta property="og:description" content="How to train an image-only chest X-ray triage model when the radiology report arrives after the triage decision: sample several LVLM reports per image, average a multimodal teacher over them, distill into a 14 ms edge model, and send uncertain cases to the cloud.">
+    <meta property="og:url" content="https://yangxinyee.github.io/blog/cxr-triage-before-the-report/">
+    <meta property="article:published_time" content="2026-10-16">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Chest X-ray Triage Before the Report Exists: Distilling a Multimodal Teacher into an Edge Model",
+      "description": "How to train an image-only chest X-ray triage model when the radiology report arrives after the triage decision: sample several LVLM reports per image, average a multimodal teacher over them, distill into a 14 ms edge model, and send uncertain cases to the cloud.",
+      "url": "https://yangxinyee.github.io/blog/cxr-triage-before-the-report/",
+      "mainEntityOfPage": "https://yangxinyee.github.io/blog/cxr-triage-before-the-report/",
+      "datePublished": "2026-10-16",
+      "dateModified": "2026-10-16",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Xinye Yang",
+        "url": "https://yangxinyee.github.io/",
+        "sameAs": [
+          "https://orcid.org/0009-0004-3143-4263",
+          "https://github.com/Yangxinyee"
+        ]
+      },
+      "about": [
+        {"@type": "Thing", "name": "Chest X-ray triage"},
+        {"@type": "Thing", "name": "Knowledge distillation"},
+        {"@type": "Thing", "name": "Missing modality"},
+        {"@type": "Thing", "name": "Edge AI"}
+      ],
+      "mentions": [
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "vrm-edge-triage",
+          "codeRepository": "https://github.com/Yangxinyee/vrm-edge-triage"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "name": "Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging",
+          "url": "https://yangxinyee.github.io/papers/vrm-cloud-edge-triage/",
+          "sameAs": ["https://doi.org/10.1016/j.smhl.2026.100689", "https://arxiv.org/abs/2610.02269"]
+        }
+      ],
+      "keywords": "chest X-ray, triage, knowledge distillation, variational risk minimization, missing modality, MedGemma, BiomedCLIP, edge deployment, cloud-edge cascade, MIMIC-CXR"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do you train an image-only model when reports are only available at training time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Train a multimodal teacher on image and report, then distill it into an image-only student. Variational Risk Minimization (VRM) makes the teacher target an average over several reports sampled from a vision-language model for the same image, instead of one report, so the student learns from a stable, uncertainty-aware target."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is VRM different from standard knowledge distillation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard distillation matches one teacher output per image. VRM matches the teacher's prediction averaged over K sampled reports. On MIMIC-CXR this gave AUC 0.842, against 0.748 for standard KD and a mean of 0.808 when one randomly chosen report is used instead of five."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many sampled reports are needed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Five was the practical choice in our experiments: the paper reports a 6.2% AUC gain from K=1 to K=5 and only 0.3% more at K=10, while training time grows linearly with K."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the deployed model need a report or a language model at inference?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The student reads the image only: 75 MB and 14 ms per image on an RTX 2060. In the cascade, only cases the student is unsure about (20.3%) go to the cloud teacher."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the code available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, at github.com/Yangxinyee/vrm-edge-triage: the teacher, the student, the VRM losses, offline report sampling, and training and evaluation scripts. Training needs your own credentialed copy of MIMIC-CXR."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper post">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../">Blog</a></nav>
+    <header>
+        <h1>Chest X-ray Triage Before the Report Exists: Distilling a Multimodal Teacher into an Edge Model</h1>
+        <p class="venue">Xinye Yang · <time datetime="2026-10-16">October 16, 2026</time> · 8 min read</p>
+    </header>
+    <article>
+<p><strong>TL;DR.</strong> In an emergency department, chest X-rays are triaged before anyone writes the report, so a model that needs image and text cannot run at the moment it is needed. In our <a href="https://yangxinyee.github.io/papers/vrm-cloud-edge-triage/">Smart Health paper</a> (oral at IEEE/ACM CHASE 2026) we train an image-only student from a multimodal teacher, and we make the teacher's target the average of its predictions over five reports that MedGemma-27B writes for the same image. We call this Variational Risk Minimization (VRM). The student is 75 MB, runs in 14 ms on an RTX 2060, and reaches AUC 0.842 on MIMIC-CXR. Sending the 20.3% of cases it is unsure about to the cloud teacher gives AUC 0.941 at 103 ms average latency. Code: <a href="https://github.com/Yangxinyee/vrm-edge-triage">vrm-edge-triage</a>.</p>
+<hr />
+<h2>The problem: the report comes after the decision</h2>
+<p>Multimodal models such as BiomedCLIP and Med-SigLIP are strongest when they see the image and the radiology report together. Triage is the step that decides which study a radiologist reads first, so at triage time the report does not exist yet. The text is not missing at random; the workflow removes it every time. We call this <em>structural modality censorship</em>: a train-test mismatch built into the clinical process.</p>
+<p>Deployment adds a second constraint. A large model in the cloud brings latency, a network dependency and data-governance work. A model on the reading-room workstation is fast and keeps data local, but it has to be small, and it still has no report.</p>
+<h2>Two obvious fixes, and why they fall short</h2>
+<ul>
+<li><strong>Fine-tune an image encoder directly.</strong> This works and is the baseline to beat: EVA-X, the best of three medical foundation encoders we fine-tuned, reached AUC 0.828. It cannot use anything the report would have added.</li>
+<li><strong>Distill from a teacher that reads one generated report.</strong> Ask a vision-language model to write a report, give it to the teacher with the image, and train the student on the teacher's output. The weakness is that the target now depends on which report the generator happened to write. When we picked one of five generated reports at random per case, 100 times over, test AUC ranged from 0.755 to 0.852. We call this the report lottery.</li>
+</ul>
+<h2>The idea: average over the reports you could have written</h2>
+<p>Treat the missing report as a latent variable. For each training image, sample <em>K</em> reports from a vision-language model, run the multimodal teacher on the image with each one, and average:</p>
+<pre><code>target(x) = (1/K) · Σ_k teacher(x, report_k),   report_k ~ LVLM(x)</code></pre>
+<p>This is a Monte Carlo estimate of the teacher's prediction marginalized over plausible readings of the image. Its variance shrinks roughly as 1/<em>K</em>, and one bad report moves it by a fifth instead of all the way.</p>
+<p>The concrete setup in the paper:</p>
+<ul>
+<li><strong>Sampler.</strong> MedGemma-27B prompted as an emergency radiologist to write findings and an impression, with temperature 0.9, top-p 0.95, top-k 50, repetition penalty 1.1 and at most 200 tokens. <em>K</em> = 5 reports per image, generated offline.</li>
+<li><strong>Teacher.</strong> BiomedCLIP image and text encoders joined by eight learnable queries that attend to the text and then to the image (we call this Latent Query Alignment). It is frozen during distillation.</li>
+<li><strong>Student.</strong> A compact image encoder plus a small projection head. It is trained with three losses: KL divergence to the averaged teacher distribution (temperature 2), cosine alignment to the teacher's averaged embedding, and weighted cross-entropy on the ground-truth urgency label.</li>
+<li><strong>Task.</strong> Binary urgent versus non-urgent, defined with two chest radiologists. Pneumothorax, large effusion, acute pneumonia, pulmonary edema and severe cardiomegaly are urgent.</li>
+</ul>
+<h2>What averaging buys</h2>
+<p>The clearest evidence is in how the target behaves as <em>K</em> grows:</p>
+<table>
+<thead>
+<tr><th>Target</th><th>Mean AUC</th><th>Std over 100 draws</th><th>Range</th></tr>
+</thead>
+<tbody>
+<tr><td>One random report (<em>K</em> = 1)</td><td>0.808</td><td>0.019</td><td>0.755–0.852</td></tr>
+<tr><td>Three reports (<em>K</em> = 3)</td><td>0.825</td><td>0.011</td><td>0.798–0.852</td></tr>
+<tr><td>Five reports (<em>K</em> = 5, VRM)</td><td>0.842</td><td>0.005</td><td>0.829–0.855</td></tr>
+</tbody>
+</table>
+<p>Three more results point the same way:</p>
+<ul>
+<li><strong>Better than the best single report.</strong> Conditioned on each of the five reports alone, the teacher scored between 0.782 and 0.832. The average scored 0.842, within 1.4 points of an oracle that picks the best report for every case in hindsight (0.856).</li>
+<li><strong>Less sensitive to hallucinated reports.</strong> Two radiologists rated 1,000 generated reports; 8% contained hallucinated findings. On test cases where at least one of the five reports was flagged, the teacher's error rate was 42.5% with one report, 14.6% with five and 8.5% with ten.</li>
+<li><strong>More stable per case.</strong> The standard deviation of the per-case prediction fell from 0.095 with one report to 0.045 with five.</li>
+</ul>
+<p>Returns flatten after five: the paper reports a 6.2% AUC gain from <em>K</em> = 1 to <em>K</em> = 5 and 0.3% more at <em>K</em> = 10, while sampling and training cost grow linearly.</p>
+<h2>Results against the baselines</h2>
+<table>
+<thead>
+<tr><th>Model</th><th>MIMIC-CXR AUC</th><th>External avg AUC</th><th>Latency</th></tr>
+</thead>
+<tbody>
+<tr><td>Standard KD (logits + features)</td><td>0.748</td><td>0.708</td><td>16 ms</td></tr>
+<tr><td>DINOv2-RadBench, fine-tuned</td><td>0.821</td><td>0.780</td><td>24 ms</td></tr>
+<tr><td>CXR Foundation, fine-tuned</td><td>0.824</td><td>0.784</td><td>22 ms</td></tr>
+<tr><td>EVA-X, fine-tuned</td><td>0.828</td><td>0.788</td><td>29 ms</td></tr>
+<tr><td>MC Dropout (EVA-X, 20 passes)</td><td>0.833</td><td>0.794</td><td>412 ms</td></tr>
+<tr><td><strong>VRM student</strong></td><td><strong>0.842</strong></td><td><strong>0.806</strong></td><td><strong>14 ms</strong></td></tr>
+<tr><td>MedGemma-27B, few-shot, asked directly</td><td>0.762</td><td>0.731</td><td>1,930 ms</td></tr>
+<tr><td>Llama-3.2-11B-Vision, few-shot</td><td>0.436</td><td>0.412</td><td>1,850 ms</td></tr>
+</tbody>
+</table>
+<p>The external average covers CheXpert, IU-CXR, PadChest and a private hospital cohort. The comparison follows an encoder-transfer protocol: the VRM student starts from the same encoder family as the fine-tuned baseline it is compared with, so the difference reflects how it was supervised, not which backbone it started from.</p>
+<p>The gain over the best fine-tuned encoder is small in AUC: 1.4 points, significant under a paired DeLong test (<em>p</em> = 0.008). The larger differences show up where triage needs them:</p>
+<ul>
+<li>At a fixed 90% sensitivity, specificity is 65.2% for VRM, 60.3% for fine-tuned EVA-X and 45.5% for standard KD. That is fewer non-urgent studies pushed to the front of the queue.</li>
+<li>Calibration error (ECE) is 0.092 against 0.119 for standard KD, which matters when a threshold decides who waits.</li>
+<li>The negative predictive value at the balanced operating point is 0.924 on MIMIC-CXR.</li>
+</ul>
+<p>Asking a large vision-language model directly is not a substitute: MedGemma-27B reached 0.762 with four examples in the prompt, at more than a hundred times the student's latency, and general-purpose models scored below 0.44.</p>
+<h2>A cascade: edge first, cloud when unsure</h2>
+<p>The student runs on every study. If its confidence is high and its predictive entropy is low, its answer stands; otherwise the study goes to the cloud teacher. The two thresholds were set on the validation split to escalate about one case in five and then frozen.</p>
+<table>
+<thead>
+<tr><th>Configuration</th><th>MIMIC-CXR AUC</th><th>External avg AUC</th><th>Escalated</th><th>Avg latency</th></tr>
+</thead>
+<tbody>
+<tr><td>Student only</td><td>0.842</td><td>0.806</td><td>0%</td><td>14 ms</td></tr>
+<tr><td>Teacher only</td><td>0.962</td><td>0.915</td><td>100%</td><td>450 ms</td></tr>
+<tr><td><strong>Cascade</strong></td><td><strong>0.941</strong></td><td><strong>0.892</strong></td><td><strong>20.3%</strong></td><td><strong>103 ms</strong></td></tr>
+</tbody>
+</table>
+<p>Average latency follows from the escalation rate: 0.797 × 14 ms + 0.203 × 450 ms ≈ 103 ms. The threshold is a dial: escalate more to approach the teacher's accuracy, less to stay local. In the paper's setup, escalated cases are de-identified at the edge or sent to the hospital's private cloud.</p>
+<h2>What it does not fix</h2>
+<ul>
+<li><strong>The sampler has to know radiology.</strong> With two general-purpose samplers (InternVL2-26B, Qwen2.5-VL-32B) the student reached 0.779 and 0.786: above standard KD, below every fine-tuned baseline. A medical sampler of similar size (HuatuoGPT-Vision-34B) reached 0.839. Averaging amplifies good reports; it cannot create them.</li>
+<li><strong>Consistent biases survive averaging.</strong> Of 200 misclassified cases, 36% confused chronic and acute changes, 31% over-read lines, rotation or low exposure as opacity, and 21% over-triaged small effusions. Averaging removes random errors, not errors every sample shares. That is one reason uncertain cases should go to review.</li>
+<li><strong>Some findings need context.</strong> Acute pneumonia had the lowest F1 among urgent classes (0.724), mostly from confusion with chronic atelectasis, a distinction that often depends on history only the report carries.</li>
+<li><strong>The teacher sets the ceiling.</strong> The student cannot learn what the teacher does not know.</li>
+</ul>
+<h2>When this pattern applies</h2>
+<p>The setting is not specific to chest X-rays. Any time a modality is available for training but structurally absent when the decision is made, you can sample the missing modality from a generative model and distill from the averaged teacher: lab results that return hours later, notes written at discharge, reads that arrive after a scan is scheduled. A short checklist:</p>
+<ul class="checklist">
+<li>Confirm the missing input is missing by workflow, not at random; that is what makes a training-time-only modality worth distilling.</li>
+<li>Use a domain sampler and have clinicians rate a sample of its outputs before trusting it as supervision.</li>
+<li>Start with <em>K</em> = 5 and check whether AUC still moves at 10.</li>
+<li>Measure stability, not only the mean: rerun with different single samples and report the spread.</li>
+<li>Report specificity at the sensitivity you would deploy at, and calibration, next to AUC.</li>
+<li>Put a confidence gate in front of the small model and decide the escalation budget explicitly.</li>
+<li>Look for errors that repeat across samples; averaging will not remove them.</li>
+</ul>
+<h2>Try it</h2>
+<p>The repository <a href="https://github.com/Yangxinyee/vrm-edge-triage">vrm-edge-triage</a> has the teacher (BiomedCLIP with Latent Query Alignment), the student with EVA-X encoder transfer, the VRM losses and the scripts for each step:</p>
+<pre><code class="language-bash">python scripts/generate_variational_samples.py --data_root data/mimic_cxr --split train \
+  --k_samples 5 --output_file data/mimic_cxr/train_variational_samples.json
+python scripts/train_teacher.py --data_root data/mimic_cxr --output_dir outputs/teacher
+python scripts/train_student_vrm.py --data_root data/mimic_cxr \
+  --teacher_checkpoint outputs/teacher/best_model.pt \
+  --samples_file data/mimic_cxr/train_variational_samples.json \
+  --output_dir outputs/student_vrm
+python scripts/evaluate.py --model student --checkpoint outputs/student_vrm/best_model.pt \
+  --data_root data/mimic_cxr
+</code></pre>
+<p>Training needs your own credentialed copy of MIMIC-CXR. The repository README lists the data layout and the EVA-X checkpoint the student starts from. <a href="https://github.com/Yangxinyee/Q-DISTILL">Q-DISTILL</a>, from the same line of work, is a self-supervised Q-Former distillation for image-only chest X-ray triage using MedGemma pseudo-reports.</p>
+<h2>FAQ</h2>
+<p><strong>How do you train an image-only model when reports are only available at training time?</strong>
+Train a multimodal teacher on image and report, then distill it into an image-only student. VRM makes the teacher target an average over several reports sampled from a vision-language model for the same image, instead of one report, so the student learns from a stable, uncertainty-aware target.</p>
+<p><strong>How is VRM different from standard knowledge distillation?</strong>
+Standard distillation matches one teacher output per image. VRM matches the teacher's prediction averaged over <em>K</em> sampled reports. On MIMIC-CXR this gave AUC 0.842, against 0.748 for standard KD and a mean of 0.808 when one randomly chosen report is used instead of five.</p>
+<p><strong>How many sampled reports are needed?</strong>
+Five was the practical choice in our experiments: the paper reports a 6.2% AUC gain from <em>K</em> = 1 to <em>K</em> = 5 and only 0.3% more at <em>K</em> = 10, while training time grows linearly with <em>K</em>.</p>
+<p><strong>Does the deployed model need a report or a language model at inference?</strong>
+No. The student reads the image only: 75 MB and 14 ms per image on an RTX 2060. In the cascade, only cases the student is unsure about (20.3%) go to the cloud teacher.</p>
+<p><strong>Is the code available?</strong>
+Yes, at github.com/Yangxinyee/vrm-edge-triage: the teacher, the student, the VRM losses, offline report sampling, and training and evaluation scripts. Training needs your own credentialed copy of MIMIC-CXR.</p>
+    </article>
+    <footer>
+        <p>Xinye Yang is a software engineer at AWS and a research assistant at the University of Colorado Anschutz School of Medicine, working on reliable medical imaging AI and EHR-based patient world models.</p>
+        <p><a href="../../">Homepage</a> · <a href="../">All posts</a> · <a href="../../papers/vrm-cloud-edge-triage/">Paper</a> · <a href="https://arxiv.org/abs/2610.02269" target="_blank" rel="noreferrer">arXiv</a> · <a href="https://github.com/Yangxinyee/vrm-edge-triage" target="_blank" rel="noreferrer">Code</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
