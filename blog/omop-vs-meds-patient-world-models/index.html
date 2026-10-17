@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMOP or MEDS for Patient World Models? Time, Actions and Meaning in Three MIMIC-IV Conversions | Xinye Yang</title>
+    <meta name="description" content="What a patient world model needs from EHR data, what OMOP CDM and MEDS each keep and lose, how three MIMIC-IV converters timestamp the same diagnosis differently, two ways to encode when a fact became available, and eight checks to run before training.">
+    <meta name="author" content="Xinye Yang">
+    <link rel="canonical" href="https://yangxinyee.github.io/blog/omop-vs-meds-patient-world-models/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <link rel="stylesheet" href="../../css/blog.css?v=1">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="OMOP or MEDS for Patient World Models? Time, Actions and Meaning in Three MIMIC-IV Conversions">
+    <meta property="og:description" content="What a patient world model needs from EHR data, what OMOP CDM and MEDS each keep and lose, how three MIMIC-IV converters timestamp the same diagnosis differently, two ways to encode when a fact became available, and eight checks to run before training.">
+    <meta property="og:url" content="https://yangxinyee.github.io/blog/omop-vs-meds-patient-world-models/">
+    <meta property="article:published_time" content="2026-10-17">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "OMOP or MEDS for Patient World Models? Time, Actions and Meaning in Three MIMIC-IV Conversions",
+      "description": "What a patient world model needs from EHR data, what OMOP CDM and MEDS each keep and lose, how three MIMIC-IV converters timestamp the same diagnosis differently, two ways to encode when a fact became available, and eight checks to run before training.",
+      "url": "https://yangxinyee.github.io/blog/omop-vs-meds-patient-world-models/",
+      "mainEntityOfPage": "https://yangxinyee.github.io/blog/omop-vs-meds-patient-world-models/",
+      "datePublished": "2026-10-17",
+      "dateModified": "2026-10-17",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Xinye Yang",
+        "url": "https://yangxinyee.github.io/",
+        "sameAs": [
+          "https://orcid.org/0009-0004-3143-4263",
+          "https://github.com/Yangxinyee"
+        ]
+      },
+      "about": [
+        {"@type": "Thing", "name": "OMOP Common Data Model"},
+        {"@type": "Thing", "name": "Medical Event Data Standard (MEDS)"},
+        {"@type": "Thing", "name": "Patient world models"},
+        {"@type": "Thing", "name": "Time leakage"},
+        {"@type": "Thing", "name": "MIMIC-IV"}
+      ],
+      "mentions": [
+        {"@type": "SoftwareSourceCode", "name": "EHR2Trace", "codeRepository": "https://github.com/Yangxinyee/ehr2trace"},
+        {"@type": "SoftwareSourceCode", "name": "MIMIC_IV_MEDS", "codeRepository": "https://github.com/Medical-Event-Data-Standard/MIMIC_IV_MEDS"},
+        {"@type": "SoftwareSourceCode", "name": "OHDSI MIMIC ETL", "codeRepository": "https://github.com/OHDSI/MIMIC"},
+        {"@type": "SoftwareSourceCode", "name": "meds_etl", "codeRepository": "https://github.com/Medical-Event-Data-Standard/meds_etl"},
+        {"@type": "ScholarlyArticle", "name": "EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents", "url": "https://yangxinyee.github.io/papers/ehr2trace/", "sameAs": "https://arxiv.org/abs/2609.38193"}
+      ],
+      "keywords": "OMOP CDM, MEDS, patient world model, EHR foundation model, time leakage, availability time, MIMIC-IV, ETL, drug exposure, ACES"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Should I use OMOP or MEDS to train a patient world model?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Train on MEDS: it is already a per-patient, time-sorted event stream, which is the shape a sequence model consumes. Keep OMOP for what it is good at, standard concepts that mean the same thing across sites and cohort definitions in OHDSI tools. Ideally derive both from one canonical event layer so they agree."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does MEDS prevent time leakage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only as well as its time column. MEDS tasks use an as-of join on time: everything at or before the prediction time is visible. If a converter places a diagnosis at admission, a model predicting at hour six sees it. The current MIMIC_IV_MEDS ETL places diagnoses at discharge and lab results at their store time; check what your converter does."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should I record when a fact became available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Either move the event to the time it became known (split collection and result into two events), which every MEDS tool handles, or keep the event time and add an available_time column, which keeps the clinical timeline but requires every downstream tool to filter on it. You can convert the second into the first with one rewrite before handing data to standard tools."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I convert OMOP to MEDS losslessly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mechanically yes (meds_etl does it), but MEDS inherits every decision the OMOP ETL made: when diagnoses are dated, which drug records exist, and whatever source detail was dropped. Information OMOP did not keep cannot be recovered downstream."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper post">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../">Blog</a></nav>
+    <header>
+        <h1>OMOP or MEDS for Patient World Models? Time, Actions and Meaning in Three MIMIC-IV Conversions</h1>
+        <p class="venue">Xinye Yang · <time datetime="2026-10-17">October 17, 2026</time> · 10 min read</p>
+    </header>
+    <article>
+<p><strong>TL;DR.</strong> OMOP CDM tells you what an event <em>is</em>, in concepts that mean the same thing across hospitals. MEDS tells you <em>in what order</em> things happened to one patient, in the shape a sequence model reads. A patient world model needs both, plus three things neither format guarantees: when each fact became available, which events were actions rather than observations, and a way back to the source row. The format matters less than the decisions the converter made. In MIMIC-IV the same diagnosis is dated at ED registration or admission by the OHDSI ETL and at discharge by the MEDS community's ETL and by EHR2Trace. On the full MIMIC-IV, back-filling diagnoses to admission moved an in-hospital mortality model from AUROC 0.829 to 0.965 in validation, and the back-filled model fell to 0.642 on realistic inputs.</p>
+<hr />
+<h2>What a patient world model asks of its data</h2>
+<p>A patient world model learns how a patient's state evolves, and how it responds to what clinicians do. Trained on EHR event streams, it is asked to roll a patient forward from a point in time, sometimes under a different action. That puts five demands on the data:</p>
+<ol>
+<li><strong>Time that means what the model will assume.</strong> At inference the model sees only what existed at the decision point. Training inputs must obey the same rule.</li>
+<li><strong>Actions separated from observations.</strong> An order, a dispense and an administration are three different events. A counterfactual question ("what if the drug was not given?") needs the administration, not the order.</li>
+<li><strong>Meaning that survives a change of hospital.</strong> A model that learns "item 50912" has learned one lab's creatinine, not creatinine.</li>
+<li><strong>Values with units you can trust.</strong> A token that sometimes means g/L and sometimes % teaches the model noise.</li>
+<li><strong>A way back to the source.</strong> When a rollout looks wrong, you need to find the rows that produced it.</li>
+</ol>
+<h2>The two formats, briefly</h2>
+<p><strong>OMOP CDM 5.4</strong> is a relational model for observational research. Facts live in domain tables (<code>condition_occurrence</code>, <code>drug_exposure</code>, <code>measurement</code>, and so on), are attached to visits, and are mapped to standard concepts (SNOMED, LOINC, RxNorm) so that a cohort definition written once runs at any site. Each row has a type concept that records <em>where the information came from</em>: for drugs, 32838 is an EHR prescription, 32825 an EHR dispensing record, 32818 an EHR administration record.</p>
+<p><strong>MEDS</strong> is a minimal event stream for machine learning: <code>subject_id</code>, <code>time</code>, <code>code</code>, and optional <code>numeric_value</code> and <code>text_value</code>, in Parquet shards where each subject sits in one shard, sorted by time. <code>time</code> may be null for static facts. The schema is open, so extension columns are allowed. Code metadata can carry <code>parent_codes</code> that point to external vocabularies, including OMOP. Tasks are defined as labels with a <code>prediction_time</code>, the inclusive end of the data a model may use, often extracted with <a href="https://arxiv.org/abs/2406.19653">ACES</a>.</p>
+<table>
+<thead>
+<tr><th>Need</th><th>OMOP CDM 5.4</th><th>MEDS 0.4</th></tr>
+</thead>
+<tbody>
+<tr><td>Event order per patient</td><td>Reconstructed by joining tables</td><td>Native: one sorted stream per subject</td></tr>
+<tr><td>When a fact became available</td><td>No field for it</td><td>No field for it; <code>time</code> is what as-of joins use</td></tr>
+<tr><td>Action vs observation</td><td>Drug type concept (prescription, dispense, administration)</td><td>Only what the code string or an extension column says</td></tr>
+<tr><td>Cross-site meaning</td><td>Standard concepts, the format's main strength</td><td>Source codes by default; <code>parent_codes</code> can link to OMOP</td></tr>
+<tr><td>Source row</td><td><code>*_source_value</code> keeps the value, not the row</td><td>Only if an extension column carries it</td></tr>
+<tr><td>Task definition</td><td>Cohorts in ATLAS</td><td>Labels with <code>prediction_time</code>, ACES</td></tr>
+</tbody>
+</table>
+<p>Neither format has a field for availability. Both leave it to the converter.</p>
+<h2>Same fact, different timestamps</h2>
+<p>MIMIC-IV assigns diagnosis codes at discharge and gives them no time of their own. A converter has to choose one, and the three open-source converters do not all agree:</p>
+<table>
+<thead>
+<tr><th>Converter</th><th>Diagnosis time</th><th>Lab result time</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="https://github.com/OHDSI/MIMIC">OHDSI MIMIC ETL</a> (OMOP)</td><td>ED registration, or admission if none (<code>condition_start_datetime</code>)</td><td>Specimen collection (<code>charttime</code>)</td></tr>
+<tr><td><a href="https://github.com/Medical-Event-Data-Standard/MIMIC_IV_MEDS">MIMIC_IV_MEDS</a> 0.2 (MEDS)</td><td>Discharge</td><td>Two events: collection at <code>charttime</code>, the result at <code>storetime</code></td></tr>
+<tr><td><a href="https://github.com/Yangxinyee/ehr2trace">EHR2Trace</a> (MEDS and OMOP)</td><td>Discharge, with the admission time kept beside it for audit</td><td>One event: <code>time</code> at collection, <code>available_time</code> at the earliest store time</td></tr>
+</tbody>
+</table>
+<p>The OHDSI choice is reasonable for what OMOP is for: a condition that was present during a stay is dated to the stay, and cohort studies ask whether a patient had it, not when it was coded. For prediction it is a leak, and so is dating a lab result at collection: the value was not visible until the lab stored it, often hours later. A MEDS view built from that OMOP database would place every discharge diagnosis at the start of the admission, and an as-of join at hour six would hand the model the answer.</p>
+<p>We measured the cost on the full MIMIC-IV (131,007 patients, in-hospital mortality predicted six hours after admission). Trained and tested with diagnoses back-filled to admission, the model scored AUROC 0.965. Trained and tested on inputs restricted to what was available, it scored 0.829. The back-filled model, tested on the realistic inputs, scored 0.642. The first number is the one a paper would report; the last is the one a hospital would get.</p>
+<h2>Two ways to encode availability</h2>
+<p>The MEDS ETL and EHR2Trace both avoid the leak, in different ways. The difference matters for a world model.</p>
+<p>For diagnoses the two agree: MIMIC-IV says nothing about when a code was decided, so both place it at discharge rather than date a diagnosis before the evidence for it existed. They differ for everything that has two real times, such as labs.</p>
+<p><strong>Move the event to when it became known.</strong> MIMIC_IV_MEDS splits each lab into a collection event (no value) and a result event at store time. Every MEDS tool handles this correctly, because <code>time</code> already means "visible from". The cost is the clinical timeline: the value is attached to when it was reported, not to when the blood was drawn, so a model learning physiology sees it shifted by the lab's turnaround time, which varies by test and by hour.</p>
+<p><strong>Keep the event time and add an availability time.</strong> EHR2Trace writes <code>time</code> as when the event happened and <code>available_time</code> as when it could first be seen; where the source gives no separate time, the two are equal and the row is flagged as assumed. In the MIMIC-IV demo, 71% of events have an availability later than their event time. This keeps the dynamics a world model is supposed to learn, and lets you build inputs with a strict as-of filter. The cost is that every downstream tool has to know about the extra column. A tool that reads only <code>time</code>, which is how standard MEDS task extraction works, will leak.</p>
+<p>The second form converts to the first with one rewrite, so you can keep both:</p>
+<pre><code class="language-python">import polars as pl
+
+events = pl.scan_parquet("work/mimiciv/meds/data/**/*.parquet")
+as_known = (
+    events
+    .with_columns(
+        event_time=pl.col("time"),
+        time=pl.coalesce("available_time", "time"),   # visible-from time
+    )
+    .sort(["subject_id", "time"])
+)
+# Write as_known out as shards for ACES or any tool that filters on `time`.
+</code></pre>
+<p>Use the as-known view for task extraction and baselines. Use the two-time view when the model's job is to learn what happens to the patient, not only what the record shows.</p>
+<h2>Actions are not observations</h2>
+<p>Medications show how much the converter decides. On the 100-patient MIMIC-IV demo:</p>
+<table>
+<thead>
+<tr><th>Conversion</th><th>Medication records</th></tr>
+</thead>
+<tbody>
+<tr><td>OHDSI ETL (OMOP)</td><td>18,229 <code>drug_exposure</code> rows, all from <code>prescriptions</code>, all typed 32838 (EHR prescription)</td></tr>
+<tr><td>Published MIMIC-IV demo in MEDS (January 2025, MEDS-Transforms 0.0.9)</td><td>63,696 medication events; whether each was an order or an administration has to be inferred from which ID column is filled</td></tr>
+<tr><td>Current MIMIC_IV_MEDS 0.2 config</td><td>eMAR administrations at chart time, with the action text in the code; pharmacy start and stop events</td></tr>
+<tr><td>EHR2Trace</td><td>17,498 orders, 15,225 dispenses and 81,638 administrations, each with an <code>event_kind</code></td></tr>
+</tbody>
+</table>
+<p>For a cohort study, "this patient was prescribed vancomycin" is often the right grain. For a world model it is the wrong one. A prescription is an intention; an administration is the intervention; an administration recorded as not given is information about the patient. A model trained on prescriptions alone learns that drugs act at the moment of the order, and a counterfactual that removes the order removes nothing that happened.</p>
+<p>If your data has only one medication stage, say so in the task definition. If it has several, keep them as separate events and let the action be the administration.</p>
+<h2>Meaning across hospitals</h2>
+<p>This is where OMOP earns its keep. In the OHDSI demo conversion, 98.3% of rows carry a standard concept. In EHR2Trace's, built without manual mappings, 18.9% do: it maps a term only when the mapping is exact or a person confirmed it, and queues the rest for review. For OHDSI analyses on MIMIC-IV today, the OHDSI ETL is the better choice.</p>
+<p>For a world model the question is narrower: will the vocabulary the model learns at one hospital line up with another's? A MEDS code such as <code>LAB//RESULT//50912//mg/dL</code> is precise and local. Two things help:</p>
+<ul>
+<li><strong>Link codes to concepts, don't replace them.</strong> MEDS <code>parent_codes</code> can point to LOINC or RxNorm through OMOP, and MIMIC_IV_MEDS does this for labs. You keep the source code as the token and gain a bridge for transfer.</li>
+<li><strong>Treat units as part of meaning.</strong> Putting the unit in the code keeps g/L and % apart, but it also splits one test into several tokens. In the MIMIC-IV demo five lab codes mix units with no conversion between them; MCHC (item 51249) appears in both g/L and %. Normalize where a conversion exists and report the rest, rather than letting either the converter or the tokenizer decide silently.</li>
+</ul>
+<h2>Conversions that cannot be undone</h2>
+<ul>
+<li><strong>OMOP to MEDS</strong> is easy mechanically (<code>meds_etl_omop</code> does it). But MEDS inherits every OMOP decision: the visit-anchored diagnosis dates above, the prescription-only drug records, and whatever the OMOP ETL did not keep, such as the source row and the time a result was stored. Nothing downstream can recover those.</li>
+<li><strong>MEDS to OMOP</strong> needs a concept for every code. That is the expensive part of any OMOP ETL, so it amounts to doing one.</li>
+</ul>
+<p>If you need both formats, derive both from one layer that holds the richest version of each event: both times, the action stage, the source row and the unit as recorded. Then the two outputs disagree only where the formats force them to, and you can check that they agree everywhere else. EHR2Trace is built this way, and one of its validation checks confirms that every term resolves to the same concept in MEDS as in OMOP.</p>
+<h2>Eight checks before you train</h2>
+<p>Whatever converter produced your data, these take minutes and catch the problems above. The snippets assume a MEDS dataset loaded as <code>events = pl.scan_parquet("data/**/*.parquet")</code>.</p>
+<ol>
+<li><strong>Where are diagnoses dated?</strong> Compare diagnosis times with admission and discharge events for the same stay. If most sit at admission, an as-of join will leak.</li>
+<li><strong>Are results visible before they were reported?</strong> Look for a store or result time in the source and check which one became <code>time</code>.</li>
+<li><strong>How many medication stages are there?</strong> Count medication events by stage: <code>events.group_by("event_kind").len().collect()</code> if an event-kind column exists, otherwise by the prefix of the medication codes. One stage means you have intentions or administrations, not both.</li>
+<li><strong>Does one code carry several units?</strong> Group numeric events by code and count distinct units, where a unit column exists; otherwise compare value ranges per code. Any code with two units and no conversion is two measurements sharing one token.</li>
+<li><strong>Are there events after death?</strong> Join each subject's <code>MEDS_DEATH</code> time and count later events. Some are legitimate (results stored after death); all should be explainable.</li>
+<li><strong>Are splits by subject?</strong> Every <code>subject_id</code> should appear in exactly one split in <code>metadata/subject_splits.parquet</code>.</li>
+<li><strong>Is the label in the inputs?</strong> Search event codes and extension columns for the cohort name, the outcome and file or partition names.</li>
+<li><strong>Can you trace one patient back?</strong> Pick a strange rollout, find its events, and see whether you can reach the source rows. If not, you will be debugging the model when the problem is the data.</li>
+</ol>
+<h2>What is still open</h2>
+<ul>
+<li>MEDS allows extension columns but does not name any for availability, event stage or provenance, so each project invents its own and tools ignore them. A small shared convention, even just <code>available_time</code> and an event-kind column, would let task extractors filter correctly by default.</li>
+<li>OMOP 5.4 has no availability field either. For prediction work on OMOP data, document how each table's datetime was chosen.</li>
+<li>Choosing between moving events and adding a column is a modelling decision, not a formatting one. It deserves a sentence in every paper's data section.</li>
+</ul>
+<h2>FAQ</h2>
+<p><strong>Should I use OMOP or MEDS to train a patient world model?</strong>
+Train on MEDS: it is already a per-patient, time-sorted event stream, which is the shape a sequence model consumes. Keep OMOP for what it is good at, standard concepts that mean the same thing across sites and cohort definitions in OHDSI tools. Ideally derive both from one canonical event layer so they agree.</p>
+<p><strong>Does MEDS prevent time leakage?</strong>
+Only as well as its time column. MEDS tasks use an as-of join on <code>time</code>: everything at or before the prediction time is visible. If a converter places a diagnosis at admission, a model predicting at hour six sees it. The current MIMIC_IV_MEDS ETL places diagnoses at discharge and lab results at their store time; check what your converter does.</p>
+<p><strong>How should I record when a fact became available?</strong>
+Either move the event to the time it became known (split collection and result into two events), which every MEDS tool handles, or keep the event time and add an <code>available_time</code> column, which keeps the clinical timeline but requires every downstream tool to filter on it. You can convert the second into the first with one rewrite before handing data to standard tools.</p>
+<p><strong>Can I convert OMOP to MEDS losslessly?</strong>
+Mechanically yes (meds_etl does it), but MEDS inherits every decision the OMOP ETL made: when diagnoses are dated, which drug records exist, and whatever source detail was dropped. Information OMOP did not keep cannot be recovered downstream.</p>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://github.com/Medical-Event-Data-Standard/meds">MEDS schema and README</a> (data, code metadata, label schemas, extension columns)</li>
+<li><a href="https://github.com/Medical-Event-Data-Standard/MIMIC_IV_MEDS">MIMIC_IV_MEDS</a> (<code>event_configs.yaml</code>, version 0.2.0)</li>
+<li><a href="https://github.com/OHDSI/MIMIC">OHDSI MIMIC ETL</a> (<code>lk_cond_diagnoses.sql</code>, <code>lk_drug.sql</code>, <code>lk_meas_labevents.sql</code>)</li>
+<li><a href="https://forums.ohdsi.org/t/drug-type-concept-id-values-from-drug-exposure-table-what-do-they-represent-is-there-overlap/12143">OHDSI forum: drug type concepts</a></li>
+<li><a href="https://arxiv.org/abs/2406.19653">ACES: Automatic Cohort Extraction System for Event-Stream Datasets</a> (ICLR 2025)</li>
+<li><a href="https://arxiv.org/abs/2609.38193">EHR2Trace</a> (leakage experiment and demo comparison) and its <a href="https://github.com/Yangxinyee/ehr2trace">repository</a></li>
+</ul>
+<p>Earlier post: <a href="../mimic-iv-to-meds/">How to convert MIMIC-IV to MEDS</a>. Corrections are welcome as issues on the EHR2Trace repository.</p>
+    </article>
+    <footer>
+        <p>Xinye Yang is a software engineer at AWS and a research assistant at the University of Colorado Anschutz School of Medicine, working on reliable medical imaging AI and EHR-based patient world models.</p>
+        <p><a href="../../">Homepage</a> · <a href="../">All posts</a> · <a href="../../papers/ehr2trace/">EHR2Trace paper</a> · <a href="https://github.com/Yangxinyee/ehr2trace" target="_blank" rel="noreferrer">Code</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
