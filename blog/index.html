@@ -23,6 +23,12 @@
       "blogPost": [
         {
           "@type": "BlogPosting",
+          "headline": "OMOP or MEDS for Patient World Models? Time, Actions and Meaning in Three MIMIC-IV Conversions",
+          "url": "https://yangxinyee.github.io/blog/omop-vs-meds-patient-world-models/",
+          "datePublished": "2026-10-17"
+        },
+        {
+          "@type": "BlogPosting",
           "headline": "How to Convert MIMIC-IV to MEDS: Three Open-Source Routes and a Five-Minute Demo",
           "url": "https://yangxinyee.github.io/blog/mimic-iv-to-meds/",
           "datePublished": "2026-10-16"
@@ -54,6 +60,11 @@
     <nav class="crumbs"><a href="../">Xinye Yang</a> / Blog</nav>
     <header><h1>Blog</h1><p class="venue">Notes on EHR data infrastructure, patient world models, and reliable medical imaging AI.</p></header>
     <ul class="post-list">
+        <li>
+            <a class="post-title" href="omop-vs-meds-patient-world-models/">OMOP or MEDS for Patient World Models? Time, Actions and Meaning in Three MIMIC-IV Conversions</a>
+            <p class="venue"><time datetime="2026-10-17">October 17, 2026</time> · 10 min read</p>
+            <p>OMOP CDM tells you what an event is, in concepts that mean the same thing across hospitals; MEDS tells you in what order things happened, in the shape a sequence model reads. A patient world model needs both, plus availability times, actions separated from observations and a way back to the source row. This post compares how the OHDSI ETL, MIMIC_IV_MEDS and EHR2Trace timestamp diagnoses, labs and medications in MIMIC-IV, shows two ways to encode when a fact became available, and lists eight checks to run before training.</p>
+        </li>
         <li>
             <a class="post-title" href="mimic-iv-to-meds/">How to Convert MIMIC-IV to MEDS: Three Open-Source Routes and a Five-Minute Demo</a>
             <p class="venue"><time datetime="2026-10-16">October 16, 2026</time> · 7 min read</p>
