@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Convert MIMIC-IV to MEDS: Three Open-Source Routes and a Five-Minute Demo | Xinye Yang</title>
+    <meta name="description" content="How to convert MIMIC-IV to the MEDS format (and OMOP CDM): when to use MIMIC_IV_MEDS with MEDS-Extract, meds_etl, or EHR2Trace, with commands, the MIMIC-IV demo converted in about two minutes, and how to avoid time leakage with an availability time.">
+    <meta name="author" content="Xinye Yang">
+    <link rel="canonical" href="https://yangxinyee.github.io/blog/mimic-iv-to-meds/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <link rel="stylesheet" href="../../css/blog.css?v=1">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to Convert MIMIC-IV to MEDS: Three Open-Source Routes and a Five-Minute Demo">
+    <meta property="og:description" content="How to convert MIMIC-IV to the MEDS format (and OMOP CDM): when to use MIMIC_IV_MEDS with MEDS-Extract, meds_etl, or EHR2Trace, with commands, the MIMIC-IV demo converted in about two minutes, and how to avoid time leakage with an availability time.">
+    <meta property="og:url" content="https://yangxinyee.github.io/blog/mimic-iv-to-meds/">
+    <meta property="article:published_time" content="2026-10-16">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "How to Convert MIMIC-IV to MEDS: Three Open-Source Routes and a Five-Minute Demo",
+      "description": "How to convert MIMIC-IV to the MEDS format (and OMOP CDM): when to use MIMIC_IV_MEDS with MEDS-Extract, meds_etl, or EHR2Trace, with commands, the MIMIC-IV demo converted in about two minutes, and how to avoid time leakage with an availability time.",
+      "url": "https://yangxinyee.github.io/blog/mimic-iv-to-meds/",
+      "mainEntityOfPage": "https://yangxinyee.github.io/blog/mimic-iv-to-meds/",
+      "datePublished": "2026-10-16",
+      "dateModified": "2026-10-16",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Xinye Yang",
+        "url": "https://yangxinyee.github.io/",
+        "sameAs": [
+          "https://orcid.org/0009-0004-3143-4263",
+          "https://github.com/Yangxinyee"
+        ]
+      },
+      "about": [
+        {"@type": "Thing", "name": "MIMIC-IV"},
+        {"@type": "Thing", "name": "Medical Event Data Standard (MEDS)"},
+        {"@type": "Thing", "name": "OMOP Common Data Model"},
+        {"@type": "Thing", "name": "Electronic health records"}
+      ],
+      "mentions": [
+        {"@type": "SoftwareSourceCode", "name": "EHR2Trace", "codeRepository": "https://github.com/Yangxinyee/ehr2trace"},
+        {"@type": "SoftwareSourceCode", "name": "MIMIC_IV_MEDS", "codeRepository": "https://github.com/Medical-Event-Data-Standard/MIMIC_IV_MEDS"},
+        {"@type": "SoftwareSourceCode", "name": "MEDS-Extract", "codeRepository": "https://github.com/mmcdermott/MEDS_extract"},
+        {"@type": "SoftwareSourceCode", "name": "meds_etl", "codeRepository": "https://github.com/Medical-Event-Data-Standard/meds_etl"},
+        {"@type": "ScholarlyArticle", "name": "EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents", "url": "https://yangxinyee.github.io/papers/ehr2trace/", "sameAs": "https://arxiv.org/abs/2609.38193"}
+      ],
+      "keywords": "MIMIC-IV, MEDS, Medical Event Data Standard, OMOP CDM, ETL, MEDS-Extract, meds_etl, EHR2Trace, time leakage, data lineage"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the fastest way to convert MIMIC-IV to MEDS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Install the MIMIC_IV_MEDS package and run meds-extract-run spec=MIMIC-IV output_dir=... . It is the MEDS community's own MIMIC-IV ETL, built on MEDS-Extract. Add dataset_key=demo to convert the open 100-patient demo without PhysioNet credentials."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I get MEDS and OMOP from MIMIC-IV at the same time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. EHR2Trace builds both OMOP CDM 5.4 and MEDS 0.4 from one canonical event layer, so patient identity, time and unit decisions are made once and the two outputs agree. On the MIMIC-IV demo the conversion took about two minutes on a two-core GitHub Actions runner."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I avoid time leakage when building prediction tasks from MIMIC-IV?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use when each fact became available, not only when the event happened. Diagnoses in MIMIC-IV are coded at discharge, so attaching them to the admission time lets a model see the future. EHR2Trace stores an available_time column on every MEDS row; filter on available_time <= prediction time when building inputs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need PhysioNet credentials to try this?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not for the MIMIC-IV demo (100 patients, Open Data Commons licence). The full MIMIC-IV release requires a credentialed PhysioNet account and the data use agreement."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper post">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../">Blog</a></nav>
+    <header>
+        <h1>How to Convert MIMIC-IV to MEDS: Three Open-Source Routes and a Five-Minute Demo</h1>
+        <p class="venue">Xinye Yang · <time datetime="2026-10-16">October 16, 2026</time> · 7 min read</p>
+    </header>
+    <article>
+<p><strong>TL;DR.</strong> There are three maintained open-source ways to turn MIMIC-IV into <a href="https://medical-event-data-standard.github.io/">MEDS</a>, the Medical Event Data Standard used for EHR foundation models. If you only need MEDS, use <a href="https://github.com/Medical-Event-Data-Standard/MIMIC_IV_MEDS">MIMIC_IV_MEDS</a>, the MEDS community's own ETL: one command. If you already have MIMIC-IV 2.2 or an OMOP database, <a href="https://github.com/Medical-Event-Data-Standard/meds_etl">meds_etl</a> converts either. If you need MEDS and OMOP together, a link from every event back to its source row, or a separate time for when each fact became available, use <a href="https://github.com/Yangxinyee/ehr2trace">EHR2Trace</a>, which I wrote with colleagues. Below are the commands for each, and a full EHR2Trace run on the open MIMIC-IV demo that converts in about two minutes.</p>
+<hr />
+<h2>What MEDS looks like</h2>
+<p>A MEDS dataset is a folder of Parquet shards in which each row is one event for one subject: <code>subject_id</code>, <code>time</code>, <code>code</code> and, when there is one, <code>numeric_value</code>. A <code>metadata/</code> folder describes the codes, the dataset and the train, tuning and held-out splits. Every subject's events sit in one shard, sorted by time. The format is deliberately minimal, so tools that read it (task extraction, tokenizers, foundation-model training code) work on any dataset converted to it.</p>
+<p>The work in converting MIMIC-IV is deciding what each event is: which column is the time, how to build a code from an item ID and a unit, what to do with rows that have no time. Each route below makes those decisions in a different place.</p>
+<h2>Route 1: MIMIC_IV_MEDS on MEDS-Extract</h2>
+<p>The MEDS project maintains a MIMIC-IV ETL as a package that contains no Python: one YAML file describes every table, and <a href="https://github.com/mmcdermott/MEDS_extract">MEDS-Extract</a> runs it.</p>
+<pre><code class="language-bash">pip install MIMIC_IV_MEDS
+# The open demo (v2.2), no credentials needed:
+meds-extract-run spec=MIMIC-IV output_dir=$MEDS_OUTPUT_DIR dataset_key=demo
+# The full release (v3.1), downloaded from PhysioNet with your credentials:
+export DATASET_DOWNLOAD_USERNAME=$PHYSIONET_USERNAME
+export DATASET_DOWNLOAD_PASSWORD=$PHYSIONET_PASSWORD
+meds-extract-run spec=MIMIC-IV output_dir=$MEDS_OUTPUT_DIR
+</code></pre>
+<p>Its README budgets about 32 minutes and 20 GB of RAM for the full extraction, plus the download (9.9 GiB, rate-limited by PhysioNet). If you already have the files, pass <code>do_download=false input_dir=...</code>. Because it is the community's reference ETL, results built on it are easier to compare with other MEDS work.</p>
+<h2>Route 2: meds_etl</h2>
+<p><code>meds_etl</code> ships two converters: one for MIMIC-IV and one for OMOP.</p>
+<pre><code class="language-bash">pip install meds_etl
+meds_etl_mimic  /path/to/mimic-iv-2.2  /path/to/output      # MIMIC-IV 2.2 only
+meds_etl_omop   /path/to/omop_csvs     /path/to/output      # any OMOP CDM export
+</code></pre>
+<p>The OMOP converter is the useful part if your institution already runs an OMOP database: you get MEDS without writing a source-specific ETL. Per its README, the MIMIC converter supports MIMIC-IV 2.2 only.</p>
+<h2>Route 3: EHR2Trace, MEDS and OMOP from one layer</h2>
+<p>EHR2Trace first builds a canonical layer of patient events, then writes OMOP CDM 5.4 and MEDS 0.4 from it, so identity, time and unit decisions are made once and both outputs agree. Every MEDS row keeps the source table and row IDs it came from, and an <code>available_time</code> next to <code>time</code>. After writing, it validates what it wrote.</p>
+<pre><code class="language-bash">git clone https://github.com/Yangxinyee/ehr2trace &amp;&amp; cd ehr2trace
+python3 -m venv .venv &amp;&amp; .venv/bin/pip install -r requirements.lock -e ".[dev]"
+wget -r -N -c -np -nH --cut-dirs=1 -P data https://physionet.org/files/mimic-iv-demo/2.2/
+python3 tools/prepare_mimiciv.py --mimic-root data/mimic-iv-demo/2.2 --out prepared/mimiciv
+export MIMICIV_DATA_ROOT=$PWD/prepared EHR_WORK_ROOT=$PWD/work OFFLINE_MODE=1
+for step in inspect ingest identity canonical omop meds validate; do
+  .venv/bin/ehr2trace $step -d datasets/mimiciv.yaml
+done
+</code></pre>
+<p>The repository runs exactly this on every push. Timings from one of those runs, on a standard two-core GitHub Actions runner:</p>
+<table>
+<thead>
+<tr><th>Step</th><th>What it does</th><th>Time</th></tr>
+</thead>
+<tbody>
+<tr><td>download</td><td>MIMIC-IV demo from PhysioNet</td><td>1–2 min</td></tr>
+<tr><td>prepare</td><td>flatten 23 source tables to Parquet with a manifest of hashes</td><td>7 s</td></tr>
+<tr><td>ingest</td><td>parse 996,323 rows, give each a source row ID</td><td>28 s</td></tr>
+<tr><td>identity</td><td>resolve 100 subjects</td><td>1 s</td></tr>
+<tr><td>canonical</td><td>build 971,550 events</td><td>70 s</td></tr>
+<tr><td>omop</td><td>write OMOP CDM 5.4 (DuckDB) plus a lineage audit table</td><td>5 s</td></tr>
+<tr><td>meds</td><td>write 100 MEDS shards, codes and splits</td><td>10 s</td></tr>
+<tr><td>validate</td><td>check the written OMOP and MEDS files</td><td>6 s</td></tr>
+</tbody>
+</table>
+<p>The MEDS output has 971,550 events for 100 subjects and 6,529 codes, split 77 / 10 / 13 into train, tuning and held-out. The OMOP output has 788,079 measurement rows, 87,082 drug exposures and 4,506 condition occurrences, among others.</p>
+<p>Two things in the run are worth knowing before you rely on it:</p>
+<ul>
+<li><strong>Concept IDs are 0 until you install a vocabulary.</strong> The repository ships no SNOMED, LOINC or RxNorm. Download them from <a href="https://athena.ohdsi.org/">Athena</a> and set <code>OMOP_VOCAB_DIR</code>; until then every source value is kept and every term goes to a review queue rather than being mapped silently. For OHDSI analyses that need high concept coverage on MIMIC-IV today, the official OHDSI MIMIC ETL maps far more.</li>
+<li><strong>One check fails on MIMIC-IV, on purpose.</strong> The run reports 43 passed, 10 skipped and 1 failed. The failure says five lab codes mix units with no conversion between them; MCHC (item 51249), for example, appears in both g/L and %. The converter reports this rather than picking one.</li>
+</ul>
+<p>To follow one patient from raw rows to the outputs: <code>ehr2trace trace -d datasets/mimiciv.yaml --patient &lt;key&gt;</code>.</p>
+<h2>The time column you will want later</h2>
+<p>MIMIC-IV records many facts after the event they describe. Diagnosis codes are assigned at discharge; a lab is collected at one time and resulted at another. If a diagnosis is placed at the admission time, a model asked to predict at hour six can see what was only known at discharge. On the full MIMIC-IV, in-hospital mortality prediction six hours after admission scored AUROC 0.965 with diagnoses back-filled to admission, 0.829 with inputs restricted to what was available at the time, and 0.642 when the back-filled model was tested on the realistic inputs.</p>
+<p>EHR2Trace writes <code>available_time</code> on every MEDS row; in the demo, 71% of events have an availability later than their event time. When you build model inputs, filter on it:</p>
+<pre><code class="language-python">import polars as pl
+
+events = pl.scan_parquet("work/mimiciv/meds/data/**/*.parquet")
+as_of = events.filter(
+    pl.col("available_time").is_null() | (pl.col("available_time") &lt;= prediction_time)
+)
+</code></pre>
+<p>Whatever converter you use, check how it times diagnoses and results before you train on its output.</p>
+<h2>Which one to use</h2>
+<table>
+<thead>
+<tr><th>You need</th><th>Use</th></tr>
+</thead>
+<tbody>
+<tr><td>MEDS from MIMIC-IV, comparable with published MEDS work</td><td>MIMIC_IV_MEDS (MEDS-Extract)</td></tr>
+<tr><td>MEDS from an existing OMOP database</td><td>meds_etl (<code>meds_etl_omop</code>)</td></tr>
+<tr><td>OMOP from MIMIC-IV for OHDSI tools such as ATLAS</td><td>OHDSI's MIMIC ETL</td></tr>
+<tr><td>MEDS and OMOP together, row-level lineage, availability times, or a local hospital export rather than MIMIC</td><td>EHR2Trace</td></tr>
+</tbody>
+</table>
+<p>EHR2Trace is research software from one team (v0.7.0), and its paper is a preprint. The comparison above is drawn from each project's public documentation; corrections are welcome as issues on the <a href="https://github.com/Yangxinyee/ehr2trace">EHR2Trace repository</a>.</p>
+<h2>FAQ</h2>
+<p><strong>What is the fastest way to convert MIMIC-IV to MEDS?</strong>
+Install the MIMIC_IV_MEDS package and run <code>meds-extract-run spec=MIMIC-IV output_dir=...</code>. It is the MEDS community's own MIMIC-IV ETL, built on MEDS-Extract. Add <code>dataset_key=demo</code> to convert the open 100-patient demo without PhysioNet credentials.</p>
+<p><strong>Can I get MEDS and OMOP from MIMIC-IV at the same time?</strong>
+Yes. EHR2Trace builds both OMOP CDM 5.4 and MEDS 0.4 from one canonical event layer, so patient identity, time and unit decisions are made once and the two outputs agree. On the MIMIC-IV demo the conversion took about two minutes on a two-core GitHub Actions runner.</p>
+<p><strong>How do I avoid time leakage when building prediction tasks from MIMIC-IV?</strong>
+Use when each fact became available, not only when the event happened. Diagnoses in MIMIC-IV are coded at discharge, so attaching them to the admission time lets a model see the future. EHR2Trace stores an <code>available_time</code> column on every MEDS row; filter on <code>available_time &lt;= prediction time</code> when building inputs.</p>
+<p><strong>Do I need PhysioNet credentials to try this?</strong>
+Not for the MIMIC-IV demo (100 patients, Open Data Commons licence). The full MIMIC-IV release requires a credentialed PhysioNet account and the data use agreement.</p>
+    </article>
+    <footer>
+        <p>Xinye Yang is a software engineer at AWS and a research assistant at the University of Colorado Anschutz School of Medicine, working on reliable medical imaging AI and EHR-based patient world models.</p>
+        <p><a href="../../">Homepage</a> · <a href="../">All posts</a> · <a href="../../papers/ehr2trace/">EHR2Trace paper</a> · <a href="https://github.com/Yangxinyee/ehr2trace" target="_blank" rel="noreferrer">Code</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
