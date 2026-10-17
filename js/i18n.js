@@ -93,6 +93,7 @@ const translations = {
         services: { title: "Services", reviewer: "Journal Reviewer", volunteer: "Volunteer" },
         blog: {
             title: "Blog",
+            omopMedsSummary: "What a patient world model needs from EHR data, what OMOP and MEDS keep and lose, and how three MIMIC-IV converters time the same facts.",
             medsSummary: "Three open-source routes from MIMIC-IV to MEDS (and OMOP), with commands, a timed demo run, and how to avoid time leakage.",
             vrmSummary: "Training an image-only chest X-ray triage model when the report arrives after the decision, and escalating uncertain cases to the cloud.",
             cxrSummary: "How to stress-test chest X-ray VLMs before deployment: prompts, workflows, metrics, and when to escalate to a multi-agent pipeline.",
@@ -195,6 +196,7 @@ const translations = {
         services: { title: "学术服务", reviewer: "期刊审稿人", volunteer: "志愿者" },
         blog: {
             title: "博客",
+            omopMedsSummary: "患者世界模型需要什么样的 EHR 数据：OMOP 和 MEDS 各保留和丢掉了什么，三个 MIMIC-IV 转换器如何给同一件事打时间戳。",
             medsSummary: "把 MIMIC-IV 转成 MEDS（以及 OMOP）的三条开源路线：命令、demo 实测耗时，以及如何避免时间泄漏。",
             vrmSummary: "急诊胸片分诊时报告还没写出来：怎样训练只看图像的分诊模型，并把不确定的病例交给云端复核。",
             cxrSummary: "胸片视觉语言模型上线前怎么做压力测试：提示词、工作流、评价指标，以及何时升级到多智能体流程。",
