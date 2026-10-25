@@ -1,8 +1,8 @@
 const translations = {
     en: {
         meta: {
-            title: "Xinye Yang (Charlie) | AI for Healthcare Research · Software Engineer at AWS",
-            description: "Xinye Yang (Charlie) is a Software Development Engineer at AWS Kiro and a research assistant at the University of Colorado Anschutz School of Medicine, working on EHR-based patient world models, reliable medical imaging AI, and clinical AI agents."
+            title: "Xinye Yang (Charlie) | AI for Healthcare · AWS Software Engineer",
+            description: "Xinye Yang (Charlie), software engineer at AWS Kiro and research assistant at CU Anschutz, works on EHR patient world models, medical imaging AI and AI agents."
         },
         nav: { home: "Homepage", about: "About Me", news: "News", publications: "Publications", blog: "Blog", experience: "Experience", education: "Education", honors: "Honors", skills: "Skills", services: "Services" },
         common: { skip: "Skip to content", details: "Details", present: "Present", advisedBy: "Advised by", and: "and" },
