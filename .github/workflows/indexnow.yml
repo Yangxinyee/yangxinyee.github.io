@@ -1,0 +1,104 @@
+name: IndexNow
+
+# Tells IndexNow search engines (Bing, Yandex, Naver, Seznam and others)
+# which pages changed, so they recrawl them without waiting for the sitemap.
+# Only URLs listed in sitemap.xml are submitted.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - 'js/i18n.js'
+      - 'llms.txt'
+      - 'sitemap.xml'
+  workflow_dispatch:
+    inputs:
+      all:
+        description: Submit every URL in sitemap.xml
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+env:
+  SITE: https://yangxinyee.github.io
+  INDEXNOW_KEY: 0bb2677a3962af557045f0003211ed6f
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Wait for GitHub Pages to publish the push
+        if: github.event_name == 'push'
+        run: sleep 90
+
+      - name: Submit changed URLs
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          SUBMIT_ALL: ${{ github.event_name == 'workflow_dispatch' && inputs.all }}
+        run: |
+          python3 - <<'PY'
+          import json, os, posixpath, subprocess, urllib.request, urllib.error
+          import xml.etree.ElementTree as ET
+
+          site = os.environ["SITE"].rstrip("/")
+          key = os.environ["INDEXNOW_KEY"]
+          ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+          listed = [loc.text.strip() for loc in ET.parse("sitemap.xml").findall(".//s:loc", ns)]
+
+          def url_for(path):
+              if path == "index.html":
+                  return site + "/"
+              if path.endswith("/index.html"):
+                  return site + "/" + posixpath.dirname(path) + "/"
+              return site + "/" + path
+
+          before = os.environ.get("BEFORE", "")
+          submit_all = os.environ.get("SUBMIT_ALL") == "true" or not before or set(before) == {"0"}
+          if submit_all:
+              urls = list(listed)
+          else:
+              changed = subprocess.run(
+                  ["git", "diff", "--name-only", before, os.environ["AFTER"]],
+                  check=True, capture_output=True, text=True,
+              ).stdout.split()
+              wanted = {url_for(p) for p in changed}
+              # The Chinese homepage is rebuilt from these files by another workflow.
+              if {"index.html", "js/i18n.js"} & set(changed):
+                  wanted |= {site + "/", site + "/zh/"}
+              urls = [u for u in listed if u in wanted]
+
+          if not urls:
+              print("No sitemap URLs changed; nothing to submit.")
+              raise SystemExit(0)
+
+          body = json.dumps({
+              "host": site.split("://", 1)[1],
+              "key": key,
+              "keyLocation": f"{site}/{key}.txt",
+              "urlList": urls,
+          }).encode()
+          request = urllib.request.Request(
+              "https://api.indexnow.org/indexnow", data=body,
+              headers={"Content-Type": "application/json; charset=utf-8"},
+          )
+          print("Submitting:", *urls, sep="\n  ")
+          try:
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  print("IndexNow responded", response.status)
+          except urllib.error.HTTPError as error:
+              print("IndexNow responded", error.code, error.read().decode(errors="replace"))
+              raise SystemExit(error.code not in (200, 202))
+          PY
