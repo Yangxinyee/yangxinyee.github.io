@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryoablation Radiomics and Report Text | Clin Breast Cancer 2026</title>
+    <meta name="description" content="Exploratory study of 40 breast cryoablation patients: mammographic radiomics, report embeddings and fusion showed no detectable discrimination for recurrence.">
+    <link rel="canonical" href="https://yangxinyee.github.io/papers/breast-cryoablation-radiomics-reports/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <meta name="citation_title" content="Exploratory Evaluation of Radiology Report Embeddings and Mammographic Radiomics for Post-Cryoablation Biopsy and Biopsy-Proven Ipsilateral Breast Tumor Recurrence">
+    <meta name="citation_author" content="Samarth Dubey">
+    <meta name="citation_author" content="Nathan Collins">
+    <meta name="citation_author" content="Xinye Yang">
+    <meta name="citation_author" content="Irvin Akinseye">
+    <meta name="citation_author" content="Zhicheng Jiao">
+    <meta name="citation_author" content="Scott Collins">
+    <meta name="citation_author" content="Catherine Boutros">
+    <meta name="citation_author" content="Robert C. Ward">
+    <meta name="citation_publication_date" content="2026/10/29">
+    <meta name="citation_journal_title" content="Clinical Breast Cancer">
+    <meta name="citation_doi" content="10.1016/j.clbc.2026.10.015">
+    <meta name="citation_abstract_html_url" content="https://yangxinyee.github.io/papers/breast-cryoablation-radiomics-reports/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ScholarlyArticle",
+      "headline": "Exploratory Evaluation of Radiology Report Embeddings and Mammographic Radiomics for Post-Cryoablation Biopsy",
+      "name": "Exploratory Evaluation of Radiology Report Embeddings and Mammographic Radiomics for Post-Cryoablation Biopsy and Biopsy-Proven Ipsilateral Breast Tumor Recurrence",
+      "url": "https://yangxinyee.github.io/papers/breast-cryoablation-radiomics-reports/",
+      "sameAs": "https://doi.org/10.1016/j.clbc.2026.10.015",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.1016/j.clbc.2026.10.015"
+      },
+      "datePublished": "2026-10-29",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Samarth Dubey"
+        },
+        {
+          "@type": "Person",
+          "name": "Nathan Collins"
+        },
+        {
+          "@type": "Person",
+          "name": "Xinye Yang",
+          "url": "https://yangxinyee.github.io/",
+          "sameAs": "https://orcid.org/0009-0004-3143-4263"
+        },
+        {
+          "@type": "Person",
+          "name": "Irvin Akinseye"
+        },
+        {
+          "@type": "Person",
+          "name": "Zhicheng Jiao"
+        },
+        {
+          "@type": "Person",
+          "name": "Scott Collins"
+        },
+        {
+          "@type": "Person",
+          "name": "Catherine Boutros"
+        },
+        {
+          "@type": "Person",
+          "name": "Robert C. Ward"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "Clinical Breast Cancer"
+      },
+      "keywords": "breast cancer, cryoablation, mammography, radiomics, radiology reports, natural language processing, recurrence",
+      "description": "Exploratory study of 40 patients treated with breast cryoablation. Mammographic radiomics, radiology report embeddings and their fusion showed no detectable discrimination for biopsy-proven ipsilateral breast tumor recurrence; fusion had the highest leave-one-out ROC AUC for post-cryoablation biopsy (0.85), which fell to 0.69 under repeated 5-fold cross-validation."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can mammographic radiomics or radiology report text predict recurrence after breast cryoablation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not in this 40-patient cohort. For biopsy-proven ipsilateral breast tumor recurrence, leave-one-out ROC AUCs were 0.42 for radiomics, 0.53 for report embeddings and 0.43 for their fusion, so no input showed detectable discrimination."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which input was most associated with a post-cryoablation biopsy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fusion of radiomics and report embeddings had the highest leave-one-out ROC AUC (0.85, versus 0.72 for radiomics and 0.49 for report text), but it dropped to 0.69 ± 0.06 under repeated stratified 5-fold cross-validation, so the study does not claim that fusion is better."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How did the study avoid information leakage with so few patients?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It used one pre-cryoablation mammogram and report per patient, patient-level leave-one-out cross-validation, and fitted every learned preprocessing and feature-selection step inside the training folds, with repeated 5-fold cross-validation to check stability."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../../#publications">Publications</a></nav>
+    <header>
+        <div class="badges"><span class="badge">Clinical Breast Cancer 2026</span></div>
+        <h1>Exploratory Evaluation of Radiology Report Embeddings and Mammographic Radiomics for Post-Cryoablation Biopsy and Biopsy-Proven Ipsilateral Breast Tumor Recurrence</h1>
+        <p class="authors">Samarth Dubey, Nathan Collins, <strong>Xinye Yang</strong>, Irvin Akinseye, Zhicheng Jiao, Scott Collins, Catherine Boutros, Robert C. Ward</p>
+        <p class="venue">Clinical Breast Cancer (2026), published online October 29, 2026 · DOI: <a href="https://doi.org/10.1016/j.clbc.2026.10.015" target="_blank" rel="noreferrer">10.1016/j.clbc.2026.10.015</a></p>
+        <div class="links"><a class="btn" href="https://doi.org/10.1016/j.clbc.2026.10.015" target="_blank" rel="noreferrer">Paper (DOI)</a><a class="btn" href="https://www.sciencedirect.com/science/article/pii/S1526820926001916" target="_blank" rel="noreferrer">ScienceDirect</a><a class="btn btn-quiet" href="#cite">Cite</a></div>
+    </header>
+
+    <section>
+        <h2>TL;DR</h2>
+        <p class="tldr">In 40 patients treated with breast cryoablation, mammographic radiomics, radiology report embeddings and their fusion showed no detectable discrimination for biopsy-proven ipsilateral breast tumor recurrence. Fusion had the highest leave-one-out ROC AUC for post-cryoablation biopsy (0.85), but it fell to 0.69 under repeated 5-fold cross-validation, so the results are hypothesis-generating.</p>
+        <p class="tldr-zh" lang="zh-CN">中文简介：一项探索性研究：在 40 名接受乳腺冷冻消融的患者中，乳腺 X 线影像组学、放射报告文本嵌入及两者融合都未能区分活检证实的同侧乳腺肿瘤复发；融合模型对术后活检的留一法 ROC AUC 最高（0.85），但在重复 5 折交叉验证中降到 0.69，结论仅供提出假设。</p>
+    </section>
+
+    <section>
+        <h2>Key points</h2>
+        <ul><li>Retrospective proof-of-concept cohort of 40 patients treated with breast cryoablation, using one pre-cryoablation mammogram and its radiology report per patient.</li><li>Three inputs were compared: mammographic radiomics, report embeddings from BioClinical-ModernBERT-base, and their fusion, each with the same L2-regularized logistic regression.</li><li>Evaluation used patient-level leave-one-out cross-validation with all learned preprocessing and feature selection fitted inside the training folds; repeated stratified 5-fold cross-validation checked stability.</li><li>13 patients had a post-cryoablation biopsy and 7 had biopsy-proven ipsilateral breast tumor recurrence (IBTR).</li><li>For IBTR, ROC AUCs were 0.42 (radiomics), 0.53 (report text) and 0.43 (fusion): no input showed detectable discrimination.</li><li>For biopsy, ROC AUCs were 0.72, 0.49 and 0.85; fusion fell to 0.69 ± 0.06 under repeated 5-fold cross-validation, which rules out a claim of superiority.</li></ul>
+    </section>
+
+    <section>
+        <h2>Summary</h2>
+        <p>After breast cryoablation, benign treatment changes on imaging can look like residual or recurrent cancer, which makes surveillance hard. This exploratory study asked whether features from the pre-cryoablation mammogram, from the text of its radiology report, or from both together are associated with two later events: a post-cryoablation biopsy and biopsy-proven ipsilateral breast tumor recurrence. With 40 patients and 7 recurrences, none of the inputs separated patients who recurred from those who did not. The combined model was most associated with a later biopsy under leave-one-out evaluation, but the estimate was unstable under repeated cross-validation. The authors call for larger cohorts, fixed follow-up horizons and independent validation before any clinical use.</p>
+        <p class="note">This summary is written for this page. The full article is available from Elsevier (subscription).</p>
+    </section>
+
+    <section id="cite">
+        <h2>Citation</h2>
+        <p>Samarth Dubey, Nathan Collins, Xinye Yang, Irvin Akinseye, Zhicheng Jiao, Scott Collins, Catherine Boutros, Robert C. Ward. Exploratory Evaluation of Radiology Report Embeddings and Mammographic Radiomics for Post-Cryoablation Biopsy and Biopsy-Proven Ipsilateral Breast Tumor Recurrence. Clinical Breast Cancer (2026). https://doi.org/10.1016/j.clbc.2026.10.015</p>
+        <pre><code>@article{dubey2026exploratory,
+  title   = {Exploratory Evaluation of Radiology Report Embeddings and Mammographic Radiomics for Post-Cryoablation Biopsy and Biopsy-Proven Ipsilateral Breast Tumor Recurrence},
+  author  = {Dubey, Samarth and Collins, Nathan and Yang, Xinye and Akinseye, Irvin and Jiao, Zhicheng and Collins, Scott and Boutros, Catherine and Ward, Robert C.},
+  journal = {Clinical Breast Cancer},
+  year    = {2026},
+  doi     = {10.1016/j.clbc.2026.10.015}
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>FAQ</h2>
+        <details><summary>Can mammographic radiomics or radiology report text predict recurrence after breast cryoablation?</summary><p>Not in this 40-patient cohort. For biopsy-proven ipsilateral breast tumor recurrence, leave-one-out ROC AUCs were 0.42 for radiomics, 0.53 for report embeddings and 0.43 for their fusion, so no input showed detectable discrimination.</p></details><details><summary>Which input was most associated with a post-cryoablation biopsy?</summary><p>Fusion of radiomics and report embeddings had the highest leave-one-out ROC AUC (0.85, versus 0.72 for radiomics and 0.49 for report text), but it dropped to 0.69 ± 0.06 under repeated stratified 5-fold cross-validation, so the study does not claim that fusion is better.</p></details><details><summary>How did the study avoid information leakage with so few patients?</summary><p>It used one pre-cryoablation mammogram and report per patient, patient-level leave-one-out cross-validation, and fitted every learned preprocessing and feature-selection step inside the training folds, with repeated 5-fold cross-validation to check stability.</p></details>
+    </section>
+
+    <section>
+        <h2>Related work by the authors</h2>
+        <ul><li><a href="../vrm-cloud-edge-triage/">Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging</a>. Smart Health 2026. Uses radiology report text to train an image-only model.</li><li><a href="../radiology-report-turing-test/">The AI Challenge: A Turing Test Pilot Study of Attendings and Residents in Identifying AI-Generated Content</a>. Meta-Radiology 2025. Radiology reports and clinician judgment.</li></ul>
+    </section>
+
+    <footer>
+        <p><a href="../../">Xinye Yang (Charlie)</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://scholar.google.com/citations?user=xEgmvx4AAAAJ" target="_blank" rel="noreferrer">Google Scholar</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
