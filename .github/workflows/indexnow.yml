@@ -22,9 +22,9 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: indexnow
-  cancel-in-progress: false
+# No concurrency group: GitHub keeps only one pending run per group and cancels
+# the rest, which would drop URLs from pushes made in quick succession. Each run
+# submits only the pages its own push changed, so parallel runs are safe.
 
 env:
   SITE: https://yangxinyee.github.io
