@@ -46,6 +46,7 @@ const translations = {
         },
         news: {
             title: "News",
+            cbc: "Our exploratory study of mammographic radiomics and radiology report embeddings after breast cryoablation is published in Clinical Breast Cancer.",
             ehr2trace: "Our preprint on auditable EHR data infrastructure for patient world models and clinical agents is on arXiv, with open-source code.",
             n1: "I join AWS Kiro as a full-time Software Development Engineer in Seattle!",
             n2: "I start as a Research Assistant at the University of Colorado Anschutz School of Medicine.",
@@ -149,6 +150,7 @@ const translations = {
         },
         news: {
             title: "动态",
+            cbc: "我们关于乳腺冷冻消融后乳腺 X 线影像组学与放射报告文本嵌入的探索性研究发表于 Clinical Breast Cancer。",
             ehr2trace: "我们关于面向患者世界模型与临床智能体的可审计 EHR 数据基础设施的预印本已发布在 arXiv，代码已开源。",
             n1: "全职加入 AWS Kiro，任软件开发工程师（西雅图）！",
             n2: "开始在科罗拉多大学安舒茨医学院担任研究助理。",
