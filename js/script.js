@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [/Connected Health/i, 'CHASE'],
         [/Smart Health/i, 'Smart Health'],
         [/medRxiv/i, 'medRxiv'],
+        [/Clinical Breast Cancer/i, 'Clin Breast Cancer'],
         [/Meta-Radiology/i, 'Meta-Radiology'],
         [/Brain-X/i, 'Brain-X'],
         [/Computational Intelligence and Design/i, 'ISCID'],
@@ -41,11 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
         ['Turing Test Pilot Study of Attendings and Residents', '/papers/radiology-report-turing-test/'],
         ['Understanding the brain with attention', '/papers/transformers-brain-sciences-survey/'],
         ['Optimization of CNN for Diagnosis on Lung Disease', '/papers/lung-disease-cnn/'],
-        ['EHR2Trace', '/papers/ehr2trace/']
+        ['EHR2Trace', '/papers/ehr2trace/'],
+        ['Post-Cryoablation Biopsy', '/papers/breast-cryoablation-radiomics-reports/']
     ];
 
     // Recent papers not yet indexed by Google Scholar; skipped automatically once Scholar lists the same title.
     const manualPublications = [
+        {
+            title: 'Exploratory Evaluation of Radiology Report Embeddings and Mammographic Radiomics for Post-Cryoablation Biopsy and Biopsy-Proven Ipsilateral Breast Tumor Recurrence',
+            authors: 'S Dubey, N Collins, X Yang, I Akinseye, Z Jiao, S Collins, C Boutros, RC Ward',
+            venue: 'Clinical Breast Cancer',
+            year: '2026',
+            citations: 0,
+            link: 'https://doi.org/10.1016/j.clbc.2026.10.015'
+        },
         {
             title: 'EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents',
             authors: 'X Yang, Y Wang, CT Lin, H Bai',
