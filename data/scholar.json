@@ -1,15 +1,23 @@
 {
   "profile": "https://scholar.google.com/citations?user=xEgmvx4AAAAJ&hl=en",
   "authorId": "xEgmvx4AAAAJ",
-  "updatedAt": "2026-10-12T19:06:45Z",
+  "updatedAt": "2026-11-01T05:41:25Z",
   "source": "Google Scholar via SerpAPI",
   "metrics": {
     "citations": 50,
     "hIndex": 2,
     "i10Index": 1,
-    "publications": 7
+    "publications": 8
   },
   "publications": [
+    {
+      "title": "Exploratory Evaluation of Radiology Report Embeddings and Mammographic Radiomics for Post-Cryoablation Biopsy and Biopsy-Proven Ipsilateral Breast Tumor Recurrence",
+      "authors": "S Dubey, N Collins, X Yang, I Akinseye, Z Jiao, S Collins, C Boutros, ...",
+      "venue": "Clinical Breast Cancer, 2026",
+      "year": "2026",
+      "citations": 0,
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=xEgmvx4AAAAJ&citation_for_view=xEgmvx4AAAAJ%3AW7OEmFMy1HYC"
+    },
     {
       "title": "EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents",
       "authors": "X Yang, Y Wang, CT Lin, H Bai",
