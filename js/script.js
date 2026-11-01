@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [/medRxiv/i, 'medRxiv'],
         [/Clinical Breast Cancer/i, 'Clin Breast Cancer'],
         [/Meta-Radiology/i, 'Meta-Radiology'],
-        [/Brain-X/i, 'Brain-X'],
+        [/Brain[-\u2010]X/i, 'Brain-X'],
         [/Computational Intelligence and Design/i, 'ISCID'],
         [/arXiv/i, 'arXiv']
     ];
