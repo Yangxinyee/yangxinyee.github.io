@@ -12,6 +12,8 @@ Xinye Yang (Chinese name: 杨新烨) also publishes as "X Yang" and "Xin-Ye Yang
 - [Semantic Scholar](https://www.semanticscholar.org/author/2370872191)
 - [GitHub](https://github.com/Yangxinyee)
 - [LinkedIn](https://www.linkedin.com/in/xinye-charlie-yang-939674286/)
+- [alphaXiv](https://www.alphaxiv.org/@xinye-yang)
+- [OpenAlex](https://openalex.org/A5030250061)
 - [CV (PDF)](https://yangxinyee.github.io/assets/Yang_Xinye_CV.pdf)
 
 ## Research interests
@@ -37,9 +39,9 @@ Multimodal LLMs; medical image analysis; AI in healthcare; agentic AI; EHR-based
 ## Publications
 
 - Samarth Dubey, Nathan Collins, Xinye Yang, Irvin Akinseye, Zhicheng Jiao, Scott Collins, Catherine Boutros, Robert C. Ward. Exploratory Evaluation of Radiology Report Embeddings and Mammographic Radiomics for Post-Cryoablation Biopsy and Biopsy-Proven Ipsilateral Breast Tumor Recurrence. Clinical Breast Cancer (2026). https://doi.org/10.1016/j.clbc.2026.10.015 Paper page: https://yangxinyee.github.io/papers/breast-cryoablation-radiomics-reports/
-- Xinye Yang, Yuli Wang, Cheng Ting Lin, Harrison Bai. EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents. arXiv:2609.38193 (2026). https://doi.org/10.48550/arXiv.2609.38193 Paper page: https://yangxinyee.github.io/papers/ehr2trace/ Code: https://github.com/Yangxinyee/ehr2trace
-- Xinye Yang, Zhusi Zhong, Scott Collins, Michael Bernstein, Grayson Baird, Terrence Healey, Michael Atalay, Mahesh Jayaraman, Xuyu Wang, Zhicheng Jiao. Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging. Smart Health 41, 100689 (2026). Presented as an oral at IEEE/ACM CHASE 2026. https://doi.org/10.1016/j.smhl.2026.100689 arXiv: https://arxiv.org/abs/2610.02269
-- Xinye Yang, Zhusi Zhong, Scott Collins, Grayson Baird, Xuyu Wang, Zhicheng Jiao. Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models. IEEE/ACM CHASE 2026 Workshop. https://doi.org/10.1109/CHASE69719.2026.00073 arXiv (free full text): https://arxiv.org/abs/2610.02270 Code: https://github.com/Yangxinyee/cxr-vlm-routing
+- Xinye Yang, Yuli Wang, Cheng Ting Lin, Harrison Bai. EHR2Trace: Auditable EHR Data Infrastructure for Patient World Models and Clinical Agents. arXiv:2609.38193 (2026). https://doi.org/10.48550/arXiv.2609.38193 Paper page: https://yangxinyee.github.io/papers/ehr2trace/ Code: https://github.com/Yangxinyee/ehr2trace alphaXiv: https://www.alphaxiv.org/abs/2609.38193
+- Xinye Yang, Zhusi Zhong, Scott Collins, Michael Bernstein, Grayson Baird, Terrence Healey, Michael Atalay, Mahesh Jayaraman, Xuyu Wang, Zhicheng Jiao. Confidence-gated cloud-edge cascade triage via variational risk minimization for medical imaging. Smart Health 41, 100689 (2026). Presented as an oral at IEEE/ACM CHASE 2026. https://doi.org/10.1016/j.smhl.2026.100689 arXiv: https://arxiv.org/abs/2610.02269 alphaXiv: https://www.alphaxiv.org/abs/2610.02269
+- Xinye Yang, Zhusi Zhong, Scott Collins, Grayson Baird, Xuyu Wang, Zhicheng Jiao. Reliability Stress Tests and Decision-Time Routing for Chest X-ray Vision-Language Models. IEEE/ACM CHASE 2026 Workshop. https://doi.org/10.1109/CHASE69719.2026.00073 arXiv (free full text): https://arxiv.org/abs/2610.02270 Code: https://github.com/Yangxinyee/cxr-vlm-routing alphaXiv: https://www.alphaxiv.org/abs/2610.02270
 - Zhuoqi Ma, Xinye Yang, et al. The AI Challenge: A Turing Test Pilot Study of Attendings and Residents in Identifying AI-Generated Content. Meta-Radiology (2025). https://doi.org/10.1016/j.metrad.2025.100199
 - Zhuoqi Ma, Xinye Yang, et al. A Unified Platform for Radiology Report Generation and Clinician-Centered AI Evaluation. medRxiv (2025). https://doi.org/10.1101/2025.07.07.25331018
 - Cheng Chen, Huilin Wang, Yunqing Chen, Zihan Yin, Xinye Yang, et al. Understanding the brain with attention: A survey of transformers in brain sciences. Brain-X (2023). https://doi.org/10.1002/brx2.29
