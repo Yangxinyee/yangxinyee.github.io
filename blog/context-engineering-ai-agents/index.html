@@ -149,7 +149,37 @@
 </table>
 <h2>Layer 1: The foundations, making an agent functional</h2>
 <h3>1. Context assembly</h3>
-<p>Maintain a deterministic ordering: stable content first, dynamic content last.</p>
+<p>Maintain a deterministic ordering: stable content first, dynamic content last (as illustrated in the figure below).</p>
+<figure style="margin:1.5em 0">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" role="img" aria-labelledby="ctxfig-title ctxfig-desc" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<title id="ctxfig-title">Layout of an agent's context window, from stable to volatile content</title>
+<desc id="ctxfig-desc">A context window stacked top to bottom: system prompt and tool definitions; project instructions and long-term memory; conversation history and tool results; the current message. Content at the top is stable and cacheable, content at the bottom is volatile. Files, notes and subtasks live outside the window and exchange information with the conversation history.</desc>
+<defs>
+<marker id="ctxfig-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" style="stroke:var(--muted,#8a8a80)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<rect x="215" y="20" width="450" height="480" rx="28" fill="#efeeea" stroke="#8a8a80" stroke-width="1.2"/>
+<text x="440" y="62" text-anchor="middle" font-size="19" font-weight="700" fill="#44443e">Context window</text>
+<rect x="245" y="86" width="390" height="86" rx="12" fill="#ecebfb" stroke="#7b72c9" stroke-width="1.2"/>
+<text x="440" y="122" text-anchor="middle" font-size="17" font-weight="700" fill="#352c8a">System prompt, tool definitions</text>
+<text x="440" y="149" text-anchor="middle" font-size="14.5" fill="#4a41a8">Sent with every request, rarely changes</text>
+<rect x="245" y="184" width="390" height="86" rx="12" fill="#ecebfb" stroke="#7b72c9" stroke-width="1.2"/>
+<text x="440" y="220" text-anchor="middle" font-size="17" font-weight="700" fill="#352c8a">Project instructions, long-term memory</text>
+<text x="440" y="247" text-anchor="middle" font-size="14.5" fill="#4a41a8">Loaded when the session starts</text>
+<rect x="245" y="282" width="390" height="86" rx="12" fill="#e4f2ec" stroke="#5f9a7c" stroke-width="1.2"/>
+<text x="440" y="318" text-anchor="middle" font-size="17" font-weight="700" fill="#1f4d3a">Conversation history, tool results</text>
+<text x="440" y="345" text-anchor="middle" font-size="14.5" fill="#2f6a50">Append-only, grows fastest</text>
+<rect x="245" y="380" width="390" height="70" rx="12" fill="#e4f2ec" stroke="#5f9a7c" stroke-width="1.2"/>
+<text x="440" y="421" text-anchor="middle" font-size="17" font-weight="700" fill="#1f4d3a">Current message</text>
+<text x="95" y="124" text-anchor="middle" font-size="15" style="fill:var(--muted,#5b5b54)">Stable, cacheable</text>
+<line x1="95" y1="146" x2="95" y2="392" style="stroke:var(--muted,#8a8a80)" stroke-width="1.6" marker-end="url(#ctxfig-arrow)"/>
+<text x="95" y="424" text-anchor="middle" font-size="15" style="fill:var(--muted,#5b5b54)">Volatile</text>
+<line x1="646" y1="325" x2="716" y2="325" style="stroke:var(--muted,#8a8a80)" stroke-width="1.6" marker-start="url(#ctxfig-arrow)" marker-end="url(#ctxfig-arrow)"/>
+<rect x="726" y="282" width="214" height="86" rx="12" fill="#fbfbf9" stroke="#cfcfc8" stroke-width="1.2"/>
+<text x="833" y="318" text-anchor="middle" font-size="17" font-weight="700" fill="#22221e">Outside the window</text>
+<text x="833" y="345" text-anchor="middle" font-size="14.5" fill="#44443e">Files, notes, subtasks</text>
+</svg>
+<figcaption style="color:var(--muted);font-size:.9em;text-align:center">Stable content sits at the top of the context window and stays cacheable; volatile content is appended at the bottom. Files, notes and subtasks live outside the window.</figcaption>
+</figure>
 <p>This is essential for prefix caching. Even a small change early in the context can invalidate the subsequent cached prefix.</p>
 <p>Codex has documented several pitfalls, including adding or removing tools mid-session, switching models, changing working directories, and inconsistent tool ordering.</p>
 <p>One mitigation is to preserve existing messages and append updates instead of retroactively modifying them, wherever the API architecture permits.</p>
