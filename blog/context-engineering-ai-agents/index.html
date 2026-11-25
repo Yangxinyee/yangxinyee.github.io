@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Engineering for AI Agents: Nine Components in Three Layers</title>
+    <meta name="description" content="How an AI agent&#x27;s context management system breaks down into nine components across three layers, from prompt caching and tool output budgets to memory.">
+    <meta name="author" content="Xinye Yang">
+    <link rel="canonical" href="https://yangxinyee.github.io/blog/context-engineering-ai-agents/">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../css/paper.css?v=1">
+    <link rel="stylesheet" href="../../css/blog.css?v=1">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Context Engineering for AI Agents: Nine Components Across Three Layers">
+    <meta property="og:description" content="Context engineering is simple in principle and hard in practice. This post breaks an AI agent&#x27;s context management system into nine components across three layers: foundations, context budget management, and advanced context and persistent memory.">
+    <meta property="og:url" content="https://yangxinyee.github.io/blog/context-engineering-ai-agents/">
+    <meta property="article:published_time" content="2026-11-24">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Context Engineering for AI Agents: Nine Components Across Three Layers",
+      "description": "Context engineering is simple in principle and hard in practice. This post breaks an AI agent's context management system into nine components across three layers: foundations, context budget management, and advanced context and persistent memory.",
+      "url": "https://yangxinyee.github.io/blog/context-engineering-ai-agents/",
+      "mainEntityOfPage": "https://yangxinyee.github.io/blog/context-engineering-ai-agents/",
+      "datePublished": "2026-11-24",
+      "dateModified": "2026-11-24",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Xinye Yang",
+        "url": "https://yangxinyee.github.io/",
+        "sameAs": [
+          "https://orcid.org/0009-0004-3143-4263",
+          "https://github.com/Yangxinyee"
+        ]
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Context engineering"
+        },
+        {
+          "@type": "Thing",
+          "name": "AI agents"
+        },
+        {
+          "@type": "Thing",
+          "name": "Prompt caching"
+        },
+        {
+          "@type": "Thing",
+          "name": "Context compaction"
+        },
+        {
+          "@type": "Thing",
+          "name": "Agent memory"
+        },
+        {
+          "@type": "Thing",
+          "name": "Large language models"
+        }
+      ],
+      "keywords": "context engineering, AI agents, agentic AI, prompt caching, context compaction, tool output management, token budgeting, subagents, persistent memory, LLM"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is context engineering for AI agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Context engineering is the design of an agent's context management system. It is not about fitting as much information as possible into a context window. It is about delivering the right information, at the right time, with the right level of detail, while balancing intelligence, latency, cost and reliability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is context engineering hard?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Three constraints compete: context windows have finite capacity; context must be processed again with each model request, so longer contexts cost more; and adding more information can degrade model performance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the order of content in the context matter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Prefix caching depends on it. Keep a deterministic ordering with stable content first and dynamic content last, because even a small change early in the context can invalidate the cached prefix that follows. Where the API allows, preserve existing messages and append updates instead of modifying them retroactively."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is context compaction lossless?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Compaction is inherently lossy: earlier instructions may disappear, and omissions in generated summaries are hard to detect. Critical information such as project instructions should be explicitly preserved or reinjected after compaction. Compaction also typically rewrites the context prefix, so the prompt cache has to be rebuilt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a larger context window remove the need for context management?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A larger context window is not a substitute for a well-engineered context management system."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+<main class="paper post">
+    <nav class="crumbs"><a href="../../">Xinye Yang</a> / <a href="../">Blog</a></nav>
+    <header>
+        <h1>Context Engineering for AI Agents: Nine Components Across Three Layers</h1>
+        <p class="venue">Xinye Yang · <time datetime="2026-11-24">November 24, 2026</time> · 4 min read</p>
+    </header>
+    <article>
+<p><strong>TL;DR.</strong> Context engineering is not about fitting as much information as possible into a context window. It is about delivering the right information, at the right time, with the right level of detail, while balancing intelligence, latency, cost, and reliability. I break an agent's context management system into nine components across three layers: the foundations that make an agent functional, context budget management that prevents overflow, and advanced context and persistent memory management.</p>
+<hr />
+<p>Having spent considerable time both building and using AI agents, including developing Context Compaction and Memory features at a scale of millions of users, I've come to appreciate how critical a well-designed context management system is to the success of an agent product.</p>
+<p>Context Engineering is deceptively simple in principle, yet full of subtle engineering challenges in practice.</p>
+<h2>Why it is hard: three competing constraints</h2>
+<ul>
+<li>Context windows have finite capacity.</li>
+<li>Context must be processed again with each model request, making longer contexts more expensive.</li>
+<li>Adding more information can actually degrade model performance.</li>
+</ul>
+<h2>The nine components at a glance</h2>
+<p>I break down an agent's context management system into nine components across three layers.</p>
+<table>
+<thead><tr><th>Layer</th><th>Component</th><th>What it is responsible for</th></tr></thead>
+<tbody>
+<tr><td rowspan="3">1. Foundations</td><td>Context assembly</td><td>A deterministic ordering: stable content first, dynamic content last</td></tr>
+<tr><td>Static context</td><td>System prompts, tool definitions and project instructions, kept compact</td></tr>
+<tr><td>Conversation history</td><td>An append-only record whose structure stays intact</td></tr>
+<tr><td rowspan="3">2. Context budget management</td><td>Tool output management</td><td>An output budget per tool; oversized results offloaded to disk</td></tr>
+<tr><td>Token accounting and budgeting</td><td>Accurate token counts before each model request</td></tr>
+<tr><td>Context compaction</td><td>When to trigger, what to preserve, how to evaluate quality</td></tr>
+<tr><td rowspan="3">3. Advanced context and persistent memory</td><td>On-demand context loading</td><td>Retrieving information when it becomes relevant</td></tr>
+<tr><td>Context isolation</td><td>Subagents with isolated context windows</td></tr>
+<tr><td>Persistent memory</td><td>Knowledge extracted, consolidated and pruned across sessions</td></tr>
+</tbody>
+</table>
+<h2>Layer 1: The foundations, making an agent functional</h2>
+<h3>1. Context assembly</h3>
+<p>Maintain a deterministic ordering: stable content first, dynamic content last.</p>
+<p>This is essential for prefix caching. Even a small change early in the context can invalidate the subsequent cached prefix.</p>
+<p>Codex has documented several pitfalls, including adding or removing tools mid-session, switching models, changing working directories, and inconsistent tool ordering.</p>
+<p>One mitigation is to preserve existing messages and append updates instead of retroactively modifying them, wherever the API architecture permits.</p>
+<h3>2. Static context</h3>
+<p>System prompts, tool definitions, and project instructions.</p>
+<p>These are included in every request, so keeping them compact is essential. With a large tool ecosystem, tool definitions alone can consume a significant portion of the context window.</p>
+<p>Claude Code addresses this through progressive disclosure: exposing lightweight tool information upfront and loading full definitions only when needed. Skills follow a similar design philosophy.</p>
+<h3>3. Conversation history</h3>
+<p>An append-only record of interactions.</p>
+<p>History cannot be arbitrarily truncated. Structural integrity must be preserved, particularly the pairing between tool calls and their corresponding results.</p>
+<h2>Layer 2: Context budget management, preventing context overflow</h2>
+<h3>4. Tool output management</h3>
+<p>One of the largest sources of context consumption, particularly when managing a diverse ecosystem of MCP servers.</p>
+<p>This is also one of the most failure-prone areas in production. I once dealt with a Sev2 incident related to this, which made the lesson particularly memorable.</p>
+<p>File reads and command outputs can quickly exhaust the context window. Each tool therefore needs an appropriate output budget.</p>
+<p>A common approach is to offload oversized results to disk, retaining only a preview and a reference to the complete output in context.</p>
+<h3>5. Token accounting and budgeting</h3>
+<p>Accurately measure token consumption before each model request and surface meaningful usage information to users.</p>
+<p>Conceptually straightforward, but inaccurate accounting can lead to surprisingly complex production failures.</p>
+<h3>6. Context compaction</h3>
+<p>The central questions are when to trigger compaction, what information to preserve, and how to evaluate its quality.</p>
+<p>Compaction is inherently lossy. Earlier instructions may disappear, and omissions in generated summaries are often difficult to detect.</p>
+<p>Certain critical information, such as project instructions, should therefore be explicitly preserved or reinjected after compaction.</p>
+<p>Compaction also typically rewrites the context prefix, requiring the prompt cache to be rebuilt.</p>
+<h2>Layer 3: Advanced context and persistent memory management</h2>
+<h3>7. On-demand context loading</h3>
+<p>Retrieve information when it becomes relevant rather than injecting everything upfront.</p>
+<h3>8. Context isolation</h3>
+<p>Delegate specialized tasks to subagents with isolated context windows, preventing intermediate reasoning and tool outputs from polluting the primary agent's context.</p>
+<h3>9. Persistent memory</h3>
+<p>Automatically extract, consolidate, and refine useful knowledge across sessions, while periodically pruning or decaying outdated and low-value memories.</p>
+<h2>Closing</h2>
+<p>Ultimately, Context Engineering is not about fitting as much information as possible into a context window.</p>
+<p>It is about delivering the right information, at the right time, with the right level of detail, while balancing intelligence, latency, cost, and reliability.</p>
+<p>A larger context window is not a substitute for a well-engineered context management system.</p>
+<h2>FAQ</h2>
+<p><strong>What is context engineering for AI agents?</strong>
+Context engineering is the design of an agent&#x27;s context management system. It is not about fitting as much information as possible into a context window. It is about delivering the right information, at the right time, with the right level of detail, while balancing intelligence, latency, cost and reliability.</p>
+<p><strong>Why is context engineering hard?</strong>
+Three constraints compete: context windows have finite capacity; context must be processed again with each model request, so longer contexts cost more; and adding more information can degrade model performance.</p>
+<p><strong>Why does the order of content in the context matter?</strong>
+Prefix caching depends on it. Keep a deterministic ordering with stable content first and dynamic content last, because even a small change early in the context can invalidate the cached prefix that follows. Where the API allows, preserve existing messages and append updates instead of modifying them retroactively.</p>
+<p><strong>Is context compaction lossless?</strong>
+No. Compaction is inherently lossy: earlier instructions may disappear, and omissions in generated summaries are hard to detect. Critical information such as project instructions should be explicitly preserved or reinjected after compaction. Compaction also typically rewrites the context prefix, so the prompt cache has to be rebuilt.</p>
+<p><strong>Does a larger context window remove the need for context management?</strong>
+No. A larger context window is not a substitute for a well-engineered context management system.</p>
+<h2>Further reading</h2>
+<ul>
+<li><a href="https://openai.com/index/unrolling-the-codex-agent-loop">Unrolling the Codex agent loop</a> (OpenAI)</li>
+<li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a> (Anthropic)</li>
+</ul>
+    </article>
+    <footer>
+        <p>Xinye Yang is a software engineer at AWS, where he works on LLM context and memory systems for agentic coding, and a research assistant at the University of Colorado Anschutz School of Medicine, working on reliable medical imaging AI, clinical AI agents and EHR-based patient world models.</p>
+        <p><a href="../../">Homepage</a> · <a href="../">All posts</a> · <a href="https://orcid.org/0009-0004-3143-4263" target="_blank" rel="noreferrer">ORCID</a> · <a href="https://github.com/Yangxinyee" target="_blank" rel="noreferrer">GitHub</a></p>
+    </footer>
+</main>
+</body>
+</html>
