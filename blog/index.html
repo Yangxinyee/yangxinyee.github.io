@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog | Xinye Yang</title>
-    <meta name="description" content="Notes by Xinye Yang on EHR data infrastructure, patient world models, and reliable medical imaging AI.">
+    <meta name="description" content="Notes by Xinye Yang on AI agent engineering, EHR data infrastructure, patient world models, and reliable medical imaging AI.">
     <link rel="canonical" href="https://yangxinyee.github.io/blog/">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="stylesheet" href="../css/paper.css?v=1">
@@ -21,6 +21,12 @@
         "url": "https://yangxinyee.github.io/"
       },
       "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "headline": "Context Engineering for AI Agents: Nine Components Across Three Layers",
+          "url": "https://yangxinyee.github.io/blog/context-engineering-ai-agents/",
+          "datePublished": "2026-11-24"
+        },
         {
           "@type": "BlogPosting",
           "headline": "OMOP or MEDS for Patient World Models? Time, Actions and Meaning in Three MIMIC-IV Conversions",
@@ -58,8 +64,13 @@
 <body>
 <main class="paper">
     <nav class="crumbs"><a href="../">Xinye Yang</a> / Blog</nav>
-    <header><h1>Blog</h1><p class="venue">Notes on EHR data infrastructure, patient world models, and reliable medical imaging AI.</p></header>
+    <header><h1>Blog</h1><p class="venue">Notes on AI agent engineering, EHR data infrastructure, patient world models, and reliable medical imaging AI.</p></header>
     <ul class="post-list">
+        <li>
+            <a class="post-title" href="context-engineering-ai-agents/">Context Engineering for AI Agents: Nine Components Across Three Layers</a>
+            <p class="venue"><time datetime="2026-11-24">November 24, 2026</time> · 4 min read</p>
+            <p>Context engineering is not about fitting as much information as possible into a context window; it is about delivering the right information, at the right time, with the right level of detail. This post breaks an agent&#x27;s context management system into nine components across three layers: context assembly, static context and conversation history; tool output management, token accounting and compaction; on-demand loading, context isolation and persistent memory.</p>
+        </li>
         <li>
             <a class="post-title" href="omop-vs-meds-patient-world-models/">OMOP or MEDS for Patient World Models? Time, Actions and Meaning in Three MIMIC-IV Conversions</a>
             <p class="venue"><time datetime="2026-10-17">October 17, 2026</time> · 10 min read</p>
